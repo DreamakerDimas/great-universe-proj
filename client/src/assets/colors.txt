@@ -1,0 +1,5 @@
+Blue Popsicle: #0f2862
+Redline: #9e363a
+Purple Shadow: #091f36
+Grey Blue Leaf: #4f5f76
+

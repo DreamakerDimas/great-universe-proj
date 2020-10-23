@@ -1,0 +1,26 @@
+.switcherBar
+    display: flex
+    flex-direction: row
+    justify-content: flex-end
+    width: 1wh
+    background-color: #b6d1eb
+    padding: 5px 50px
+    & > *
+        user-select: none
+        padding: 5px
+        margin: 1px 6px
+        color: #024091
+        cursor: pointer
+    @media screen and (max-width: 780px)
+        justify-content: center
+        padding: 4px
+        & > *
+            font-size: 20px
+
+.activeSpan
+    margin: 0 5px
+    border: 1px solid #3362b9
+    border-radius: 5px
+    background-color: #92c3f1
+    color: #024091
+    cursor: default

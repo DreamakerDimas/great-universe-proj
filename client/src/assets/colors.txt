@@ -3,3 +3,5 @@ Redline: #9e363a
 Purple Shadow: #091f36
 Grey Blue Leaf: #4f5f76
 
+// red black: #960505
+// red error: #c91818

@@ -1,0 +1,57 @@
+.headerContainer
+    max-height: 280px
+    width: 100vw
+    display: flex
+    flex-direction: row
+    justify-content: flex-start
+    align-items: center
+    background-color: #024091
+    @media screen and (max-width: 780px)
+        flex-direction: column
+        align-items: stretch
+
+.headerLogo
+    margin-left: 20px
+    display: flex
+    justify-content: center
+    align-items: center
+    background-color: #b6d1eb
+    padding: 0 25px
+    @media screen and (max-width: 780px)
+        margin: 5px
+        border-radius: 10px
+
+.logoContainer
+    width: 295px
+    height: 68px
+    object-fit: cover
+    img
+        width: 100%
+
+.navContainer
+    margin-left: 50px
+    display: flex
+    flex-direction: row
+    justify-content: space-around
+    align-items: center
+    padding: 5px 0
+    @media screen and (max-width: 780px)
+        flex-direction: column
+        margin: 0
+        .navButton
+            margin: 5px
+            padding: 0
+
+.navButton
+    list-style-type: none
+    padding-right: 25px
+    margin: 0
+    a
+        text-decoration: none
+    span
+        color: #b6d1eb
+        font-size: 20px
+        font-weight: 500
+        &:hover
+            cursor: pointer
+            color: #457ce0

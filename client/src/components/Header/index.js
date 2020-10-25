@@ -1,9 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import styles from './Header.module.sass';
 import logo from '../../assets/logo.png';
-import { Link } from 'react-router-dom';
 
-const Header = () => {
+const Header = ({ isAuthenticated }) => {
+  console.log(isAuthenticated);
   return (
     <div className={styles.headerContainer}>
       <div className={styles.headerLogo}>
@@ -37,7 +41,7 @@ const Header = () => {
         </li>
         <li className={styles.navButton}>
           <Link to="/auth">
-            <span>Вход</span>
+            <span>Вход {isAuthenticated}</span>
           </Link>
         </li>
       </ul>
@@ -45,4 +49,12 @@ const Header = () => {
   );
 };
 
-export default Header;
+Header.propTypes = {
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(Header);

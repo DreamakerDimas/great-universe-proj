@@ -15,8 +15,9 @@ router.post(
   [
     check('name', 'Name is required').not().isEmpty(),
     check('email', 'Please include valid email').isEmail(),
-    check('password', 'Password must be with 6 or more characters').isLength({
+    check('password', 'Password must be between 6 and 30 characters').isLength({
       min: 6,
+      max: 30,
     }),
   ],
   async (req, res) => {
@@ -50,10 +51,15 @@ router.post(
         },
       };
 
-      jwt.sign(payload, config.get('jwtSecret'), (err, token) => {
-        if (err) throw err;
-        return res.send({ token });
-      });
+      jwt.sign(
+        payload,
+        config.get('jwtSecret'),
+        { expiresIn: '10y' },
+        (err, token) => {
+          if (err) throw err;
+          return res.send({ token });
+        }
+      );
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');

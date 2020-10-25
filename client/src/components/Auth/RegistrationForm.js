@@ -1,11 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import styles from './Auth.module.sass';
 import registerSchema from '../../lib/validationSchemas/registerSchema';
+import { register } from '../../actions/auth';
+import PropTypes from 'prop-types';
 
-const RegistrationForm = () => {
-  //onSubmit()
+import styles from './Auth.module.sass';
 
+const RegistrationForm = ({ register }) => {
   return (
     <div className={styles.formContainer}>
       <h2>Регистрация аккаунта</h2>
@@ -18,7 +20,9 @@ const RegistrationForm = () => {
           confirmPassword: '',
         }}
         validationSchema={registerSchema}
-        onSubmit={(values) => {}}
+        onSubmit={async (values) => {
+          register(values);
+        }}
       >
         {({ values }) => (
           <Form>
@@ -56,7 +60,7 @@ const RegistrationForm = () => {
               name="password"
               type="password"
               value={values.password}
-              //onChange={formik.handleChange}
+              // just prettier stopper
             />
             <ErrorMessage
               className={styles.errorContainer}
@@ -70,7 +74,7 @@ const RegistrationForm = () => {
               name="confirmPassword"
               type="password"
               value={values.confirmPassword}
-              //onChange={formik.handleChange}
+              // just prettier stopper
             />
             <ErrorMessage
               className={styles.errorContainer}
@@ -86,4 +90,8 @@ const RegistrationForm = () => {
   );
 };
 
-export default RegistrationForm;
+RegistrationForm.propTypes = {
+  register: PropTypes.func.isRequired,
+};
+
+export default connect(null, { register })(RegistrationForm);

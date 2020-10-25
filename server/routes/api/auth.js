@@ -9,7 +9,7 @@ const User = require('../../models/User');
 const router = express.Router();
 
 // @route   GET api/auth
-// @desk    Get user with checked token
+// @desk    Get user by checked token
 // @access  Public
 router.get('/', checkToken, async (req, res) => {
   try {
@@ -39,7 +39,7 @@ router.post(
     const { email, password } = req.body;
 
     try {
-      let user = User.findOne({ email });
+      let user = await User.findOne({ email });
       if (!user) {
         return res.status(400).json({ msg: 'Invalid Credentials' });
       }
@@ -55,10 +55,15 @@ router.post(
         },
       };
 
-      jwt.sign(payload, config.get('jwtSecret'), (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      });
+      jwt.sign(
+        payload,
+        config.get('jwtSecret'),
+        { expiresIn: '10y' },
+        (err, token) => {
+          if (err) throw err;
+          res.json({ token });
+        }
+      );
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');

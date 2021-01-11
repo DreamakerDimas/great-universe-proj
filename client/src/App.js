@@ -14,7 +14,7 @@ import Auth from './Pages/Auth';
 import setAuthToken from './utils/setAuthToken';
 import { Provider } from 'react-redux';
 import store from './store';
-import { loadUser } from './actions/auth';
+import { getUser } from './actions/auth';
 import Alert from './components/Alert';
 
 if (localStorage.token) {
@@ -24,7 +24,7 @@ if (localStorage.token) {
 
 function App() {
   useEffect(() => {
-    store.dispatch(loadUser());
+    store.dispatch(getUser());
   }, []);
 
   return (

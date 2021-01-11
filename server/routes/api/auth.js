@@ -1,74 +1,28 @@
 const express = require('express');
-const bcrypt = require('bcryptjs');
+
+const userController = require('../../controllers/userController');
 const checkToken = require('../../middleware/checkToken');
-const jwt = require('jsonwebtoken');
+const getAuthToken = require('../../middleware/getAuthToken');
 const config = require('config');
-const { check, validationResult } = require('express-validator');
 
 const User = require('../../models/User');
 const router = express.Router();
 
-// @route   GET api/auth
+// @route   GET api/auth/getUser
 // @desk    Get user by checked token
 // @access  Public
-router.get('/', checkToken, async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id).select('-password');
-    res.json(user);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
-  }
-});
+router.get('/getUser', checkToken, userController.getUser);
 
-// @route   POST api/auth
+// @route   POST api/auth/login
 // @desk    Authenticate user & get token
 // @access  Public
-router.post(
-  '/',
-  [
-    check('email', 'Please include valid email').isEmail(),
-    check('password', 'Password is required').exists(),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
+router.post('/login', userController.loginUser, getAuthToken);
 
-    const { email, password } = req.body;
+// @route   POST api/users
+// @desk    Register user
+// @access  Public
+router.post('/register', userController.registerUser, getAuthToken);
 
-    try {
-      let user = await User.findOne({ email });
-      if (!user) {
-        return res.status(400).json({ msg: 'Invalid Credentials' });
-      }
-
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-        return res.status(400).json({ msg: 'Invalid Credentials' });
-      }
-
-      const payload = {
-        user: {
-          id: user.id,
-        },
-      };
-
-      jwt.sign(
-        payload,
-        config.get('jwtSecret'),
-        { expiresIn: '10y' },
-        (err, token) => {
-          if (err) throw err;
-          res.json({ token });
-        }
-      );
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
-    }
-  }
-);
+// validation need
 
 module.exports = router;

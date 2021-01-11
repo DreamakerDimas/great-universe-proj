@@ -11,7 +11,7 @@ module.exports.getUser = async (req, res) => {
   }
 };
 
-module.exports.loginUser = async (req, res) => {
+module.exports.loginUser = async (req, res, next) => {
   const { email, password } = req.body;
 
   try {

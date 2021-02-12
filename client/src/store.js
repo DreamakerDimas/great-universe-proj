@@ -1,16 +1,16 @@
 import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
 import rootReducer from './reducers';
+import rootSaga from './sagas/rootSaga';
 
-const initialState = {};
-
-const middleware = [thunk];
+const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(
   rootReducer,
-  initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
+  composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
+
+sagaMiddleware.run(rootSaga, store.dispatch);
 
 export default store;

@@ -1,42 +1,34 @@
-import {
+import AUTH_TYPES from '../actions/types';
+const {
   REGISTER_SUCCESS,
-  REGISTER_FAIL,
+  REGISTER_ERROR,
   LOGIN_SUCCESS,
-  LOGIN_FAIL,
-  GET_USER,
-  AUTH_ERROR,
-} from '../actions/types';
+  LOGIN_ERROR,
+} = AUTH_TYPES;
 
 const initialState = {
-  token: localStorage.getItem('token'),
-  isAuthenticated: null,
   loading: true,
-  user: null,
+  error: null,
 };
 
 export default (state = initialState, action) => {
-  const { type, payload } = action;
-
   switch (type) {
+    case AUTH_REQUEST:
+      return {
+        loading: true,
+        error: null,
+      };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
-    case GET_USER:
-      localStorage.setItem('token', payload.token);
       return {
-        ...state,
-        ...payload,
-        isAuthenticated: true,
         loading: false,
+        error: null,
       };
-    case REGISTER_FAIL:
-    case LOGIN_FAIL:
-    case AUTH_ERROR:
-      localStorage.removeItem('token');
+    case REGISTER_ERROR:
+    case LOGIN_ERROR:
       return {
-        ...state,
-        token: null,
-        isAuthenticated: false,
         loading: false,
+        error: action.error,
       };
     default:
       return state;

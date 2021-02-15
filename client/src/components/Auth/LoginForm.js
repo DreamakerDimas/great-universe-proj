@@ -1,18 +1,13 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import loginSchema from '../../lib/validationSchemas/loginSchema';
-import { login } from '../../actions/auth';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import PropTypes from 'prop-types';
 
+import loginSchema from '../../lib/validationSchemas/loginSchema';
+import { authActionLogin } from '../../actions/auth';
 import styles from './Auth.module.sass';
 
-const LoginForm = ({ login, isAuthenticated }) => {
-  if (isAuthenticated) {
-    return <Redirect to="/" />;
-  }
-
+const LoginForm = ({ login }) => {
   return (
     <div className={styles.formContainer}>
       <h2>Вход в аккаунт</h2>
@@ -20,9 +15,7 @@ const LoginForm = ({ login, isAuthenticated }) => {
       <Formik
         initialValues={{ email: '', password: '' }}
         validationSchema={loginSchema}
-        onSubmit={async (values) => {
-          login(values);
-        }}
+        onSubmit={(values) => login(values)}
       >
         {({ values }) => (
           <Form>
@@ -31,13 +24,13 @@ const LoginForm = ({ login, isAuthenticated }) => {
               id="email"
               name="email"
               type="email"
-              value={values.name}
-              // just prettier stopper
+              value={values.email}
+              //
             />
             <ErrorMessage
               component="div"
               className={styles.errorContainer}
-              name="name"
+              name="email"
             />
 
             <label htmlFor="password">Пароль</label>
@@ -66,8 +59,8 @@ LoginForm.propTypes = {
   isAuthenticated: PropTypes.bool,
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
+const mapDispatchToProps = (dispatch) => ({
+  login: (data) => dispatch(authActionLogin(data)),
 });
 
-export default connect(mapStateToProps, { login })(LoginForm);
+export default connect(null, mapDispatchToProps)(LoginForm);

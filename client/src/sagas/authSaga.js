@@ -1,5 +1,5 @@
 import { put } from 'redux-saga/effects';
-import AUTH_TYPES from '../actions/types';
+import { AUTH_TYPES } from '../actions/types';
 import * as restController from '../api/rest/restController';
 import history from '../browserHistory';
 

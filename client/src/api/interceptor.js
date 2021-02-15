@@ -1,6 +1,8 @@
 import axios from 'axios';
-import { baseURL, ACCESS_TOKEN } from '../lib/constants/index';
+import CONSTANTS from '../lib/constants/index';
 import history from '../browserHistory';
+
+const { baseURL, ACCESS_TOKEN } = CONSTANTS;
 
 const instance = axios.create({
   baseURL,

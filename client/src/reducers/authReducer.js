@@ -1,5 +1,7 @@
-import AUTH_TYPES from '../actions/types';
+import { AUTH_TYPES } from '../actions/types';
+
 const {
+  AUTH_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_ERROR,
   LOGIN_SUCCESS,
@@ -12,7 +14,7 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  switch (type) {
+  switch (action.type) {
     case AUTH_REQUEST:
       return {
         loading: true,

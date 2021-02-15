@@ -6,8 +6,7 @@ import PropTypes from 'prop-types';
 import styles from './Header.module.sass';
 import logo from '../../assets/logo.png';
 
-const Header = ({ isAuthenticated }) => {
-  console.log(isAuthenticated);
+const Header = (props) => {
   return (
     <div className={styles.headerContainer}>
       <div className={styles.headerLogo}>
@@ -41,7 +40,7 @@ const Header = ({ isAuthenticated }) => {
         </li>
         <li className={styles.navButton}>
           <Link to="/auth">
-            <span>Вход {isAuthenticated}</span>
+            <span>Вход </span>
           </Link>
         </li>
       </ul>
@@ -50,11 +49,7 @@ const Header = ({ isAuthenticated }) => {
 };
 
 Header.propTypes = {
-  isAuthenticated: PropTypes.bool,
+  //
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
-
-export default connect(mapStateToProps)(Header);
+export default connect(null, null)(Header);

@@ -1,4 +1,6 @@
-import { SET_ALERT, REMOVE_ALERT } from '../actions/types';
+import { ALERT_TYPES } from '../actions/types';
+
+const { SET_ALERT, REMOVE_ALERT } = ALERT_TYPES;
 
 const initialState = [
   // {

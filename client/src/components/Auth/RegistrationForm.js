@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import registerSchema from '../../lib/validationSchemas/registerSchema';
-import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
+import registerSchema from '../../lib/validationSchemas/registerSchema';
+import { authActionRegister } from '../../actions/auth';
 import styles from './Auth.module.sass';
 
 const RegistrationForm = ({ register }) => {
@@ -20,9 +20,7 @@ const RegistrationForm = ({ register }) => {
           confirmPassword: '',
         }}
         validationSchema={registerSchema}
-        onSubmit={async (values) => {
-          register(values);
-        }}
+        onSubmit={(values) => register(values)}
       >
         {({ values }) => (
           <Form>
@@ -32,7 +30,7 @@ const RegistrationForm = ({ register }) => {
               name="name"
               type="text"
               value={values.name}
-              // just prettier stopper
+              //
             />
             <ErrorMessage
               className={styles.errorContainer}
@@ -46,7 +44,7 @@ const RegistrationForm = ({ register }) => {
               name="email"
               type="email"
               value={values.email}
-              // just prettier stopper
+              //
             />
             <ErrorMessage
               className={styles.errorContainer}
@@ -60,7 +58,7 @@ const RegistrationForm = ({ register }) => {
               name="password"
               type="password"
               value={values.password}
-              // just prettier stopper
+              //
             />
             <ErrorMessage
               className={styles.errorContainer}
@@ -74,7 +72,7 @@ const RegistrationForm = ({ register }) => {
               name="confirmPassword"
               type="password"
               value={values.confirmPassword}
-              // just prettier stopper
+              //
             />
             <ErrorMessage
               className={styles.errorContainer}
@@ -94,4 +92,8 @@ RegistrationForm.propTypes = {
   register: PropTypes.func.isRequired,
 };
 
-export default connect(null, { register })(RegistrationForm);
+const mapDispatchToProps = (dispatch) => ({
+  register: (data) => dispatch(authActionRegister(data)),
+});
+
+export default connect(null, mapDispatchToProps)(RegistrationForm);

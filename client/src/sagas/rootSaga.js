@@ -1,5 +1,5 @@
 import { takeLatest, takeLeading, takeEvery } from 'redux-saga/effects';
-import AUTH_TYPES from '../actions/types';
+import { AUTH_TYPES } from '../actions/types';
 import { loginSaga, registerSaga } from './authSaga';
 
 function* rootSaga() {

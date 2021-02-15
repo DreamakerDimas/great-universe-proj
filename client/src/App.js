@@ -17,15 +17,10 @@ import store from './store';
 import { getUser } from './actions/auth';
 import Alert from './components/Alert';
 
-if (localStorage.token) {
-  setAuthToken(localStorage.token); // Need to Fix: Not work after second page reload
-  console.log(localStorage.token);
-}
-
 function App() {
-  useEffect(() => {
-    store.dispatch(getUser());
-  }, []);
+  // useEffect(() => {
+  //   store.dispatch(getUser());
+  // }, []);
 
   return (
     <Provider store={store}>

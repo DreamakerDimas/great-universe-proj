@@ -1,10 +1,13 @@
 const express = require('express');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const config = require('config');
-
 const router = express.Router();
-const User = require('../../models/User');
+
+const checkToken = require('../../middleware/checkToken');
+const { getUser } = require('../../controllers/userController');
+
+// @route   GET api/users/getUser
+// @desk    Get user by ID in token
+// @access  Public
+router.get('/getUser', checkToken, getUser);
 
 // user update, etc...
 

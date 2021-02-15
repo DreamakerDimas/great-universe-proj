@@ -8,16 +8,14 @@ module.exports = (req, res, next) => {
         id: req.body.id,
       },
     };
+    const secret = config.get('jwtSecret');
 
-    jwt.sign(
-      payload,
-      config.get('jwtSecret'),
-      { expiresIn: '10y' },
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      }
-    );
+    jwt.sign(payload, secret, { expiresIn: '1y' }, (err, token) => {
+      if (err) throw err;
+
+      const data = { token };
+      res.json(data);
+    });
   } catch (err) {
     res.status(401).json({ msg: 'Token generate error' });
   }

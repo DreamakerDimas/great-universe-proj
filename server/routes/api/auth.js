@@ -1,28 +1,19 @@
 const express = require('express');
-
-const userController = require('../../controllers/userController');
-const checkToken = require('../../middleware/checkToken');
-const getAuthToken = require('../../middleware/getAuthToken');
-const config = require('config');
-
-const User = require('../../models/User');
 const router = express.Router();
 
-// @route   GET api/auth/getUser
-// @desk    Get user by checked token
-// @access  Public
-router.get('/getUser', checkToken, userController.getUser);
+const { login, register } = require('../../controllers/authController');
+const getAuthToken = require('../../middleware/getAuthToken');
 
 // @route   POST api/auth/login
 // @desk    Authenticate user & get token
 // @access  Public
-router.post('/login', userController.loginUser, getAuthToken);
+router.post('/login', login, getAuthToken);
 
 // @route   POST api/users
-// @desk    Register user
+// @desk    Register user & get token
 // @access  Public
-router.post('/register', userController.registerUser, getAuthToken);
+router.post('/register', register, getAuthToken);
 
-// validation need
+// validation needed
 
 module.exports = router;

@@ -1,7 +1,8 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import React, { useEffect } from 'react';
+import { Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
+import browserHistory from './browserHistory';
 import store from './store';
 import Header from './components/Header/Header';
 import Home from './Pages/Home/Home';
@@ -11,14 +12,13 @@ import Map from './Pages/Map/Map';
 import Auth from './Pages/Auth/AuthPage';
 import Alert from './components/Alert';
 
-function App() {
+function App(props) {
   // useEffect(() => {
   //   store.dispatch(getUser());
   // }, []);
-
   return (
     <Provider store={store}>
-      <Router>
+      <Router history={browserHistory}>
         <Header />
         <Alert />
         <Switch>

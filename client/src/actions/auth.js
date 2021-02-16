@@ -6,10 +6,12 @@ import { AUTH_TYPES } from './types';
 //       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
 //   }
 
-export const authActionLogin = (data) => ({
-  type: AUTH_TYPES.LOGIN_REQUEST,
-  data: data,
-});
+export const authActionLogin = (data) => {
+  return {
+    type: AUTH_TYPES.LOGIN_REQUEST,
+    data: data,
+  };
+};
 
 export const authActionRegister = (data) => ({
   type: AUTH_TYPES.REGISTER_REQUEST,

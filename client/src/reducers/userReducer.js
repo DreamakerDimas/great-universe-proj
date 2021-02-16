@@ -1,6 +1,11 @@
 import { USER_TYPES } from '../actions/types';
 
-const { GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_ERROR };
+const {
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+  GET_USER_ERROR,
+  CLEAR_USER,
+} = USER_TYPES;
 
 const initialState = {
   loading: true,
@@ -28,5 +33,9 @@ export default function (state = initialState, action) {
         loading: false,
         error: action.error,
       };
+    case CLEAR_USER:
+      return initialState;
+    default:
+      return state;
   }
 }

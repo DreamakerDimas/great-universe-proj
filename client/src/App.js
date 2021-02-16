@@ -1,20 +1,14 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  useHistory,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import React, { useEffect } from 'react';
-import Header from './components/Header';
-import Home from './Pages/Home';
-import Articles from './Pages/Articles';
-import History from './Pages/History';
-import Map from './Pages/Map';
-import Auth from './Pages/Auth';
-import setAuthToken from './utils/setAuthToken';
 import { Provider } from 'react-redux';
+
 import store from './store';
-import { getUser } from './actions/auth';
+import Header from './components/Header/Header';
+import Home from './Pages/Home/Home';
+import Articles from './Pages/Articles/Articles';
+import History from './Pages/History/History';
+import Map from './Pages/Map/Map';
+import Auth from './Pages/Auth/AuthPage';
 import Alert from './components/Alert';
 
 function App() {

@@ -52,4 +52,12 @@ Header.propTypes = {
   //
 };
 
+const mapStateToProps = () => {
+  //
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  getUser: //
+});
+
 export default connect(null, null)(Header);

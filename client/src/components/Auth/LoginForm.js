@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import PropTypes from 'prop-types';
@@ -7,7 +8,12 @@ import loginSchema from '../../lib/validationSchemas/loginSchema';
 import { authActionLogin } from '../../actions/auth';
 import styles from './Auth.module.sass';
 
-const LoginForm = ({ login }) => {
+const LoginForm = ({ login, history }) => {
+  const submitHandler = (values) => {
+    const data = { values, history };
+    login(data);
+  };
+
   return (
     <div className={styles.formContainer}>
       <h2>Вход в аккаунт</h2>
@@ -15,7 +21,7 @@ const LoginForm = ({ login }) => {
       <Formik
         initialValues={{ email: '', password: '' }}
         validationSchema={loginSchema}
-        onSubmit={(values) => login(values)}
+        onSubmit={(values) => submitHandler(values)}
       >
         {({ values }) => (
           <Form>
@@ -63,4 +69,4 @@ const mapDispatchToProps = (dispatch) => ({
   login: (data) => dispatch(authActionLogin(data)),
 });
 
-export default connect(null, mapDispatchToProps)(LoginForm);
+export default withRouter(connect(null, mapDispatchToProps)(LoginForm));

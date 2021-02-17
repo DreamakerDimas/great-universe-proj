@@ -1,6 +1,5 @@
 import axios from 'axios';
 import CONSTANTS from '../lib/constants/index';
-import history from '../browserHistory';
 
 const { baseURL, ACCESS_TOKEN } = CONSTANTS;
 
@@ -26,10 +25,7 @@ instance.interceptors.response.use(
     }
     return response;
   },
-  (err) => {
-    const pathname = history.location.pathname;
-    console.log(pathname, err);
-  }
+  (err) => {}
 );
 
 export default instance;

@@ -1,26 +1,27 @@
 import { put } from 'redux-saga/effects';
-import { AUTH_TYPES } from '../actions/types';
+import { AUTH_TYPES, USER_TYPES } from '../actions/types';
 import * as restController from '../api/rest/restController';
-import history from '../browserHistory';
 
 export function* loginSaga(action) {
   yield put({ type: AUTH_TYPES.AUTH_REQUEST });
   try {
-    yield restController.login(action.data);
+    yield restController.login(action.data.values);
     yield put({ type: AUTH_TYPES.LOGIN_SUCCESS });
-    history.push('/');
+    action.data.history.push('/');
+    yield put({ type: USER_TYPES.GET_USER });
   } catch (err) {
-    yield put({ type: AUTH_TYPES.LOGIN_ERROR });
+    yield put({ type: AUTH_TYPES.LOGIN_ERROR, error: err });
   }
 }
 
 export function* registerSaga(action) {
   yield put({ type: AUTH_TYPES.AUTH_REQUEST });
   try {
-    yield restController.register(action.data);
-    history.push('/');
+    yield restController.register(action.data.values);
     yield put({ type: AUTH_TYPES.REGISTER_SUCCESS });
+    action.data.history.push('/');
+    yield put({ type: USER_TYPES.GET_USER });
   } catch (err) {
-    yield put({ type: AUTH_TYPES.REGISTER_ERROR });
+    yield put({ type: AUTH_TYPES.REGISTER_ERROR, error: err });
   }
 }

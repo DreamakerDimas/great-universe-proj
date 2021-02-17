@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import PropTypes from 'prop-types';
@@ -7,7 +8,12 @@ import registerSchema from '../../lib/validationSchemas/registerSchema';
 import { authActionRegister } from '../../actions/auth';
 import styles from './Auth.module.sass';
 
-const RegistrationForm = ({ register }) => {
+const RegistrationForm = ({ register, history }) => {
+  const submitHandler = (values) => {
+    const data = { values, history };
+    register(data);
+  };
+
   return (
     <div className={styles.formContainer}>
       <h2>Регистрация аккаунта</h2>
@@ -20,7 +26,7 @@ const RegistrationForm = ({ register }) => {
           confirmPassword: '',
         }}
         validationSchema={registerSchema}
-        onSubmit={(values) => register(values)}
+        onSubmit={(values) => submitHandler(values)}
       >
         {({ values }) => (
           <Form>
@@ -96,4 +102,4 @@ const mapDispatchToProps = (dispatch) => ({
   register: (data) => dispatch(authActionRegister(data)),
 });
 
-export default connect(null, mapDispatchToProps)(RegistrationForm);
+export default withRouter(connect(null, mapDispatchToProps)(RegistrationForm));

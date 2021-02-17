@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import browserHistory from './browserHistory';
 import store from './store';
 import Header from './components/Header/Header';
 import Home from './Pages/Home/Home';
@@ -18,7 +17,7 @@ function App(props) {
   // }, []);
   return (
     <Provider store={store}>
-      <Router history={browserHistory}>
+      <BrowserRouter>
         <Header />
         <Alert />
         <Switch>
@@ -28,7 +27,7 @@ function App(props) {
           <Route exact path="/map" component={Map} />
           <Route exact path="/auth" component={Auth} />
         </Switch>
-      </Router>
+      </BrowserRouter>
     </Provider>
   );
 }

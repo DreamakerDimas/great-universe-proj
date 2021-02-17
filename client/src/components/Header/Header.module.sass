@@ -1,4 +1,5 @@
 .headerContainer
+    z-index: 10
     max-height: 280px
     display: flex
     flex-direction: row
@@ -10,6 +11,7 @@
         align-items: stretch
 
 .headerLogo
+    box-sizing: border-box
     margin-left: 20px
     display: flex
     justify-content: center
@@ -28,15 +30,16 @@
         width: 100%
 
 .navContainer
-    margin-left: 50px
+    width: 100%
+    align-self: stretch
+    margin: 0
     display: flex
     flex-direction: row
-    justify-content: space-around
+    justify-content: flex-end
     align-items: center
-    padding: 5px 0
     @media screen and (max-width: 780px)
         flex-direction: column
-        margin: 0
+        padding: 0
         .navButton
             margin: 5px
             padding: 0
@@ -48,6 +51,7 @@
     a
         text-decoration: none
     span
+        user-select: none
         color: #b6d1eb
         font-size: 20px
         font-weight: 500

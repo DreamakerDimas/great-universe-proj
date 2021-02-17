@@ -46,15 +46,16 @@ const Header = ({ getUser, userData, error, loading, logout }) => {
             <span>Карта</span>
           </Link>
         </li>
-        <li className={styles.navButton}>
-          {userData ? (
-            <UserMenu userData={userData} logout={logout} />
-          ) : (
+
+        {userData ? (
+          <UserMenu userData={userData} logout={logout} />
+        ) : (
+          <li className={styles.navButton}>
             <Link to="/auth">
               <span>Авторизация</span>
             </Link>
-          )}
-        </li>
+          </li>
+        )}
       </ul>
     </div>
   );

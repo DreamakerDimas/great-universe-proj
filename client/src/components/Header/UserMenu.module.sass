@@ -1,0 +1,60 @@
+.userMenuContainer
+    align-self: stretch
+    box-sizing: border-box
+    display: flex
+    flex-direction: row
+    justify-content: flex-start
+    box-sizing: border-box
+    border-left: 1px solid #b6d1eb
+    list-style-type: none
+    margin-left: 30px 
+    &>div
+        padding: 0 50px 0 20px
+        width: 100%
+        display: flex
+        justify-content: flex-start
+        align-items: center
+        span
+            user-select: none
+            margin: 5px
+            color: #b6d1eb
+            font-size: 18px
+            font-weight: 500
+        &:hover
+            .userName
+                color: #457ce0
+                cursor: default
+
+.userMenu
+    box-sizing: border-box
+    position: absolute
+    border-left: 1px solid #b6d1eb
+    border-right: 1px solid #b6d1eb
+    background-color: #0d4b9b
+    margin-top: 68px
+    margin-left: -1px
+    list-style-type: none
+    display: flex
+    flex-direction: column
+    align-items: stretch
+    padding: 0
+    animation-name: drop
+    animation-duration: 0.2s
+    animation-timing-function: ease-out
+    li
+        text-align: center
+        padding: 5px 15px
+        padding-right: 16px 
+        margin-top: 5px 
+        user-select: none
+        color: #b6d1eb
+        &:hover
+            color: #457ce0
+
+@keyframes drop
+    0%
+        opacity: 0
+        transform: translateY(20px)        
+    100%
+        opacity: 1
+        transform: translateY(0)  

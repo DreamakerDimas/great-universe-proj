@@ -25,14 +25,14 @@ const LoginForm = ({ login, history }) => {
         validationSchema={loginSchema}
         onSubmit={submitHandler}
       >
-        {({ values }) => (
+        {({ values: { email, password } }) => (
           <Form>
             <label htmlFor="email">Почта</label>
             <Field
               id="email"
               name="email"
               type="email"
-              value={values.email}
+              value={email}
               //
             />
             <ErrorMessage
@@ -46,7 +46,7 @@ const LoginForm = ({ login, history }) => {
               id="password"
               name="password"
               type="password"
-              value={values.password}
+              value={password}
             />
             <ErrorMessage
               component="div"

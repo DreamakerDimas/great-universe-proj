@@ -9,6 +9,8 @@ import { authActionLogin } from '../../actions/auth';
 import styles from './Auth.module.sass';
 
 const LoginForm = ({ login, history }) => {
+  const initValues = { email: '', password: '' };
+
   const submitHandler = (values) => {
     const data = { values, history };
     login(data);
@@ -19,9 +21,9 @@ const LoginForm = ({ login, history }) => {
       <h2>Вход в аккаунт</h2>
 
       <Formik
-        initialValues={{ email: '', password: '' }}
+        initialValues={initValues}
         validationSchema={loginSchema}
-        onSubmit={(values) => submitHandler(values)}
+        onSubmit={submitHandler}
       >
         {({ values }) => (
           <Form>

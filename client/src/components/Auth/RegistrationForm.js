@@ -9,6 +9,8 @@ import { authActionRegister } from '../../actions/auth';
 import styles from './Auth.module.sass';
 
 const RegistrationForm = ({ register, history }) => {
+  const initValues = { name: '', email: '', password: '', confirmPassword: '' };
+
   const submitHandler = (values) => {
     const data = { values, history };
     register(data);
@@ -19,23 +21,18 @@ const RegistrationForm = ({ register, history }) => {
       <h2>Регистрация аккаунта</h2>
 
       <Formik
-        initialValues={{
-          name: '',
-          email: '',
-          password: '',
-          confirmPassword: '',
-        }}
+        initialValues={initValues}
         validationSchema={registerSchema}
-        onSubmit={(values) => submitHandler(values)}
+        onSubmit={submitHandler}
       >
-        {({ values }) => (
+        {({ values: { name, email, password, confirmPassword } }) => (
           <Form>
             <label htmlFor="name">Логин</label>
             <Field
               id="name"
               name="name"
               type="text"
-              value={values.name}
+              value={name}
               //
             />
             <ErrorMessage
@@ -49,7 +46,7 @@ const RegistrationForm = ({ register, history }) => {
               id="email"
               name="email"
               type="email"
-              value={values.email}
+              value={email}
               //
             />
             <ErrorMessage
@@ -63,7 +60,7 @@ const RegistrationForm = ({ register, history }) => {
               id="password"
               name="password"
               type="password"
-              value={values.password}
+              value={password}
               //
             />
             <ErrorMessage
@@ -77,7 +74,7 @@ const RegistrationForm = ({ register, history }) => {
               id="confirmPassword"
               name="confirmPassword"
               type="password"
-              value={values.confirmPassword}
+              value={confirmPassword}
               //
             />
             <ErrorMessage

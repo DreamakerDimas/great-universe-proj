@@ -12,22 +12,26 @@
 
 .headerLogo
     box-sizing: border-box
-    margin-left: 20px
     display: flex
     justify-content: center
     align-items: center
     background-color: #b6d1eb
-    padding: 0 25px
+    padding: 0 20px 0 10px
+    clip-path: polygon(0 0, 95% 0, 100% 25%, 100% 75%, 95% 100%, 0 100%, 0 85%, 0 10%)
+    transition: clip-path 0.2s, background-color 0.2s
     @media screen and (max-width: 780px)
+        clip-path: polygon(3% 0, 97% 0, 100% 25%, 100% 75%, 97% 100%, 3% 100%, 0 75%, 0 25%)
         margin: 5px
-        border-radius: 10px
-
-.logoContainer
-    width: 295px
-    height: 68px
-    object-fit: cover
-    img
-        width: 100%
+    @media screen and (max-width: 600px)
+        clip-path: polygon(5% 0, 95% 0, 100% 25%, 100% 75%, 95% 100%, 5% 100%, 0 75%, 0 25%)
+    &:hover
+        background-color: #91bae0
+    .logoContainer
+        width: 295px
+        height: 68px
+        object-fit: cover
+        img
+            width: 100%
 
 .navContainer
     width: 100%

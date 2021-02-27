@@ -6,60 +6,61 @@ const pngPath = process.env.PUBLIC_URL + '/map/png/Milky_Way_Longitude.png';
 const grabIconPath = process.env.PUBLIC_URL + '/icons/svg/grab-icon.svg';
 const cursorIconPath = process.env.PUBLIC_URL + '/icons/svg/cursor-icon.svg';
 
-const mapMouseModes = { SELECT: 'default', DRAG: 'grab' };
+const mapMouseModes = { SELECT: 'default', DRAG: 'grab', DRAG_ACTIVE: '' };
 
 const Map = () => {
+  // --- Modes --- //
   const [mouseMode, setMouseMode] = useState(mapMouseModes.SELECT);
 
-  const [mouseDown, setMouseDown] = useState(false);
+  // mode setters
+  const toDragMode = () => {
+    setMouseMode(mapMouseModes.DRAG);
+  };
+  const toSelectMode = () => {
+    setMouseMode(mapMouseModes.SELECT);
+  };
 
+  const [mouseDown, setMouseDown] = useState(false);
+  // --- Modes ends --- //
+
+  // --- Map interaction controller --- //
   const [zoom, setZoom] = useState(1.1);
 
-  const [width, setWidth] = useState(Math.trunc(zoom * window.innerWidth));
-  const [zoomMultiplier, setZoomMultiplier] = useState(1);
+  const getWidth = () => Math.trunc(zoom * window.innerWidth);
+  const [width, setWidth] = useState(getWidth());
+  const [currentZoomMultiplier, setCurrentZoomMultiplier] = useState(1);
 
-  const [mapPosition, setMapPosition] = useState([0, 0]);
-  const [borderValues, setBorderValues] = useState({
+  const [mapPosition, setMapPosition] = useState({ top: 0, left: 0 });
+
+  const getBoundaries = () => ({
     top: window.innerHeight - width,
     left: window.innerWidth - width + 10,
     zero: 0,
   });
+  const [boundaryValues, setBoundaryValues] = useState(getBoundaries());
 
-  const setPosition = () => {
-    setMapPosition((prevPosition) => {
-      const x =
-        prevPosition[1] * zoomMultiplier -
-        (window.innerWidth * zoomMultiplier - window.innerWidth) / 2;
-      const y =
-        prevPosition[0] * zoomMultiplier -
-        (window.innerHeight * zoomMultiplier - window.innerHeight) / 2;
-      return [y, x];
-    });
-  };
-
-  const moveHandler = (e) => {
-    if (!mouseDown) return;
-    const newMapPosition = [
-      mapPosition[0] + e.movementY,
-      mapPosition[1] + e.movementX,
-    ];
+  // check new position and change if beyond boundaries
+  const getCheckedPosition = (top, left) => {
     // x; if newPos - and < border
-    if (newMapPosition[1] < 0 && newMapPosition[1] < borderValues.left)
-      newMapPosition[1] = borderValues.left;
-
+    if (left < 0 && left < boundaryValues.left) left = boundaryValues.left;
     // y; if newPos - and < border
-    if (newMapPosition[0] < 0 && newMapPosition[0] < borderValues.top)
-      newMapPosition[0] = borderValues.top;
-
-    // y; if newPos +
-    if (newMapPosition[0] > 0) newMapPosition[0] = borderValues.zero;
+    if (top < 0 && top < boundaryValues.top) top = boundaryValues.top;
 
     // x; if newPos +
-    if (newMapPosition[1] > 0) newMapPosition[1] = borderValues.zero;
+    if (left > 0) left = boundaryValues.zero;
+    // y; if newPos +
+    if (top > 0) top = boundaryValues.zero;
 
-    console.log('w-ow', width - e.currentTarget.offsetWidth);
-    console.log('x', mapPosition[1]);
-    setMapPosition(newMapPosition);
+    return { top, left };
+  };
+
+  // Mouse handlers
+  const moveHandler = (e) => {
+    if (!mouseDown) return;
+    let top = mapPosition.top + e.movementY;
+    let left = mapPosition.left + e.movementX;
+
+    setMapPosition(getCheckedPosition(top, left));
   };
 
   const mouseDownHandler = (e) => {
@@ -87,41 +88,44 @@ const Map = () => {
     });
   };
 
-  // mode setters
-  const toDragMode = () => {
-    setMouseMode(mapMouseModes.DRAG);
+  const reCalcPosition = () => {
+    setMapPosition((prevPosition) => {
+      const top =
+        prevPosition.top * currentZoomMultiplier -
+        (window.innerHeight * currentZoomMultiplier - window.innerHeight) / 2;
+      const left =
+        prevPosition.left * currentZoomMultiplier -
+        (window.innerWidth * currentZoomMultiplier - window.innerWidth) / 2;
+      return getCheckedPosition(Math.trunc(top), Math.trunc(left));
+    });
   };
-  const toSelectMode = () => {
-    setMouseMode(mapMouseModes.SELECT);
-  };
-
-  // styles setters
-  const imagesStyle = {
-    width: `${width}px`,
-    top: mapPosition[0],
-    left: mapPosition[1],
-    transition: 'width 0.1s, top 0.1s, left 0.1s',
-  };
-  const mouseStyle = { cursor: mouseMode };
-
-  useEffect(() => {}, [mouseDown, mapPosition]);
 
   useEffect(() => {
     setWidth((prevWidth) => {
-      const newWidth = Math.trunc(zoom * window.innerWidth);
-      setZoomMultiplier(newWidth / prevWidth);
+      const newWidth = getWidth();
+      // set multiplier for reCalc position
+      setCurrentZoomMultiplier(newWidth / prevWidth);
       return newWidth;
     });
   }, [zoom]);
 
   useEffect(() => {
-    setPosition();
-    setBorderValues({
-      top: window.innerHeight - width,
-      left: window.innerWidth - width + 10,
-      zero: 0,
-    });
+    setBoundaryValues(getBoundaries());
   }, [width]);
+
+  useEffect(() => {
+    reCalcPosition();
+  }, [boundaryValues]);
+
+  // styles setters
+  const imagesStyle = {
+    width: `${width}px`,
+    top: mapPosition.top,
+    left: mapPosition.left,
+    transition: 'width 0.1s, top 0.1s, left 0.1s',
+  };
+  const mouseStyle = { cursor: mouseMode };
+
   return (
     <>
       <div className={styles.mapContainer} style={mouseStyle}>

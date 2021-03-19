@@ -6,47 +6,43 @@ import styles from './MapContainer.module.sass';
 
 const { DRAG, SELECT } = MAP_MOUSE_MODES;
 
+const getWidth = (zoomValue) => Math.trunc(zoomValue * window.innerWidth);
+
+// check new position and change if beyond boundaries
+const getCheckedPosition = (top, left, boundaryValues) => {
+  // x; if newPos - and < border
+  if (left < 0 && left < boundaryValues.left) left = boundaryValues.left;
+  // y; if newPos - and < border
+  if (top < 0 && top < boundaryValues.top) top = boundaryValues.top;
+
+  // x; if newPos +
+  if (left > 0) left = boundaryValues.zero;
+  // y; if newPos +
+  if (top > 0) top = boundaryValues.zero;
+
+  return { top, left };
+};
+
+const getBoundaries = (width) => ({
+  top: window.innerHeight - width,
+  left: window.innerWidth - width + 10,
+  zero: 0,
+});
+
 const MapContainer = () => {
   // --- Modes --- //
   const [mouseMode, setMouseMode] = useState(SELECT);
   const [mouseDown, setMouseDown] = useState(false);
-  // mode setters
-  const toDragMode = () => {
-    setMouseMode(DRAG);
-  };
-  const toSelectMode = () => {
-    setMouseMode(SELECT);
-  };
 
-  // --- Map interaction controller --- //
-  const [zoom, setZoom] = useState(1.1);
-  const getWidth = () => Math.trunc(zoom * window.innerWidth);
-  const [width, setWidth] = useState(() => getWidth());
-  const [currentZoomMultiplier, setCurrentZoomMultiplier] = useState(1);
+  const [zoom, setZoom] = useState(1.1); // map zoom value
+  const [width, setWidth] = useState(() => getWidth(zoom)); // map size
+  const [currentZoomMultiplier, setCurrentZoomMultiplier] = useState(1); // For correct centering while zoom happens
 
   const [mapPosition, setMapPosition] = useState({ top: 0, left: 0 });
 
-  const getBoundaries = () => ({
-    top: window.innerHeight - width,
-    left: window.innerWidth - width + 10,
-    zero: 0,
-  });
-  const [boundaryValues, setBoundaryValues] = useState(getBoundaries());
-
-  // check new position and change if beyond boundaries
-  const getCheckedPosition = (top, left) => {
-    // x; if newPos - and < border
-    if (left < 0 && left < boundaryValues.left) left = boundaryValues.left;
-    // y; if newPos - and < border
-    if (top < 0 && top < boundaryValues.top) top = boundaryValues.top;
-
-    // x; if newPos +
-    if (left > 0) left = boundaryValues.zero;
-    // y; if newPos +
-    if (top > 0) top = boundaryValues.zero;
-
-    return { top, left };
-  };
+  const [boundaryValues, setBoundaryValues] = useState(() =>
+    getBoundaries(width)
+  );
 
   // Mouse handlers
   const moveHandler = (e) => {
@@ -54,32 +50,7 @@ const MapContainer = () => {
     let top = mapPosition.top + e.movementY;
     let left = mapPosition.left + e.movementX;
 
-    setMapPosition(getCheckedPosition(top, left));
-  };
-
-  const mouseDownHandler = (e) => {
-    console.log('mouseDown', mouseDown);
-    if (mouseMode !== DRAG) return;
-    setMouseDown(true);
-  };
-
-  const mouseUpHandler = (e) => {
-    console.log('mouseUp');
-    setMouseDown(false);
-  };
-
-  // zoom controllers
-  const zoomInHandler = () => {
-    setZoom((prevZoom) => {
-      if (prevZoom >= 3) return 3;
-      return Number((prevZoom + 0.1).toFixed(1));
-    });
-  };
-  const zoomOutHandler = () => {
-    setZoom((prevZoom) => {
-      if (prevZoom <= 1) return 1;
-      return Number((prevZoom - 0.1).toFixed(1));
-    });
+    setMapPosition(getCheckedPosition(top, left, boundaryValues));
   };
 
   const reCalcPosition = () => {
@@ -90,13 +61,17 @@ const MapContainer = () => {
       const left =
         prevPosition.left * currentZoomMultiplier -
         (window.innerWidth * currentZoomMultiplier - window.innerWidth) / 2;
-      return getCheckedPosition(Math.trunc(top), Math.trunc(left));
+      return getCheckedPosition(
+        Math.trunc(top),
+        Math.trunc(left),
+        boundaryValues
+      );
     });
   };
 
   useEffect(() => {
     setWidth((prevWidth) => {
-      const newWidth = getWidth();
+      const newWidth = getWidth(zoom);
       // set multiplier for reCalc position
       setCurrentZoomMultiplier(newWidth / prevWidth);
       return newWidth;
@@ -104,7 +79,7 @@ const MapContainer = () => {
   }, [zoom]);
 
   useEffect(() => {
-    setBoundaryValues(getBoundaries());
+    setBoundaryValues(getBoundaries(width));
   }, [width]);
 
   useEffect(() => {
@@ -121,16 +96,11 @@ const MapContainer = () => {
 
   return (
     <div className={styles.mapContainer} style={mouseStyle}>
-      <MapInterface
-        zoomInHandler={zoomInHandler}
-        zoomOutHandler={zoomOutHandler}
-        toDragMode={toDragMode}
-        toSelectMode={toSelectMode}
-      />
+      <MapInterface setZoom={setZoom} setMouseMode={setMouseMode} />
 
       <MapImages
-        mouseDownHandler={mouseDownHandler}
-        mouseUpHandler={mouseUpHandler}
+        mouseMode={mouseMode}
+        setMouseDown={setMouseDown}
         moveHandler={moveHandler}
         imagesStyle={imagesStyle}
       />

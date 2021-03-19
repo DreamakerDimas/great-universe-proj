@@ -1,10 +1,23 @@
 import React from 'react';
-import { MAP_PNG_PATH } from '../../constants';
+import { MAP_MOUSE_MODES, MAP_PNG_PATH } from '../../constants';
 import SVGZones from './SVGZones/SVGZones';
 import styles from './MapImages.module.sass';
 
+const { DRAG } = MAP_MOUSE_MODES;
+
 const MapImages = (props) => {
-  const { mouseDownHandler, mouseUpHandler, moveHandler, imagesStyle } = props;
+  const { mouseMode, setMouseDown, moveHandler, imagesStyle } = props;
+
+  const mouseDownHandler = (e) => {
+    console.log('mouseDown');
+    if (mouseMode !== DRAG) return;
+    setMouseDown(true);
+  };
+
+  const mouseUpHandler = (e) => {
+    console.log('mouseUp');
+    setMouseDown(false);
+  };
 
   return (
     <div

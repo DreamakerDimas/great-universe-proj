@@ -3,31 +3,13 @@ import { MAP_MOUSE_MODES } from '../../constants';
 import MapImages from './MapImages';
 import MapInterface from './MapInterface';
 import styles from './MapContainer.module.sass';
+import {
+  getWidth,
+  getCheckedPosition,
+  getBoundaries,
+} from './functions/mapFunctions';
 
 const { DRAG, SELECT } = MAP_MOUSE_MODES;
-
-const getWidth = (zoomValue) => Math.trunc(zoomValue * window.innerWidth);
-
-// check new position and change if beyond boundaries
-const getCheckedPosition = (top, left, boundaryValues) => {
-  // x; if newPos - and < border
-  if (left < 0 && left < boundaryValues.left) left = boundaryValues.left;
-  // y; if newPos - and < border
-  if (top < 0 && top < boundaryValues.top) top = boundaryValues.top;
-
-  // x; if newPos +
-  if (left > 0) left = boundaryValues.zero;
-  // y; if newPos +
-  if (top > 0) top = boundaryValues.zero;
-
-  return { top, left };
-};
-
-const getBoundaries = (width) => ({
-  top: window.innerHeight - width,
-  left: window.innerWidth - width + 10,
-  zero: 0,
-});
 
 const MapContainer = () => {
   // --- Modes --- //
@@ -47,6 +29,7 @@ const MapContainer = () => {
   // Mouse handlers
   const moveHandler = (e) => {
     if (!mouseDown) return;
+
     let top = mapPosition.top + e.movementY;
     let left = mapPosition.left + e.movementX;
 
@@ -58,9 +41,11 @@ const MapContainer = () => {
       const top =
         prevPosition.top * currentZoomMultiplier -
         (window.innerHeight * currentZoomMultiplier - window.innerHeight) / 2;
+
       const left =
         prevPosition.left * currentZoomMultiplier -
         (window.innerWidth * currentZoomMultiplier - window.innerWidth) / 2;
+
       return getCheckedPosition(
         Math.trunc(top),
         Math.trunc(left),
@@ -69,10 +54,11 @@ const MapContainer = () => {
     });
   };
 
+  // set new multiplier for new position
   useEffect(() => {
     setWidth((prevWidth) => {
       const newWidth = getWidth(zoom);
-      // set multiplier for reCalc position
+
       setCurrentZoomMultiplier(newWidth / prevWidth);
       return newWidth;
     });

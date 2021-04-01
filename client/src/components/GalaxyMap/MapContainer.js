@@ -9,7 +9,7 @@ import {
   getBoundaries,
 } from './functions/mapFunctions';
 
-const { DRAG, SELECT } = MAP_MOUSE_MODES;
+const { SELECT, DRAG, DRAG_ACTIVE } = MAP_MOUSE_MODES;
 
 const MapContainer = () => {
   // --- Modes --- //
@@ -76,12 +76,18 @@ const MapContainer = () => {
   }, [boundaryValues]);
 
   // styles setters
+  const cursorHandler = useCallback(() => {
+    if (mouseMode === DRAG && mouseDown) return DRAG_ACTIVE;
+    if (mouseMode === DRAG) return DRAG;
+    return SELECT;
+  }, [mouseMode, mouseDown]);
+
   const imagesStyle = {
     width: `${width}px`,
     top: mapPosition.top,
     left: mapPosition.left,
   };
-  const mouseStyle = { cursor: mouseMode };
+  const mouseStyle = { cursor: cursorHandler() };
 
   return (
     <div className={styles.mapContainer} style={mouseStyle}>

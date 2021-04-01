@@ -9,16 +9,24 @@ const { DRAG } = MAP_MOUSE_MODES;
 const MapImages = (props) => {
   const { mouseMode, setMouseDown, moveHandler, imagesStyle, width } = props;
 
-  const mouseDownHandler = (e) => {
-    console.log('mouseDown');
-    if (mouseMode !== DRAG) return;
-    setMouseDown(true);
-  };
+  const mouseDownHandler = useCallback(
+    (e) => {
+      console.log('mouseDown');
+      if (mouseMode !== DRAG) return;
+      setMouseDown(true);
+    },
+    [mouseMode]
+  );
 
-  const mouseUpHandler = (e) => {
+  const mouseUpHandler = useCallback((e) => {
     console.log('mouseUp');
     setMouseDown(false);
-  };
+  }, []);
+
+  const mouseLeaveHandler = useCallback((e) => {
+    console.log('mouseLeave');
+    setMouseDown(false);
+  }, []);
 
   return (
     <div
@@ -26,6 +34,7 @@ const MapImages = (props) => {
       onMouseDown={mouseDownHandler}
       onMouseMove={moveHandler}
       onMouseUp={mouseUpHandler}
+      onMouseLeave={mouseLeaveHandler}
     >
       <SlicedMap style={imagesStyle} width={width} />
       <SVGZones style={imagesStyle} />

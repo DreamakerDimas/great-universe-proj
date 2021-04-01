@@ -88,5 +88,5 @@ export const MOUSE_ICONS = {
 export const MAP_MOUSE_MODES = {
   SELECT: 'default',
   DRAG: 'grab',
-  DRAG_ACTIVE: '',
+  DRAG_ACTIVE: 'grabbing',
 };

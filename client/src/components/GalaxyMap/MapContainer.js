@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { MAP_MOUSE_MODES, MAP_PNG_ARR } from '../../constants';
+import React, { useState, useEffect, useCallback } from 'react';
+import { MAP_MOUSE_MODES } from '../../constants';
 import MapImages from './MapImages';
 import MapInterface from './MapInterface';
 import styles from './MapContainer.module.sass';
@@ -16,7 +16,7 @@ const MapContainer = () => {
   const [mouseMode, setMouseMode] = useState(SELECT);
   const [mouseDown, setMouseDown] = useState(false);
 
-  const [zoom, setZoom] = useState(1.1); // map zoom value
+  const [zoom, setZoom] = useState(1); // map zoom value
   const [width, setWidth] = useState(() => getWidth(zoom)); // map size
   const [currentZoomMultiplier, setCurrentZoomMultiplier] = useState(1); // For correct centering while zoom happens
 
@@ -27,16 +27,19 @@ const MapContainer = () => {
   );
 
   // Mouse handlers
-  const moveHandler = (e) => {
-    if (!mouseDown) return;
+  const moveHandler = useCallback(
+    (e) => {
+      if (!mouseDown) return;
 
-    let top = mapPosition.top + e.movementY;
-    let left = mapPosition.left + e.movementX;
+      let top = mapPosition.top + e.movementY;
+      let left = mapPosition.left + e.movementX;
 
-    setMapPosition(getCheckedPosition(top, left, boundaryValues));
-  };
+      setMapPosition(getCheckedPosition(top, left, boundaryValues));
+    },
+    [mapPosition, mouseDown]
+  );
 
-  const reCalcPosition = () => {
+  const reCalcPosition = useCallback(() => {
     setMapPosition((prevPosition) => {
       const top =
         prevPosition.top * currentZoomMultiplier -
@@ -52,7 +55,7 @@ const MapContainer = () => {
         boundaryValues
       );
     });
-  };
+  }, [currentZoomMultiplier, boundaryValues]);
 
   // set new multiplier for new position
   useEffect(() => {

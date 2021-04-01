@@ -4,7 +4,7 @@ import { MAP_MOUSE_MODES } from '../../constants';
 import styles from './MapInterface.module.sass';
 
 const { DRAG, SELECT } = MAP_MOUSE_MODES;
-const { GRAB, DEFAULT } = MOUSE_ICONS;
+const { GRAB_ICON, ZOOM_IN_ICON, ZOOM_OUT_ICON, DEFAULT_ICON } = MOUSE_ICONS;
 
 const MapInterface = (props) => {
   const { setMouseMode, setZoom } = props;
@@ -31,13 +31,17 @@ const MapInterface = (props) => {
 
   return (
     <div className={styles.buttonsContainer}>
-      <button onClick={zoomInHandler}>+</button>
-      <button onClick={zoomOutHandler}>-</button>
+      <button onClick={zoomInHandler}>
+        <img src={ZOOM_IN_ICON} />
+      </button>
+      <button onClick={zoomOutHandler}>
+        <img src={ZOOM_OUT_ICON} />
+      </button>
       <button onClick={toDragMode}>
-        <img src={GRAB} />
+        <img src={GRAB_ICON} />
       </button>
       <button onClick={toSelectMode}>
-        <img src={DEFAULT} />
+        <img src={DEFAULT_ICON} />
       </button>
     </div>
   );

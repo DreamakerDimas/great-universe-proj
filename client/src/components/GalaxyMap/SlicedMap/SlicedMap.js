@@ -1,5 +1,5 @@
 import React from 'react';
-import { MAP_PNG_ARR } from '../../../constants';
+import { LOW_SIZE_MAP_PNG, MAP_PNG_ARR } from '../../../constants';
 import styles from './SlicedMap.module.sass';
 
 const SlicedMap = (props) => {
@@ -12,6 +12,12 @@ const SlicedMap = (props) => {
 
   return (
     <div className={styles.imagesContainer} style={props.style}>
+      <img
+        src={LOW_SIZE_MAP_PNG}
+        alt=""
+        className={styles.lowMap}
+        style={props.style}
+      />
       {MAP_PNG_ARR.map((row, i) => (
         <div key={i} className={styles.rowContainer}>
           {row.map((col, j) => (

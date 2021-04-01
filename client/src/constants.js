@@ -81,9 +81,14 @@ export const MAP_PNG_ARR = [
   ],
 ];
 
+export const LOW_SIZE_MAP_PNG =
+  'https://drive.google.com/u/1/uc?id=1EI-n1EUOa1tCMq5SMX6yI0g0JaPKR_2L&export=download';
+
 export const MOUSE_ICONS = {
-  GRAB: process.env.PUBLIC_URL + '/icons/svg/grab-icon.svg',
-  DEFAULT: process.env.PUBLIC_URL + '/icons/svg/cursor-icon.svg',
+  GRAB_ICON: process.env.PUBLIC_URL + '/icons/svg/grab-icon.svg',
+  ZOOM_IN_ICON: process.env.PUBLIC_URL + '/icons/svg/zoom-in.svg',
+  ZOOM_OUT_ICON: process.env.PUBLIC_URL + '/icons/svg/zoom-out.svg',
+  DEFAULT_ICON: process.env.PUBLIC_URL + '/icons/svg/cursor-icon.svg',
 };
 export const MAP_MOUSE_MODES = {
   SELECT: 'default',

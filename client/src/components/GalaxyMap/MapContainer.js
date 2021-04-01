@@ -57,6 +57,19 @@ const MapContainer = () => {
     });
   }, [currentZoomMultiplier, boundaryValues]);
 
+  // change width on resize
+  useEffect(() => {
+    const resizeHandler = () => {
+      setWidth(getWidth(zoom));
+    };
+
+    window.addEventListener('resize', resizeHandler);
+
+    return () => {
+      window.removeEventListener('resize', resizeHandler);
+    };
+  }, []);
+
   // set new multiplier for new position
   useEffect(() => {
     setWidth((prevWidth) => {

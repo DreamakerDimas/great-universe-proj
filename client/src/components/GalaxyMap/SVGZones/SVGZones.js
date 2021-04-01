@@ -36,6 +36,7 @@ const SVGZones = ({ style }) => {
       className={styles.container}
       src={svgPath}
       beforeInjection={beforeInjectionHandler}
+      //onClick={(e) => console.log(e.target.parentNode.getAttribute('name'))}
       style={style}
     ></ReactSVG>
   );

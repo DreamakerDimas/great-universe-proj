@@ -1,5 +1,6 @@
 import React from 'react';
 import { MAP_MOUSE_MODES, MAP_PNG_PATH } from '../../constants';
+import SlicedMap from './SlicedMap/SlicedMap';
 import SVGZones from './SVGZones/SVGZones';
 import styles from './MapImages.module.sass';
 
@@ -26,7 +27,7 @@ const MapImages = (props) => {
       onMouseMove={moveHandler}
       onMouseUp={mouseUpHandler}
     >
-      <img src={MAP_PNG_PATH} style={imagesStyle} />
+      <SlicedMap />
       <SVGZones style={imagesStyle} />
     </div>
   );

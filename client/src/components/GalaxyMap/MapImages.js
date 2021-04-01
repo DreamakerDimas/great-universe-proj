@@ -7,7 +7,7 @@ import styles from './MapImages.module.sass';
 const { DRAG } = MAP_MOUSE_MODES;
 
 const MapImages = (props) => {
-  const { mouseMode, setMouseDown, moveHandler, imagesStyle } = props;
+  const { mouseMode, setMouseDown, moveHandler, imagesStyle, width } = props;
 
   const mouseDownHandler = (e) => {
     console.log('mouseDown');
@@ -27,7 +27,7 @@ const MapImages = (props) => {
       onMouseMove={moveHandler}
       onMouseUp={mouseUpHandler}
     >
-      <SlicedMap />
+      <SlicedMap style={imagesStyle} width={width} />
       <SVGZones style={imagesStyle} />
     </div>
   );

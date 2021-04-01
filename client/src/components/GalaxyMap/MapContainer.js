@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MAP_MOUSE_MODES } from '../../constants';
+import { MAP_MOUSE_MODES, MAP_PNG_ARR } from '../../constants';
 import MapImages from './MapImages';
 import MapInterface from './MapInterface';
 import styles from './MapContainer.module.sass';
@@ -89,6 +89,7 @@ const MapContainer = () => {
         setMouseDown={setMouseDown}
         moveHandler={moveHandler}
         imagesStyle={imagesStyle}
+        width={width}
       />
     </div>
   );

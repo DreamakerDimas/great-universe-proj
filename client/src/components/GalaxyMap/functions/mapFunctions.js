@@ -1,6 +1,13 @@
+import { MAP_PNG_ARR } from '../../../constants';
+
 // get new width
-export const getWidth = (zoomValue) =>
-  Math.trunc(zoomValue * window.innerWidth);
+export const getWidth = (zoomValue) => {
+  let newWidth = Math.trunc(zoomValue * window.innerWidth);
+  while (newWidth % MAP_PNG_ARR.length) {
+    newWidth--;
+  }
+  return newWidth;
+};
 
 // check new position and change if beyond boundaries
 export const getCheckedPosition = (top, left, boundaryValues) => {

@@ -1,13 +1,21 @@
 import React from 'react';
 import { MAP_PNG_ARR } from '../../../constants';
+import styles from './SlicedMap.module.sass';
 
-const SlicedMap = () => {
+const SlicedMap = (props) => {
+  const oneImageSize = Math.floor(props.width / MAP_PNG_ARR.length);
+
+  const imageStyle = {
+    width: oneImageSize + 'px',
+    height: oneImageSize + 'px',
+  };
+
   return (
-    <div className="map_images_container">
+    <div className={styles.imagesContainer} style={props.style}>
       {MAP_PNG_ARR.map((row, i) => (
-        <div key={i} className="map_row">
+        <div key={i} className={styles.rowContainer}>
           {row.map((col, j) => (
-            <img key={j} src={col} alt="map_polygon" />
+            <img key={j} src={col} alt="map_polygon" style={imageStyle} />
           ))}
         </div>
       ))}

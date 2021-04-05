@@ -19,8 +19,19 @@ export class UsersService {
 
   async create(user: CreateUserDto): Promise<UserEntity | null> {
     // pass hash
-    const newUser = await this.userRepository.save(user);
-    console.log(newUser);
-    return newUser;
+    return this.userRepository.save(user);
   }
+  
+  async findOneById(id: string): Promise<UserEntity | null> {
+    return this.userRepository.findOne({ id });
+  }
+  
+  async find(user: FindUserDTO): Promise<UserEntity[] | null> {
+    return this.userRepository.find(user);
+  }
+  
+  async updateById(id: string, updateData: UpdateUserDTO): Promise<UserEntity | null> {
+    await this.userRepository.findOneAndUpdate({ id }, updateData);
+    return this.findOneById(id);
+  } 
 }

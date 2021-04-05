@@ -1,5 +1,0 @@
-{
-  "port": 5000,
-  "jwtSecret": "dimas great universe Coloss",
-  "mongoURI": "mongodb+srv://DreamakerDimas:12354323d@dimascluster.75cjq.azure.mongodb.net/universedb?retryWrites=true&w=majority"
-}

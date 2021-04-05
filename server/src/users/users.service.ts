@@ -34,4 +34,9 @@ export class UsersService {
     await this.userRepository.findOneAndUpdate({ id }, updateData);
     return this.findOneById(id);
   } 
+  
+  async remove(id: string): Boolean {
+    await this.userRepository.delete(id);
+    return true;
+  } 
 }

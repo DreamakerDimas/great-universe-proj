@@ -21,12 +21,16 @@ export class UsersService {
 
   async create(user: CreateUserDto): Promise<UserEntity | null> {
     // pass hash
-    return this.userRepository.save(user);
+    try {
+      return this.userRepository.save(user);
+    } catch (error) {
+      throw error;
+    }
   }
 
   async findOneById(id: string): Promise<UserEntity | null> {
     return this.userRepository.findOneOrFail(id);
-  } // find with password
+  }
 
   async find(user: FindUserDto): Promise<UserEntity[] | null> {
     // add offset + limit + order

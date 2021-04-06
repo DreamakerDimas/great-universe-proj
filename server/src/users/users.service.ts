@@ -49,20 +49,17 @@ export class UsersService {
   ): Promise<UserEntity | null> {
     const user = await this.userRepository.findOneOrFail(id);
 
-    if (!user) {
-      console.error("User didn't found.");
-    }
-
     await this.userRepository.update(id, updateData);
     return await this.userRepository.findOne(id);
   }
 
-  async updatePasswordById() {
-    //
+  async updatePasswordById(id: string, password: string) {
+    const hashPass = hashPassword(password);
+    await this.userRepository.update(id, {password: hashPass})
   }
 
-  async updateRoleById() {
-    //
+  async updateRoleById(id: string, role: UserRoles) {
+    await this.userRepository.update(id, {role})
   }
 
   async remove(id: string): Promise<boolean> {

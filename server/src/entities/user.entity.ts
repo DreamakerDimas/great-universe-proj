@@ -18,7 +18,7 @@ export class UserEntity {
 
   @Column() password: string;
 
-  @Column({ type: 'enum', enum: UserRoles, default: UserRoles.user })
+  @Column({ type: 'enum', enum: UserRoles, default: () => UserRoles.user })
   role: UserRoles;
 
   @Column() avatar: string;

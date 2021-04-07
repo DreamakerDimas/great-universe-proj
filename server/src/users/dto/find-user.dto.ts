@@ -3,11 +3,11 @@ import { UserRoles } from 'src/enums/user-roles.enum';
 
 export class FindUserDto {
   @IsOptional()
-  readonly login: string;
+  readonly login?: string;
 
   @IsOptional()
-  readonly email: string;
+  readonly email?: string;
 
   @IsOptional()
-  readonly role: UserRoles;
+  readonly role?: UserRoles;
 }

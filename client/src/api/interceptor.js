@@ -20,7 +20,8 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (response) => {
-    if (response.data.token) {
+    console.log(response.data.access_token);
+    if (response.data.access_token) {
       window.localStorage.setItem(CONSTANTS.ACCESS_TOKEN, response.data.token);
     }
     return response;

@@ -5,9 +5,9 @@ import * as restController from '../api/rest/restController';
 export function* loginSaga(action) {
   yield put({ type: AUTH_TYPES.AUTH_REQUEST });
   try {
-    yield restController.login(action.data.values);
+    const data = yield restController.login(action.data.values);
+    if (data) action.data.history.push('/');
     yield put({ type: AUTH_TYPES.LOGIN_SUCCESS });
-    action.data.history.push('/');
     yield put({ type: USER_TYPES.GET_USER });
   } catch (err) {
     yield put({ type: AUTH_TYPES.LOGIN_ERROR, error: err });
@@ -17,9 +17,9 @@ export function* loginSaga(action) {
 export function* registerSaga(action) {
   yield put({ type: AUTH_TYPES.AUTH_REQUEST });
   try {
-    yield restController.register(action.data.values);
+    const data = yield restController.register(action.data.values);
+    if (data) action.data.history.push('/');
     yield put({ type: AUTH_TYPES.REGISTER_SUCCESS });
-    action.data.history.push('/');
     yield put({ type: USER_TYPES.GET_USER });
   } catch (err) {
     yield put({ type: AUTH_TYPES.REGISTER_ERROR, error: err });

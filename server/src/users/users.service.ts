@@ -16,7 +16,7 @@ export class UsersService {
     readonly userRepository: Repository<UserEntity>,
   ) {
     // this.find({ login: 't', email: 't', role: UserRoles.user });
-    this.updateById('606db33ee1cd287ef339e080', { login: 'new_test1' });
+    // this.updateById('606db33ee1cd287ef339e080', { login: 'new_test1' });
   }
 
   async create(user: CreateUserDto): Promise<UserEntity | null> {
@@ -38,8 +38,8 @@ export class UsersService {
     return result;
   }
 
-  async findOneWithPassword(id: string): Promise<UserEntity | null> {
-    return this.userRepository.findOneOrFail(id);
+  async findOneWithPassword(email: string): Promise<UserEntity | null> {
+    return this.userRepository.findOneOrFail({ email });
   }
 
   async find(user: FindUserDto): Promise<ReturnUserDto[] | null> {

@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { hashPassword } from 'src/auth/auth.functions';
 import { UserEntity } from 'src/entities/user.entity';
+import { UserRoles } from 'src/enums/user-roles.enum';
 import { Like, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FindUserDto } from './dto/find-user.dto';
+import { ReturnUserDto } from './dto/return-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
@@ -12,54 +15,76 @@ export class UsersService {
     @InjectRepository(UserEntity)
     readonly userRepository: Repository<UserEntity>,
   ) {
-    // this.create({
-    //   login: 'test2',
-    //   email: 'test2@test.com',
-    //   password: 'password',
-    // });
+    // this.find({ login: 't', email: 't', role: UserRoles.user });
+    this.updateById('606db33ee1cd287ef339e080', { login: 'new_test1' });
   }
 
   async create(user: CreateUserDto): Promise<UserEntity | null> {
-    // pass hash
-    try {
-      return this.userRepository.save(user);
-    } catch (error) {
-      throw error;
-    }
+    const hashedPass = await hashPassword(user.password);
+    const role = UserRoles.user;
+    const avatar = '';
+    return this.userRepository.save({
+      ...user,
+      password: hashedPass,
+      role,
+      avatar,
+    });
   }
 
-  async findOneById(id: string): Promise<UserEntity | null> {
+  async findOneById(id: string): Promise<ReturnUserDto | null> {
+    const foundUser = await this.userRepository.findOneOrFail(id);
+    const { password, ...result } = foundUser;
+
+    return result;
+  }
+
+  async findOneWithPassword(id: string): Promise<UserEntity | null> {
     return this.userRepository.findOneOrFail(id);
   }
 
-  async find(user: FindUserDto): Promise<UserEntity[] | null> {
+  async find(user: FindUserDto): Promise<ReturnUserDto[] | null> {
     // add offset + limit + order
     const { login, email, role } = user;
     const where = {
-      login: Like(`%${login}%`),
-      email: Like(`%${email}%`),
+      login: { $regex: `${login}`, $options: 'i' },
+      email: { $regex: `${email}`, $options: 'i' },
       role,
     };
-    return this.userRepository.find({ where, order: { createdAt: 'DESC' } }); // count + haveMore
+
+    const [foundedUsers, count] = await this.userRepository.findAndCount({
+      where,
+      order: { createdAt: 'DESC' },
+      skip: 0,
+      take: 10,
+    }); // count + haveMore
+
+    const resultArr = foundedUsers.map((user) => {
+      const { password, ...returnUser } = user;
+      return returnUser;
+    });
+
+    return resultArr;
   }
 
   async updateById(
     id: string,
     updateData: UpdateUserDto,
-  ): Promise<UserEntity | null> {
-    const user = await this.userRepository.findOneOrFail(id);
-
+  ): Promise<ReturnUserDto | null> {
     await this.userRepository.update(id, updateData);
-    return await this.userRepository.findOne(id);
+
+    const user = await this.userRepository.findOne(id);
+
+    const { password, ...result } = user;
+    return result;
   }
 
   async updatePasswordById(id: string, password: string) {
-    const hashPass = hashPassword(password);
-    await this.userRepository.update(id, {password: hashPass})
+    const hashPass = await hashPassword(password);
+    await this.userRepository.update(id, { password: hashPass });
   }
 
   async updateRoleById(id: string, role: UserRoles) {
-    await this.userRepository.update(id, {role})
+    await this.userRepository.update(id, { role });
   }
 
   async remove(id: string): Promise<boolean> {

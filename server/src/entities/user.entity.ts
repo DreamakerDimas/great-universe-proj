@@ -1,5 +1,7 @@
 import { UserRoles } from 'src/enums/user-roles.enum';
 import {
+  AfterInsert,
+  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
@@ -8,7 +10,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'users' })
 export class UserEntity {
   @ObjectIdColumn() id: ObjectID;
 
@@ -16,12 +18,13 @@ export class UserEntity {
 
   @Column({ unique: true }) email: string;
 
-  @Column() password: string;
+  @Column({ select: false }) password: string;
 
-  @Column({ type: 'enum', enum: UserRoles, default: () => UserRoles.user })
+  @Column()
   role: UserRoles;
 
-  @Column() avatar: string;
+  @Column()
+  avatar: string; // this will be url
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

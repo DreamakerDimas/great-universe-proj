@@ -9,9 +9,15 @@ import { authActionRegister } from '../../actions/auth';
 import styles from './Auth.module.sass';
 
 const RegistrationForm = ({ register, history }) => {
-  const initValues = { name: '', email: '', password: '', confirmPassword: '' };
+  const initValues = {
+    login: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  };
 
   const submitHandler = (values) => {
+    console.log(values);
     const data = { values, history };
     register(data);
   };
@@ -25,20 +31,20 @@ const RegistrationForm = ({ register, history }) => {
         validationSchema={registerSchema}
         onSubmit={submitHandler}
       >
-        {({ values: { name, email, password, confirmPassword } }) => (
+        {({ values: { login, email, password, confirmPassword } }) => (
           <Form>
-            <label htmlFor="name">Логин</label>
+            <label htmlFor="login">Логин</label>
             <Field
-              id="name"
-              name="name"
+              id="login"
+              name="login"
               type="text"
-              value={name}
+              value={login}
               //
             />
             <ErrorMessage
               className={styles.errorContainer}
               component="div"
-              name="name"
+              name="login"
             />
 
             <label htmlFor="email">Почта</label>

@@ -26,7 +26,7 @@ const UserMenu = ({ userData, logout }) => {
     <li className={styles.userMenuContainer}>
       <div onClick={showMenuHandler}>
         <div>A</div>
-        <span className={styles.userName}>{userData.name}</span>
+        <span className={styles.userName}>{userData.login}</span>
       </div>
       {isShowMenu && renderMenu()}
     </li>

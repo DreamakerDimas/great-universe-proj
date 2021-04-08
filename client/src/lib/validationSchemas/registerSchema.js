@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import { loginPattern } from '../constants/regexPatterns';
 
 const registerSchema = Yup.object({
-  name: Yup.string()
+  login: Yup.string()
     .required('Обязательное поле')
     .matches(
       loginPattern,

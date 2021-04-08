@@ -18,7 +18,8 @@ export function* loginSaga(action) {
 export function* registerSaga(action) {
   yield put({ type: AUTH_TYPES.REGISTER_REQUEST });
   try {
-    yield restController.register(action.data.values);
+    const { confirmPassword, ...userData } = action.data.values;
+    yield restController.register(userData);
     yield put({ type: AUTH_TYPES.REGISTER_SUCCESS });
     action.data.history.push('/');
     yield put({ type: USER_TYPES.GET_USER });

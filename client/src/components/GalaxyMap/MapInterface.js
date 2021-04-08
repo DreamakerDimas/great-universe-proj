@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { hideZoneData } from '../../actions/map';
 import { MOUSE_ICONS } from '../../constants';
 import { MAP_MOUSE_MODES } from '../../constants';
 import styles from './MapInterface.module.sass';
@@ -7,10 +9,11 @@ const { DRAG, SELECT } = MAP_MOUSE_MODES;
 const { GRAB_ICON, ZOOM_IN_ICON, ZOOM_OUT_ICON, DEFAULT_ICON } = MOUSE_ICONS;
 
 const MapInterface = (props) => {
-  const { setMouseMode, setZoom } = props;
+  const { setMouseMode, setZoom, hideZoneData } = props;
 
   const toDragMode = () => {
     setMouseMode(DRAG);
+    hideZoneData();
   };
   const toSelectMode = () => {
     setMouseMode(SELECT);
@@ -47,4 +50,8 @@ const MapInterface = (props) => {
   );
 };
 
-export default MapInterface;
+const mapDispatchToProps = (dispatch) => ({
+  hideZoneData: () => dispatch(hideZoneData()),
+});
+
+export default connect(null, mapDispatchToProps)(MapInterface);

@@ -3,11 +3,14 @@ import { MAP_MOUSE_MODES, MAP_PNG_PATH } from '../../constants';
 import SlicedMap from './SlicedMap/SlicedMap';
 import SVGZones from './SVGZones/SVGZones';
 import styles from './MapImages.module.sass';
+import { hideZoneData, showZoneData } from '../../actions/map';
+import { connect } from 'react-redux';
 
-const { DRAG } = MAP_MOUSE_MODES;
+const { DRAG, SELECT } = MAP_MOUSE_MODES;
 
 const MapImages = (props) => {
   const { mouseMode, setMouseDown, moveHandler, imagesStyle, width } = props;
+  const { showZoneData, hideZoneData } = props;
 
   const mouseDownHandler = useCallback(
     (e) => {
@@ -28,6 +31,12 @@ const MapImages = (props) => {
     setMouseDown(false);
   }, []);
 
+  const zoneClickHandler = (e) => {
+    if (mouseMode !== SELECT) return;
+    const zoneName = e.target.parentNode.getAttribute('name');
+    showZoneData(zoneName);
+  };
+
   return (
     <div
       className={styles.imagesContainer}
@@ -35,6 +44,7 @@ const MapImages = (props) => {
       onMouseMove={moveHandler}
       onMouseUp={mouseUpHandler}
       onMouseLeave={mouseLeaveHandler}
+      onClick={zoneClickHandler}
     >
       <SlicedMap style={imagesStyle} width={width} />
       <SVGZones style={imagesStyle} />
@@ -42,4 +52,8 @@ const MapImages = (props) => {
   );
 };
 
-export default MapImages;
+const mapDispatchToProps = (dispatch) => ({
+  showZoneData: (zone_name) => dispatch(showZoneData(zone_name)),
+});
+
+export default connect(null, mapDispatchToProps)(MapImages);

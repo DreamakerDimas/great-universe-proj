@@ -8,10 +8,12 @@ import {
   getCheckedPosition,
   getBoundaries,
 } from './functions/mapFunctions';
+import { connect } from 'react-redux';
+import MapData from '../GalaxyMapData/MapData';
 
 const { SELECT, DRAG, DRAG_ACTIVE } = MAP_MOUSE_MODES;
 
-const MapContainer = () => {
+const MapContainer = (props) => {
   // --- Modes --- //
   const [mouseMode, setMouseMode] = useState(SELECT);
   const [mouseDown, setMouseDown] = useState(false);
@@ -113,8 +115,15 @@ const MapContainer = () => {
         imagesStyle={imagesStyle}
         width={width}
       />
+
+      {props.isShowed && <MapData />}
     </div>
   );
 };
 
-export default MapContainer;
+const mapStateToProps = (state) => {
+  const { isShowed } = state.mapStore;
+  return { isShowed };
+};
+
+export default connect(mapStateToProps, null)(MapContainer);

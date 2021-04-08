@@ -18,15 +18,14 @@ instance.interceptors.request.use(
   (err) => Promise.reject(err)
 );
 
-instance.interceptors.response.use(
-  (response) => {
-    console.log(response.data.access_token);
-    if (response.data.access_token) {
-      window.localStorage.setItem(CONSTANTS.ACCESS_TOKEN, response.data.token);
-    }
-    return response;
-  },
-  (err) => {}
-);
+instance.interceptors.response.use((response) => {
+  if (response.data.access_token) {
+    window.localStorage.setItem(
+      CONSTANTS.ACCESS_TOKEN,
+      response.data.access_token
+    );
+  }
+  return response;
+});
 
 export default instance;

@@ -6,8 +6,8 @@ import { loginSaga, registerSaga } from './authSaga';
 import { getUserSaga } from './userSaga';
 
 function* rootSaga() {
-  yield takeLatest(AUTH_TYPES.REGISTER_REQUEST, registerSaga);
-  yield takeLatest(AUTH_TYPES.LOGIN_REQUEST, loginSaga);
+  yield takeLatest(AUTH_TYPES.REGISTER, registerSaga);
+  yield takeLatest(AUTH_TYPES.LOGIN, loginSaga);
   yield takeLatest(USER_TYPES.GET_USER, getUserSaga);
 }
 

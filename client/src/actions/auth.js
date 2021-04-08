@@ -8,13 +8,13 @@ import { AUTH_TYPES } from './types';
 
 export const authActionLogin = (data) => {
   return {
-    type: AUTH_TYPES.LOGIN_REQUEST,
+    type: AUTH_TYPES.LOGIN,
     data: data,
   };
 };
 
 export const authActionRegister = (data) => ({
-  type: AUTH_TYPES.REGISTER_REQUEST,
+  type: AUTH_TYPES.REGISTER,
   data: data,
 });
 

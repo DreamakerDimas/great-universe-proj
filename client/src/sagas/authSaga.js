@@ -3,23 +3,24 @@ import { AUTH_TYPES, USER_TYPES } from '../actions/types';
 import * as restController from '../api/rest/restController';
 
 export function* loginSaga(action) {
-  yield put({ type: AUTH_TYPES.AUTH_REQUEST });
+  yield put({ type: AUTH_TYPES.LOGIN_REQUEST });
   try {
-    const data = yield restController.login(action.data.values);
-    if (data) action.data.history.push('/');
+    yield restController.login(action.data.values);
     yield put({ type: AUTH_TYPES.LOGIN_SUCCESS });
+    action.data.history.push('/');
     yield put({ type: USER_TYPES.GET_USER });
   } catch (err) {
+    console.log(err);
     yield put({ type: AUTH_TYPES.LOGIN_ERROR, error: err });
   }
 }
 
 export function* registerSaga(action) {
-  yield put({ type: AUTH_TYPES.AUTH_REQUEST });
+  yield put({ type: AUTH_TYPES.REGISTER_REQUEST });
   try {
-    const data = yield restController.register(action.data.values);
-    if (data) action.data.history.push('/');
+    yield restController.register(action.data.values);
     yield put({ type: AUTH_TYPES.REGISTER_SUCCESS });
+    action.data.history.push('/');
     yield put({ type: USER_TYPES.GET_USER });
   } catch (err) {
     yield put({ type: AUTH_TYPES.REGISTER_ERROR, error: err });

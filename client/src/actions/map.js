@@ -13,3 +13,13 @@ export const getCountryData = (data) => ({
   type: MAP_INTERACTIONS_TYPES.GET_COUNTRY,
   data,
 });
+
+export const updateCountryData = (data) => ({
+  type: MAP_INTERACTIONS_TYPES.UPDATE_COUNTRY,
+  data,
+});
+
+export const deleteCountryData = (data) => ({
+  type: MAP_INTERACTIONS_TYPES.DELETE_COUNTRY,
+  data,
+});

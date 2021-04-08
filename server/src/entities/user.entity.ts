@@ -1,7 +1,5 @@
 import { UserRoles } from 'src/enums/user-roles.enum';
 import {
-  AfterInsert,
-  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,

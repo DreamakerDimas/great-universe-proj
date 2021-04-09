@@ -51,11 +51,16 @@ export default function (state = initialState, action) {
     case CREATE_COUNTRY_SUCCESS:
     case GET_COUNTRY_SUCCESS:
     case UPDATE_COUNTRY_SUCCESS:
-    case DELETE_COUNTRY_SUCCESS:
       return {
         ...state,
         loading: false,
         currentData: action.data,
+      };
+    case DELETE_COUNTRY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        currentData: null,
       };
     case CREATE_COUNTRY_ERROR:
     case GET_COUNTRY_ERROR:

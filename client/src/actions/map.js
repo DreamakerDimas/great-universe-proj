@@ -19,12 +19,12 @@ export const createCountry = (data) => ({
   data,
 });
 
-export const updateCountryData = (data) => ({
+export const updateCountry = (data) => ({
   type: MAP_INTERACTIONS_TYPES.UPDATE_COUNTRY,
   data,
 });
 
-export const deleteCountryData = (data) => ({
+export const deleteCountry = (data) => ({
   type: MAP_INTERACTIONS_TYPES.DELETE_COUNTRY,
   data,
 });

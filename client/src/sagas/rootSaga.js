@@ -7,7 +7,7 @@ import {
 } from '../actions/types';
 
 import { loginSaga, registerSaga } from './authSaga';
-import { createZoneSaga, getZoneSaga } from './mapSaga';
+import { createZoneSaga, getZoneSaga, updateZoneSaga, deleteZoneSaga } from './mapSaga';
 import { getUserSaga } from './userSaga';
 
 function* rootSaga() {
@@ -16,6 +16,8 @@ function* rootSaga() {
   yield takeLatest(USER_TYPES.GET_USER, getUserSaga);
   yield takeLatest(MAP_INTERACTIONS_TYPES.GET_COUNTRY, getZoneSaga);
   yield takeLatest(MAP_INTERACTIONS_TYPES.CREATE_COUNTRY, createZoneSaga);
+  yield takeLatest(MAP_INTERACTIONS_TYPES.UPDATE_COUNTRY, updateZoneSaga);
+  yield takeLatest(MAP_INTERACTIONS_TYPES.DELETE_COUNTRY, deleteZoneSaga);
 }
 
 export default rootSaga;

@@ -55,3 +55,14 @@ export function* updateZoneSaga(action) {
     yield put({ type: UPDATE_COUNTRY_ERROR, error: err });
   }
 }
+
+export function* deleteZoneSaga(action) {
+  yield put({ type: DELETE_COUNTRY_REQUEST });
+  try {
+    yield restController.deleteZone(action.data);
+  
+    yield put({ type: DELETE_COUNTRY_SUCCESS });
+  } catch (err) {
+    yield put({ type: DELETE_COUNTRY_ERROR, error: err });
+  }
+}

@@ -1,18 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { createCountry } from '../../../actions/map';
+import { createCountry, updateCountry, deleteCountry } from '../../../actions/map';
 import CountryForm from '../CountryForm/CountryForm';
 import styles from './CountryContent.module.sass';
 
 const CountryContent = (props) => {
-  const { country, createCountry } = props;
+  const { country, createCountry, updateCountry, deleteCountry } = props;
 
   const createHandler = (values) => {
     createCountry(values);
   };
+  
+  const updateHandler = (values) => {
+    const id = props.country.id;
+    updateCountry({ id, updateData });
+  }
+  
+  const deleteHandler = () => {
+     const id = props.country.id;
+     deletrCountry(id);
+  }
+  
+  const [isEditMode, setEditMode] = useState(false);
+
+  const switchMode = (mode) => {
+    setEditMode(mode)
+  } 
+
+  const getInitValues = () => {
+    const { id, ...restData } = country;
+    return restData;
+  } 
 
   return (
     <div>
+    {isEditMode ? (<><CountryForm initValues={getInitValues()} actionFunc={updateHandler} /></>) : (<>
       {country.isEmpty ? (
         <>
           <CountryForm
@@ -30,20 +52,25 @@ const CountryContent = (props) => {
             )}
             <div className="zoneName">Наименование: {country.disp_name}</div>
           </div>
-          <div className="governmentType">
+          {country.government_type && <div className="governmentType">
             Государственный строй: {country.government_type}
-          </div>
-          <div className="zoneInfo">Описание: {country.description}</div>
-          <div className="edit"></div>
-          <div className="links"></div>
+          </div>} 
+          {country.description && <div className="zoneInfo">Описание: {country.description}</div>}
+          {country.tags &&<div className="tags"></div>} 
+          <div className="editBtn" onClick={() => setEditMode(true)} ></div>
+          <div className="deleteBtn" onClick={deleteHandler}></div>
         </>
       )}
+      </>)
+    } 
     </div>
   );
 };
 
 const mapDispatchToProps = (dispatch) => ({
   createCountry: (values) => dispatch(createCountry(values)),
+  updateCountry: (data) => dispatch(updateCountry(data)), 
+  deleteCountry: (data) => dispatch(deleteCountry(data)),
 });
 
 export default connect(null, mapDispatchToProps)(CountryContent);

@@ -1,16 +1,16 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { MAP_MOUSE_MODES, MAP_PNG_PATH } from '../../constants';
 import SlicedMap from './SlicedMap/SlicedMap';
 import SVGZones from './SVGZones/SVGZones';
 import styles from './MapImages.module.sass';
-import { hideZoneData, showZoneData } from '../../actions/map';
+import { getCountryData, hideZoneData, showZoneData } from '../../actions/map';
 import { connect } from 'react-redux';
 
 const { DRAG, SELECT } = MAP_MOUSE_MODES;
 
 const MapImages = (props) => {
   const { mouseMode, setMouseDown, moveHandler, imagesStyle, width } = props;
-  const { showZoneData, hideZoneData } = props;
+  const { showZoneData } = props;
 
   const mouseDownHandler = useCallback(
     (e) => {
@@ -54,6 +54,7 @@ const MapImages = (props) => {
 
 const mapDispatchToProps = (dispatch) => ({
   showZoneData: (zone_name) => dispatch(showZoneData(zone_name)),
+  getCountryData: (zone_name) => dispatch(getCountryData(zone_name)),
 });
 
 export default connect(null, mapDispatchToProps)(MapImages);

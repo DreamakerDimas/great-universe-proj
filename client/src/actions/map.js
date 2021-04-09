@@ -14,6 +14,11 @@ export const getCountryData = (data) => ({
   data,
 });
 
+export const createCountry = (data) => ({
+  type: MAP_INTERACTIONS_TYPES.CREATE_COUNTRY,
+  data,
+});
+
 export const updateCountryData = (data) => ({
   type: MAP_INTERACTIONS_TYPES.UPDATE_COUNTRY,
   data,

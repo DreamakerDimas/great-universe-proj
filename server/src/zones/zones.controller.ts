@@ -17,11 +17,15 @@ export class ZonesController {
     return this.zonesService.findById(id);
   }
 
-  @Get('/findByZoneName/:zone_name')
+  @Get('/:zone_name')
   async findByZoneName(
     @Param('zone_name') zone_name: string,
   ): Promise<ZoneEntity | null> {
-    return this.zonesService.findById(zone_name);
+    let result;
+    const zone = await this.zonesService.findByZoneName(zone_name);
+    result = zone;
+    if (!zone) result = { zone_name, isEmpty: true };
+    return result;
   }
 
   @Post('update/:id')

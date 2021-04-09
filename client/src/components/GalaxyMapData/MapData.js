@@ -1,21 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { getCountryData } from '../../actions/map';
+import CountryContent from './ContryContent/CountryContent';
 import styles from './MapData.module.sass';
 
 const MapData = (props) => {
+  const { mapStore, getCountryData } = props;
+  const { currentData } = mapStore;
+
+  useEffect(() => {
+    getCountryData(mapStore.zone_name);
+  }, [mapStore.zone_name]);
+
   return (
-    <div className={styles.dataContainer}>
-      <div className="zoneName">{props.mapStore.zone_name}</div>
-      <div className="zoneInfo">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis
-        commodi enim porro laborum mollitia praesentium dolores quaerat, nihil,
-        nam facere distinctio consequuntur nulla doloribus blanditiis unde,
-        optio minima error veritatis aperiam sint soluta minus voluptatibus.
-        Eaque corrupti at asperiores nisi, ipsam dolorum, eius modi laudantium,
-        enim fugiat veniam veritatis unde natus ad sunt sapiente eum.
+    <div className={styles.topContainer}>
+      <div className={styles.countryDataHeader} />
+      <div className={styles.dataContainer}>
+        {mapStore.loading ? (
+          <div></div>
+        ) : (
+          <>
+            <CountryContent country={currentData} />
+          </>
+        )}
       </div>
-      <div className="edit"></div>
-      <div className="links"></div>
+      <div className={styles.countryDataHeader} />
     </div>
   );
 };
@@ -25,4 +34,8 @@ const mapStateToProps = (state) => {
   return { mapStore };
 };
 
-export default connect(mapStateToProps, null)(MapData);
+const mapDispatchToProps = (dispatch) => ({
+  getCountryData: (zone_name) => dispatch(getCountryData(zone_name)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MapData);

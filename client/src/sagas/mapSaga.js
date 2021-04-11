@@ -48,7 +48,7 @@ export function* createZoneSaga(action) {
 export function* updateZoneSaga(action) {
   yield put({ type: UPDATE_COUNTRY_REQUEST });
   try {
-    const resData = yield restController.updateZoneData(action.data);
+    const resData = yield restController.updateZone(action.data);
 
     yield put({ type: UPDATE_COUNTRY_SUCCESS, data: resData.data });
   } catch (err) {
@@ -60,7 +60,7 @@ export function* deleteZoneSaga(action) {
   yield put({ type: DELETE_COUNTRY_REQUEST });
   try {
     yield restController.deleteZone(action.data);
-  
+
     yield put({ type: DELETE_COUNTRY_SUCCESS });
   } catch (err) {
     yield put({ type: DELETE_COUNTRY_ERROR, error: err });

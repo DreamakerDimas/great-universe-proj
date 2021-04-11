@@ -14,7 +14,7 @@ const MapData = (props) => {
 
   return (
     <div className={styles.topContainer}>
-      <div className={styles.countryDataHeader} />
+      <div className={styles.countryDataLine} />
       <div className={styles.dataContainer}>
         {mapStore.loading ? (
           <div></div>
@@ -24,7 +24,7 @@ const MapData = (props) => {
           </>
         )}
       </div>
-      <div className={styles.countryDataHeader} />
+      <div className={styles.countryDataLine} />
     </div>
   );
 };

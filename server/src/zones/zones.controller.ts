@@ -1,4 +1,12 @@
-import { Controller, Delete, Get, Param, Post, Request } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Request,
+} from '@nestjs/common';
 import { ZoneEntity } from 'src/entities/zone.entity';
 import { ZonesService } from './zones.service';
 
@@ -28,7 +36,7 @@ export class ZonesController {
     return result;
   }
 
-  @Post('update/:id')
+  @Patch('/:id')
   async update(
     @Param('id') id: string,
     @Request() req,

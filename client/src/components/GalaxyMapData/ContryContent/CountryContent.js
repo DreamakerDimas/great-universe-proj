@@ -21,8 +21,8 @@ const CountryContent = (props) => {
   };
 
   const deleteHandler = () => {
-    const id = props.country.id;
-    deleteCountry(id);
+    const { id, zone_name } = props.country;
+    deleteCountry({ id, zone_name });
   };
 
   const [isEditMode, setEditMode] = useState(false);
@@ -78,8 +78,14 @@ const CountryContent = (props) => {
                 </div>
               )}
               {country.tags && <div className="tags"></div>}
-              <div className="editBtn" onClick={toEditMode}></div>
-              <div className="deleteBtn" onClick={deleteHandler}></div>
+              <div className={styles.buttonsContainer}>
+                <button className={styles.editBtn} onClick={toEditMode}>
+                  Редактировать
+                </button>
+                <button className={styles.deleteBtn} onClick={deleteHandler}>
+                  Удалить
+                </button>
+              </div>
             </div>
           )}
         </>

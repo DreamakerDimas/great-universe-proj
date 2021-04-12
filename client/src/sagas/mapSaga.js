@@ -59,9 +59,10 @@ export function* updateZoneSaga(action) {
 export function* deleteZoneSaga(action) {
   yield put({ type: DELETE_COUNTRY_REQUEST });
   try {
-    yield restController.deleteZone(action.data);
+    yield restController.deleteZone(action.data.id);
+    const emptyData = { zone_name: action.data.zone_name, isEmpty: true };
 
-    yield put({ type: DELETE_COUNTRY_SUCCESS });
+    yield put({ type: DELETE_COUNTRY_SUCCESS, data: emptyData });
   } catch (err) {
     yield put({ type: DELETE_COUNTRY_ERROR, error: err });
   }

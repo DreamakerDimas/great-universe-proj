@@ -25,7 +25,6 @@ const SlicedMap = (props) => {
           ))}
         </div>
       ))}
-      ;
     </div>
   );
 };

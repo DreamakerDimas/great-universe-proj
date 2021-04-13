@@ -38,7 +38,7 @@ const MapContainer = (props) => {
 
       setMapPosition(getCheckedPosition(top, left, boundaryValues));
     },
-    [mapPosition, mouseDown]
+    [mapPosition, mouseDown, boundaryValues]
   );
 
   const reCalcPosition = useCallback(() => {

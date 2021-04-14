@@ -10,6 +10,7 @@ import {
 } from './functions/mapFunctions';
 import { connect } from 'react-redux';
 import MapData from '../GalaxyMapData/MapData';
+import { useDrag, usePinch, useMove } from 'react-use-gesture';
 
 const { SELECT, DRAG, DRAG_ACTIVE } = MAP_MOUSE_MODES;
 
@@ -41,6 +42,26 @@ const MapContainer = (props) => {
     [mapPosition, mouseDown, boundaryValues]
   );
 
+  const bindDrag = useDrag(
+    ({ down, offset }) => {
+      if (down) {
+        let [left, top] = offset;
+        console.log(width);
+        setMapPosition(getCheckedPosition(top, left, boundaryValues));
+      }
+    },
+    {
+      bounds: {
+        left: boundaryValues.left,
+        top: boundaryValues.top,
+        right: boundaryValues.zero,
+        bottom: boundaryValues.zero,
+      },
+      initial: (state) => [mapPosition.left, mapPosition.top],
+      intentional: true,
+    }
+  );
+  console.log(mapPosition);
   const reCalcPosition = useCallback(() => {
     setMapPosition((prevPosition) => {
       const top =
@@ -62,24 +83,21 @@ const MapContainer = (props) => {
   // change width on resize
   useEffect(() => {
     const resizeHandler = () => {
-      setWidth(getWidth(zoom));
+      setWidth((prevWidth) => {
+        const newWidth = getWidth(zoom);
+
+        // set new multiplier for new position
+        setCurrentZoomMultiplier(newWidth / prevWidth);
+        return newWidth;
+      });
     };
+    resizeHandler();
 
     window.addEventListener('resize', resizeHandler);
 
     return () => {
       window.removeEventListener('resize', resizeHandler);
     };
-  }, []);
-
-  // set new multiplier for new position
-  useEffect(() => {
-    setWidth((prevWidth) => {
-      const newWidth = getWidth(zoom);
-
-      setCurrentZoomMultiplier(newWidth / prevWidth);
-      return newWidth;
-    });
   }, [zoom]);
 
   useEffect(() => {
@@ -111,9 +129,10 @@ const MapContainer = (props) => {
       <MapImages
         mouseMode={mouseMode}
         setMouseDown={setMouseDown}
-        moveHandler={moveHandler}
+        // moveHandler={moveHandler}
         imagesStyle={imagesStyle}
         width={width}
+        bindDrag={bindDrag}
       />
 
       {props.isShowed && <MapData />}

@@ -9,7 +9,14 @@ import { connect } from 'react-redux';
 const { DRAG, SELECT } = MAP_MOUSE_MODES;
 
 const MapImages = (props) => {
-  const { mouseMode, setMouseDown, moveHandler, imagesStyle, width } = props;
+  const {
+    mouseMode,
+    setMouseDown,
+    moveHandler,
+    imagesStyle,
+    width,
+    bindDrag,
+  } = props;
   const { showZoneData } = props;
 
   const mouseDownHandler = useCallback(
@@ -40,11 +47,12 @@ const MapImages = (props) => {
   return (
     <div
       className={styles.imagesContainer}
-      onMouseDown={mouseDownHandler}
-      onMouseMove={moveHandler}
-      onMouseUp={mouseUpHandler}
-      onMouseLeave={mouseLeaveHandler}
+      // onMouseDown={mouseDownHandler}
+      // onMouseMove={moveHandler}
+      // onMouseUp={mouseUpHandler}
+      // onMouseLeave={mouseLeaveHandler}
       onClick={zoneClickHandler}
+      {...bindDrag()}
     >
       <SlicedMap style={imagesStyle} width={width} />
       <SVGZones style={imagesStyle} />

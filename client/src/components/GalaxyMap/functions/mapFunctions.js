@@ -25,8 +25,18 @@ export const getCheckedPosition = (top, left, boundaryValues) => {
 };
 
 // get new boundaries values
-export const getBoundaries = (width) => ({
-  top: window.innerHeight - width,
-  left: window.innerWidth - width + 10,
-  zero: 0,
-});
+export const getBoundaries = (width) => {
+  if (window.innerWidth - width >= 0) {
+    return {
+      top: window.innerHeight - width,
+      left: 0,
+      zero: 0,
+    };
+  }
+
+  return {
+    top: window.innerHeight - width,
+    left: window.innerWidth - width,
+    zero: 0,
+  };
+};

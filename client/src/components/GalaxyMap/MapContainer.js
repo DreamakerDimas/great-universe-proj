@@ -10,7 +10,6 @@ import {
 } from './functions/mapFunctions';
 import { connect } from 'react-redux';
 import MapData from '../GalaxyMapData/MapData';
-import { useDrag, usePinch, useMove } from 'react-use-gesture';
 
 const { SELECT, DRAG, DRAG_ACTIVE } = MAP_MOUSE_MODES;
 
@@ -21,64 +20,12 @@ const MapContainer = (props) => {
 
   const [zoom, setZoom] = useState(1); // map zoom value
   const [width, setWidth] = useState(() => getWidth(zoom)); // map size
-  const [currentZoomMultiplier, setCurrentZoomMultiplier] = useState(1); // For correct centering while zoom happens
 
-  const [mapPosition, setMapPosition] = useState({ top: 0, left: 0 });
+  const [currentZoomMultiplier, setCurrentZoomMultiplier] = useState(1); // For correct centering while zoom happens
 
   const [boundaryValues, setBoundaryValues] = useState(() =>
     getBoundaries(width)
   );
-
-  // Mouse handlers
-  const moveHandler = useCallback(
-    (e) => {
-      if (!mouseDown) return;
-
-      let top = mapPosition.top + e.movementY;
-      let left = mapPosition.left + e.movementX;
-
-      setMapPosition(getCheckedPosition(top, left, boundaryValues));
-    },
-    [mapPosition, mouseDown, boundaryValues]
-  );
-
-  const bindDrag = useDrag(
-    ({ down, offset }) => {
-      if (down) {
-        let [left, top] = offset;
-        console.log(width);
-        setMapPosition(getCheckedPosition(top, left, boundaryValues));
-      }
-    },
-    {
-      bounds: {
-        left: boundaryValues.left,
-        top: boundaryValues.top,
-        right: boundaryValues.zero,
-        bottom: boundaryValues.zero,
-      },
-      initial: (state) => [mapPosition.left, mapPosition.top],
-      intentional: true,
-    }
-  );
-  console.log(mapPosition);
-  const reCalcPosition = useCallback(() => {
-    setMapPosition((prevPosition) => {
-      const top =
-        prevPosition.top * currentZoomMultiplier -
-        (window.innerHeight * currentZoomMultiplier - window.innerHeight) / 2;
-
-      const left =
-        prevPosition.left * currentZoomMultiplier -
-        (window.innerWidth * currentZoomMultiplier - window.innerWidth) / 2;
-
-      return getCheckedPosition(
-        Math.trunc(top),
-        Math.trunc(left),
-        boundaryValues
-      );
-    });
-  }, [currentZoomMultiplier, boundaryValues]);
 
   // change width on resize
   useEffect(() => {
@@ -104,10 +51,6 @@ const MapContainer = (props) => {
     setBoundaryValues(getBoundaries(width));
   }, [width]);
 
-  useEffect(() => {
-    reCalcPosition();
-  }, [boundaryValues]);
-
   // styles setters
   const cursorHandler = useCallback(() => {
     if (mouseMode === DRAG && mouseDown) return DRAG_ACTIVE;
@@ -117,8 +60,6 @@ const MapContainer = (props) => {
 
   const imagesStyle = {
     width: `${width}px`,
-    top: mapPosition.top,
-    left: mapPosition.left,
   };
   const mouseStyle = { cursor: cursorHandler() };
 
@@ -132,7 +73,10 @@ const MapContainer = (props) => {
         // moveHandler={moveHandler}
         imagesStyle={imagesStyle}
         width={width}
-        bindDrag={bindDrag}
+        currentZoomMultiplier={currentZoomMultiplier}
+        boundaryValues={boundaryValues}
+        setWidth={setWidth}
+        zoom={zoom}
       />
 
       {props.isShowed && <MapData />}

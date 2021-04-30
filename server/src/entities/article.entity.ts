@@ -16,11 +16,11 @@ export class ArticleEntity {
 
   @Column({ nullable: false }) content: string;
 
-  @Column({ nullable: false }) author: ObjectID;
+  @Column({ nullable: false }) author: string; // ObjID
 
   @Column() isApproved: boolean;
 
-  @Column() likedBy: ObjectID[];
+  @Column() likedBy: string[]; // arr of ObjID
 
   @Column() comments: [];
 

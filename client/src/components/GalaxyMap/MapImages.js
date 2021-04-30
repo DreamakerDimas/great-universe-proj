@@ -72,6 +72,7 @@ const MapImages = (props) => {
   const zoneClickHandler = (e) => {
     if (mouseMode !== SELECT) return;
     const zoneName = e.target.parentNode.getAttribute('name');
+    if (zoneName === null) return;
     showZoneData(zoneName);
   };
 

@@ -5,7 +5,6 @@ import {
   IsArray,
   IsBoolean,
 } from 'class-validator';
-import { ObjectID } from 'typeorm';
 
 export class DefaultArticleDto {
   @IsString()
@@ -17,7 +16,7 @@ export class DefaultArticleDto {
   readonly content: string;
 
   @IsMongoId()
-  readonly author: ObjectID;
+  readonly author: string;
 
   @IsArray()
   readonly tags: [];

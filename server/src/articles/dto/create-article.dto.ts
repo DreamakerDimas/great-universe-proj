@@ -11,7 +11,7 @@ export class CreateArticleDto {
   readonly content: string;
 
   @IsMongoId()
-  readonly author: ObjectID;
+  readonly author: string;
 
   @IsArray()
   readonly tags: [];

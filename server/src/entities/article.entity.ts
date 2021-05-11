@@ -14,6 +14,8 @@ export class ArticleEntity {
 
   @Column({ nullable: false }) title: string;
 
+  @Column({ nullable: false }) type: string; // articles types enum(id db?)
+
   @Column({ nullable: false }) content: string;
 
   @Column({ nullable: false }) author: string; // ObjID
@@ -22,9 +24,9 @@ export class ArticleEntity {
 
   @Column() likedBy: string[]; // arr of ObjID
 
-  @Column() comments: [];
+  @Column() comments: []; // comment entity
 
-  @Column() tags: [];
+  @Column() tags: []; // tag entity
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

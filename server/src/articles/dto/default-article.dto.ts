@@ -7,9 +7,14 @@ import {
 } from 'class-validator';
 
 export class DefaultArticleDto {
+  // need to experiment with extends !!!
   @IsString()
   @IsNotEmpty()
   readonly title: string;
+
+  @IsString()
+  @IsNotEmpty()
+  readonly type: string;
 
   @IsString()
   @IsNotEmpty()

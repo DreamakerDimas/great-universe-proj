@@ -8,6 +8,10 @@ export class CreateArticleDto {
 
   @IsString()
   @IsNotEmpty()
+  readonly type: string; // type enum (db?)
+
+  @IsString()
+  @IsNotEmpty()
   readonly content: string;
 
   @IsMongoId()

@@ -1,12 +1,6 @@
-import {
-  IsNotEmpty,
-  IsString,
-  IsMongoId,
-  IsArray,
-  IsOptional,
-} from 'class-validator';
+import { IsNotEmpty, IsString, IsArray, IsOptional } from 'class-validator';
 
-export class CreateArticleDto {
+export class CreateTagDto {
   @IsString()
   @IsNotEmpty()
   readonly name: string;
@@ -14,9 +8,6 @@ export class CreateArticleDto {
   @IsString()
   @IsNotEmpty()
   readonly code_name: string;
-
-  @IsArray()
-  readonly parents_tree: []; // arr of parents tags code_name
 
   @IsOptional()
   @IsArray()

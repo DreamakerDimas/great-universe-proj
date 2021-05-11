@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { AuthController } from './auth/auth.controller';
 import { ZonesModule } from './zones/zones.module';
 import { ArticlesModule } from './articles/articles.module';
+import { TagsModule } from './tags/tags.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ArticlesModule } from './articles/articles.module';
     AuthModule,
     ZonesModule,
     ArticlesModule,
+    TagsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

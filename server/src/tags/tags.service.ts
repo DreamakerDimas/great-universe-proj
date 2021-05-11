@@ -12,10 +12,18 @@ export class TagsService {
   ) {}
 
   // get full tree
+  async getAll() {
+    const tags = this.tagRepository.find();
+    return tags;
+  }
 
   // get branch
+  async getById(id: string) {
+    const tagsBranch = this.tagRepository.findById(string);
+    return tagsBranch;
+  }
 
-  async createPrimary(tag: CreateTagDto) {
+  async create(tag: CreateTagDto) {
     const newTagTree: CreateTagDto = {
       related_tags: [],
       child_tags: [],
@@ -25,13 +33,16 @@ export class TagsService {
     return await this.tagRepository.save(newTagTree);
   }
 
-  // update (name, code_name, related_tags)
+  // update (name, code_name, related_tags, child_tags)
+  async updateById(id, updateBody) {
+    await this.tagRepository.update(id, updateData);
+    return await this.tagRepository.findOne(id);
+  }
 
-  // delete
-
-  // create child (actions more like update)
-
-  // delete child
-
-  // update child
+  async removeById(id: string): Promise < boolean > {
+    await this.tagRepository.delete(id);
+    const article = await this.tagRepository.findOne(id);
+    if (article) return false;
+    return true;
+  }
 }

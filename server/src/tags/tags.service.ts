@@ -37,7 +37,7 @@ export class TagsService {
     return await this.tagRepository.save(newTagTree);
   }
 
-  // update (name, code_name, related_tags, child_tags)
+  // update (name, related_tags, child_tags)
   async updateById(id, updateData) {
     await this.tagRepository.update(id, updateData);
     return await this.tagRepository.findOne(id);

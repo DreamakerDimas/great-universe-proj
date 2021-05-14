@@ -19,9 +19,10 @@ import { TagsService } from './tags.service';
 @Controller('tags')
 export class TagsController {
   constructor(private tagsService: TagsService) {}
-  //    const tagsList = tag.parents_tree;
-  // if (tagsList.length === 0) {
-  // }
+
+  // get full tree
+
+  // get branch
 
   // create tag
   @Post()
@@ -66,6 +67,51 @@ function addTagToBranch(branch, depthCounter, depthArr, targetToAdd, i = 0) {
     child_tags: branch.child_tags.map((tag) => {
       if (tag.code_name === depthArr[i])
         return addTagToBranch(tag, depthCounter, depthArr, targetToAdd, i);
+      return tag;
+    }),
+  };
+}
+
+function updateTagInBranch(
+  branch,
+  depthCounter,
+  depthArr,
+  target, // need full target data
+  i = 0,
+) {
+  if (i === depthCounter) {
+    const tags = branch.child_tags.map((tag) => {
+      if (tag.code_name === target.code_name) return target;
+      return tag;
+    });
+    return { ...branch, child_tags: tags };
+  }
+
+  i++;
+  return {
+    ...branch,
+    child_tags: branch.child_tags.map((tag) => {
+      if (tag.code_name === depthArr[i])
+        return updateTagInBranch(tag, depthCounter, depthArr, target, i);
+      return tag;
+    }),
+  };
+}
+
+function removeTagFromBranch(branch, depthCounter, depthArr, target, i = 0) {
+  if (i === depthCounter) {
+    const tags = branch.child_tags.filter(
+      (tag) => tag.code_name !== target.code_name,
+    );
+    return { ...branch, child_tags: tags };
+  }
+
+  i++;
+  return {
+    ...branch,
+    child_tags: branch.child_tags.map((tag) => {
+      if (tag.code_name === depthArr[i])
+        return removeTagFromBranch(tag, depthCounter, depthArr, target, i);
       return tag;
     }),
   };

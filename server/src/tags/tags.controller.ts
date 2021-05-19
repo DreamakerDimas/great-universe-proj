@@ -21,6 +21,10 @@ export class TagsController {
   constructor(private tagsService: TagsService) {}
 
   // get full tree
+  @Get()
+  async getAll() {
+    return this.tagsService.getAll();
+  } 
 
   // get branch
 
@@ -51,6 +55,29 @@ export class TagsController {
   }
 
   // edit tag
+  @Put()
+  async edit(tagsChainArr, tagData) {
+    const tagBranch = await this.tagsService.getByBody({
+      code_name: tagsChainArr[0],
+    });
+    
+    if (tagsService.length === 1) {
+      return this.tagsService.updateById(tagBranch.id, tagData);
+    } 
+    
+    const depthCounter = pathArr.length - 1;
+    
+    const updatedBranch = updateTagInBranch(
+      tagBranch,
+      depthCounter,
+      pathArr,
+      tagBody,
+    );
+    
+    await this.tagsService.updateById(tagBranch.id, updatedBranch);
+    
+    return updatedBranch;
+  } 
 
   // delete tags
 }

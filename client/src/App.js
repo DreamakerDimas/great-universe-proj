@@ -10,11 +10,9 @@ import History from './Pages/History/History';
 import Map from './Pages/Map/Map';
 import Auth from './Pages/Auth/AuthPage';
 import Alert from './components/Alert';
+import TagsTreeEditor from './Pages/TagsTreeEditor/TagsTreeEditor';
 
 function App(props) {
-  // useEffect(() => {
-  //   store.dispatch(getUser());
-  // }, []);
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -26,6 +24,8 @@ function App(props) {
           <Route exact path="/history" component={History} />
           <Route exact path="/map" component={Map} />
           <Route exact path="/auth" component={Auth} />
+          {/* only for admin, moderator */}
+          <Route exact path="/tagsEditor" component={TagsTreeEditor} />
         </Switch>
       </BrowserRouter>
     </Provider>

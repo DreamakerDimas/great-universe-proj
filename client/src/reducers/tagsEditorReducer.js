@@ -59,5 +59,7 @@ export default function (state = initialState, action) {
         loading: false,
         error: action.error,
       };
+    default:
+      return state;
   }
 }

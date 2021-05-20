@@ -1,4 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Delete, Get, Post, Put } from '@nestjs/common';
 import { TagsService } from './tags.service';
 
 //  const testArr = ['name1', 'name1.1', 'name1.1.1', 'name1.1.1.2'];
@@ -24,7 +24,7 @@ export class TagsController {
   @Get()
   async getAll() {
     return this.tagsService.getAll();
-  } 
+  }
 
   // get branch
 
@@ -60,26 +60,50 @@ export class TagsController {
     const tagBranch = await this.tagsService.getByBody({
       code_name: tagsChainArr[0],
     });
-    
-    if (tagsService.length === 1) {
+
+    if (tagsChainArr.length === 1) {
       return this.tagsService.updateById(tagBranch.id, tagData);
-    } 
-    
-    const depthCounter = pathArr.length - 1;
-    
+    }
+
+    const depthCounter = tagsChainArr.length - 1;
+
     const updatedBranch = updateTagInBranch(
       tagBranch,
       depthCounter,
-      pathArr,
-      tagBody,
+      tagsChainArr,
+      tagData,
     );
-    
-    await this.tagsService.updateById(tagBranch.id, updatedBranch);
-    
-    return updatedBranch;
-  } 
 
-  // delete tags
+    await this.tagsService.updateById(tagBranch.id, updatedBranch);
+
+    return updatedBranch;
+  }
+
+  // delete tag
+  @Delete()
+  async remove(tagsChainArr) {
+    const tagBranch = await this.tagsService.getByBody({
+      code_name: tagsChainArr[0],
+    });
+    const tagID = tagBranch.id.toString();
+
+    if (tagsChainArr.length === 1) {
+      await this.tagsService.removeById(tagID);
+      return true; // or what ??!!!
+    }
+
+    const depthCounter = tagsChainArr.length - 1; // this could be calculated inside recursive func !!!
+
+    const updatedBranch = removeTagFromBranch(
+      tagBranch,
+      depthCounter,
+      tagsChainArr,
+      target, // need recursive GET tag func !!!
+    );
+
+    await this.tagsService.updateById(tagID, updatedBranch);
+    return updatedBranch;
+  }
 }
 
 function addTagToBranch(branch, depthCounter, depthArr, targetToAdd, i = 0) {

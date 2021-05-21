@@ -20,8 +20,8 @@ const {
 export function* getAllTagsSaga() {
   yield put({ type: GET_ALL_TAGS_REQUEST });
   try {
-    const resData = yield restController.getAllTags();
-    yield put({ type: GET_ALL_TAGS_SUCCESS, data: resData });
+    const { data } = yield restController.getAllTags();
+    yield put({ type: GET_ALL_TAGS_SUCCESS, data });
   } catch (err) {
     yield put({ type: GET_ALL_TAGS_ERROR, error: err });
   }

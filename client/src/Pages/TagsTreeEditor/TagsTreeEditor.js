@@ -1,36 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { getAllTags, selectTag } from '../../actions/tagsEditor';
 import TagsTree from '../../components/TagsTree/TagsTree';
 import styles from './TagsTreeEditor.module.sass';
 
 // only for admin, moderator !!!
-const TagsTreeEditor = (props) => {
-  const testBranch = {
-    code_name: 'name1',
-    child_tags: [
-      {
-        code_name: 'name1.1',
-        child_tags: [
-          {
-            code_name: 'name1.1.1',
-            child_tags: [
-              { code_name: 'name1.1.1.1', child_tags: [] },
-              { code_name: 'name1.1.1.2', child_tags: [] },
-            ],
-          },
-        ],
-      },
-      { code_name: 'name1.2', child_tags: [] },
-    ],
-  };
+const TagsTreeEditor = ({ selectTag, getAllTags, tagsEditorStore }) => {
+  const { loading, tagsTree } = tagsEditorStore;
+
+  useEffect(() => {
+    getAllTags();
+  }, []);
+
+  // add user data waiter (globally) !!!
 
   return (
     <div className={styles.mainContainer}>
-      {/* loader */}
-      <TagsTree tagsTree={[testBranch, testBranch]} />
-      {/* in to TagsTree - props: tagsTree, select */}
-      <div>Tag Description</div>
+      {loading ? (
+        'Loading...'
+      ) : (
+        <>
+          <TagsTree tagsTree={tagsTree} select={selectTag} />
+          {/* in to TagsTree - props: tagsTree, select */}
+          <div>Tag Description</div>
+        </>
+      )}
     </div>
   );
 };
 
-export default TagsTreeEditor;
+const mapStateToProps = (state) => {
+  const { tagsEditorStore } = state;
+  return { tagsEditorStore };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  selectTag: (data) => dispatch(selectTag(data)),
+  getAllTags: () => dispatch(getAllTags()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TagsTreeEditor);

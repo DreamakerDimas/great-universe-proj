@@ -8,6 +8,7 @@ const TagsTree = (props) => {
     if (branch.child_tags.length === 0) {
       return (
         <TagsBranch
+          // key={branch.id}
           branch={branch}
           select={select}
           childs={[]}
@@ -18,6 +19,7 @@ const TagsTree = (props) => {
 
     return (
       <TagsBranch
+        // key={branch.id}
         branch={branch}
         select={select}
         childs={branch.child_tags.map((tag) => {

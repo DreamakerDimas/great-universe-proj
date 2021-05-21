@@ -16,21 +16,6 @@ import {
 } from './tags.functions';
 import { TagsService } from './tags.service';
 
-//  const testArr = ['name1', 'name1.1', 'name1.1.1', 'name1.1.1.2'];
-// const testBranch = {
-//   code_name: 'name1',
-//   child_tags: [
-//     {code_name: 'name1.1', child_tags: [
-//       {code_name: 'name1.1.1', child_tags: [
-//         {code_name: 'name1.1.1.1', child_tags: []},
-//         {code_name: 'name1.1.1.2', child_tags: []}
-//         ]
-//       }
-//     ]},
-//     {code_name: 'name1.2', child_tags: []}
-//     ],
-//   };
-
 @Controller('tags')
 export class TagsController {
   constructor(private tagsService: TagsService) {}

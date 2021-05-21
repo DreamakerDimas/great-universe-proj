@@ -1,48 +1,41 @@
 import React from 'react';
+import TagsBranch from '../TagsBranch/TagsBranch';
 
 const TagsTree = (props) => {
   const { tagsTree, select } = props;
 
-  const testBranch = {
-    code_name: 'name1',
-    child_tags: [
-      {
-        code_name: 'name1.1',
-        child_tags: [
-          {
-            code_name: 'name1.1.1',
-            child_tags: [
-              { code_name: 'name1.1.1.1', child_tags: [] },
-              { code_name: 'name1.1.1.2', child_tags: [] },
-            ],
-          },
-        ],
-      },
-      { code_name: 'name1.2', child_tags: [] },
-    ],
+  const renderBranch = (branch, pathArr) => {
+    if (branch.child_tags.length === 0) {
+      return (
+        <TagsBranch
+          branch={branch}
+          select={select}
+          childs={[]}
+          pathArr={pathArr}
+        />
+      );
+    }
+
+    return (
+      <TagsBranch
+        branch={branch}
+        select={select}
+        childs={branch.child_tags.map((tag) => {
+          const newPathArr = [...pathArr, tag.code_name];
+          return renderBranch(tag, newPathArr);
+        })}
+        pathArr={pathArr}
+      />
+    );
   };
 
-  const renderTreeNames = (tree) => {
-    console.log(tree);
-    const renderBranchNames = (branch) => {
-      if (branch.child_tags.length === 0) {
-        return '';
-      }
-
-      return branch.child_tags.map((tag) => {
-        return (
-          <li>
-            {tag.code_name}
-            <ul>{renderBranchNames(tag)}</ul>
-          </li>
-        );
-      });
-    };
-
-    return tree.map((branch) => <ul>{renderBranchNames(branch)}</ul>);
-  };
-
-  return <div>{renderTreeNames([testBranch, testBranch])}</div>;
+  return (
+    <div>
+      <ul>
+        {tagsTree.map((branch) => renderBranch(branch, [branch.code_name]))}
+      </ul>
+    </div>
+  );
 };
 
 export default TagsTree;

@@ -15,7 +15,7 @@ import {
   deleteZoneSaga,
 } from './mapSaga';
 import { getAllTagsSaga } from './tagsEditorSaga';
-import { getUserSaga } from './userSaga';
+import { getUserSaga, createTagSaga, updateTagSaga, deleteTagSaga} from './userSaga';
 
 function* rootSaga() {
   yield takeLatest(AUTH_TYPES.REGISTER, registerSaga);
@@ -26,6 +26,9 @@ function* rootSaga() {
   yield takeLatest(MAP_INTERACTIONS_TYPES.UPDATE_COUNTRY, updateZoneSaga);
   yield takeLatest(MAP_INTERACTIONS_TYPES.DELETE_COUNTRY, deleteZoneSaga);
   yield takeLatest(TAGS_EDITOR_TYPES.GET_ALL_TAGS, getAllTagsSaga);
+  yield takeLatest(TAGS_EDITOR_TYPES.CREATE_TAG, createTagSaga);
+  yield takeLatest(TAGS_EDITOR_TYPES.UPDATE_TAG, updateTagSaga);
+  yield takeLatest(TAGS_EDITOR_TYPES.DELETE_TAG, deleteTagSaga);
 }
 
 export default rootSaga;

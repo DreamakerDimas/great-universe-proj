@@ -16,4 +16,8 @@ export class CreateTagDto {
   @IsOptional()
   @IsArray()
   readonly child_tags?: []; // empty
+  
+  @IsOptional()
+  @IsArray()
+  readonly color?: string; // hex
 }

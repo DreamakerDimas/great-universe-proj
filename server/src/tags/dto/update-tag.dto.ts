@@ -14,4 +14,7 @@ export class UpdateTagDto {
 
   @IsArray()
   readonly child_tags: [];
+  
+  @IsString()
+  readonly color: string;
 }

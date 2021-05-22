@@ -13,4 +13,6 @@ export class TagEntity {
   // will add this tags to article when tag is chosen (they could be removed!! UI)
 
   @Column() child_tags: []; // tag entity (deep tree) (child tag could have childs too, and so on)
+  
+  @Column() color: string; // color of branch in hex format
 }

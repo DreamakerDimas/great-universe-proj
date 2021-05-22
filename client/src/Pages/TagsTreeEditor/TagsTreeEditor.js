@@ -21,8 +21,14 @@ const TagsTreeEditor = ({ selectTag, getAllTags, tagsEditorStore }) => {
       ) : (
         <>
           <TagsTree tagsTree={tagsTree} select={selectTag} />
-          {/* in to TagsTree - props: tagsTree, select */}
+          
           <div>Tag Description</div>
+          
+          <div className={styles.popUpContainer}>
+            <div className={styles.formContainer}>
+              
+            </div>
+          </div>
         </>
       )}
     </div>

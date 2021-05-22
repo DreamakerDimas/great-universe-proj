@@ -1,6 +1,8 @@
 import React from 'react';
 
 const CreateTagForm = () => {
+  const initValues; //
+  
   return <div>
    <Formik initialValues={initValues} onSubmit={submitHandler}>
           {({
@@ -19,6 +21,8 @@ const CreateTagForm = () => {
                 component="div"
                 name="disp_name"
               /> */}
+              
+              {/* Color. Only for primary tag?? */} 
               
               {/* Add childs creation */} 
   

@@ -1,5 +1,6 @@
 import React from 'react';
 import TagsBranch from '../TagsBranch/TagsBranch';
+import styles from './TagsTree.module.sass';
 
 const TagsTree = (props) => {
   const { tagsTree, select } = props;
@@ -8,6 +9,7 @@ const TagsTree = (props) => {
     if (branch.child_tags.length === 0) {
       return (
         <TagsBranch
+          styles={styles.branchStyles}
           key={branch.id}
           branch={branch}
           select={select}
@@ -19,6 +21,7 @@ const TagsTree = (props) => {
 
     return (
       <TagsBranch
+        styles={styles.branchStyles} //? mb use state (color) 
         key={branch.id}
         branch={branch}
         select={select}
@@ -32,8 +35,8 @@ const TagsTree = (props) => {
   };
 
   return (
-    <div>
-      <ul>
+    <div className={styles.treeContainer}>
+      <ul className={styles.treeList}>
         {tagsTree.map((branch) => renderBranch(branch, [branch.code_name]))}
       </ul>
     </div>

@@ -19,8 +19,6 @@ const {
 const initialState = {
   loading: true,
   error: null,
-  selectedTagChain: [], // ['code_name1', 'code_name1.1', 'code_name1.1.5']
-  selectedTagData: [],
   tagsTree: [],
 };
 

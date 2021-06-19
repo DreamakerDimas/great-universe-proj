@@ -32,7 +32,7 @@ export function* createTagSaga(action) {
   try {
     const resData = yield restController.createTag(action.data);
 
-    // join with existing tags tree
+    // join with existing tags tree (for render)
     const tagsTree = [];
 
     yield put({ type: CREATE_TAG_SUCCESS, data: tagsTree });
@@ -46,7 +46,7 @@ export function* updateTagSaga(action) {
   try {
     const resData = yield restController.updateTag(action.data);
 
-    // join with existing tags tree
+    // merge with existing tags tree
     const tagsTree = [];
 
     yield put({ type: UPDATE_TAG_SUCCESS, data: tagsTree });
@@ -60,7 +60,7 @@ export function* deleteTagSaga(action) {
   try {
     const resData = yield restController.deleteTag(action.data);
 
-    // join with existing tags tree
+    // merge with existing tags tree
     const tagsTree = [];
 
     yield put({ type: DELETE_TAG_SUCCESS, data: tagsTree });

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { MAP_MOUSE_MODES } from '../../constants';
+import React, {useState, useEffect, useCallback} from 'react';
+import {MAP_MOUSE_MODES} from '../../constants';
 import MapImages from './MapImages';
 import MapInterface from './MapInterface';
 import styles from './MapContainer.module.sass';
@@ -8,10 +8,10 @@ import {
   getCheckedPosition,
   getBoundaries,
 } from './functions/mapFunctions';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import MapData from '../GalaxyMapData/MapData';
 
-const { SELECT, DRAG, DRAG_ACTIVE } = MAP_MOUSE_MODES;
+const {SELECT, DRAG, DRAG_ACTIVE} = MAP_MOUSE_MODES;
 
 const MapContainer = (props) => {
   // --- Modes --- //
@@ -24,7 +24,7 @@ const MapContainer = (props) => {
   const [currentZoomMultiplier, setCurrentZoomMultiplier] = useState(1); // For correct centering while zoom happens
 
   const [boundaryValues, setBoundaryValues] = useState(() =>
-    getBoundaries(width)
+    getBoundaries(width),
   );
 
   // change width on resize
@@ -61,7 +61,7 @@ const MapContainer = (props) => {
   const imagesStyle = {
     width: `${width}px`,
   };
-  const mouseStyle = { cursor: cursorHandler() };
+  const mouseStyle = {cursor: cursorHandler()};
 
   return (
     <div className={styles.mapContainer} style={mouseStyle}>
@@ -85,8 +85,8 @@ const MapContainer = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const { isShowed } = state.mapStore;
-  return { isShowed };
+  const {isShowed} = state.mapStore;
+  return {isShowed};
 };
 
 export default connect(mapStateToProps, null)(MapContainer);

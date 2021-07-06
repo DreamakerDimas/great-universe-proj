@@ -1,5 +1,5 @@
 import React from 'react';
-import { LOW_SIZE_MAP_PNG, MAP_PNG_ARR } from '../../../constants';
+import {LOW_SIZE_MAP_PNG, MAP_PNG_ARR} from '../../../constants';
 import styles from './SlicedMap.module.sass';
 
 const SlicedMap = (props) => {

@@ -1,14 +1,14 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {Formik, Field, Form, ErrorMessage} from 'formik';
 import PropTypes from 'prop-types';
 
 import registerSchema from '../../lib/validationSchemas/registerSchema';
-import { authActionRegister } from '../../actions/auth';
+import {authActionRegister} from '../../actions/auth';
 import styles from './Auth.module.sass';
 
-const RegistrationForm = ({ register, history }) => {
+const RegistrationForm = ({register, history}) => {
   const initValues = {
     login: '',
     email: '',
@@ -18,7 +18,7 @@ const RegistrationForm = ({ register, history }) => {
 
   const submitHandler = (values) => {
     console.log(values);
-    const data = { values, history };
+    const data = {values, history};
     register(data);
   };
 
@@ -31,7 +31,7 @@ const RegistrationForm = ({ register, history }) => {
         validationSchema={registerSchema}
         onSubmit={submitHandler}
       >
-        {({ values: { login, email, password, confirmPassword } }) => (
+        {({values: {login, email, password, confirmPassword}}) => (
           <Form>
             <label htmlFor="login">Логин</label>
             <Field

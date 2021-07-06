@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { getAllTags, selectTag } from '../../actions/tagsEditor';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {getAllTags, selectTag} from '../../actions/tagsEditor';
 import TagsTree from '../../components/TagsTree/TagsTree';
 import styles from './TagsTreeEditor.module.sass';
 
 // only for admin, moderator !!!
-const TagsTreeEditor = ({ selectTag, getAllTags, tagsEditorStore }) => {
-  const { loading, tagsTree } = tagsEditorStore;
+const TagsTreeEditor = ({selectTag, getAllTags, tagsEditorStore}) => {
+  const {loading, tagsTree} = tagsEditorStore;
 
   useEffect(() => {
     getAllTags();
@@ -21,12 +21,12 @@ const TagsTreeEditor = ({ selectTag, getAllTags, tagsEditorStore }) => {
       ) : (
         <>
           <TagsTree tagsTree={tagsTree} select={selectTag} />
-          
+
           <div>Tag Description</div>
-          
+
           <div className={styles.popUpContainer}>
             <div className={styles.formContainer}>
-              
+
             </div>
           </div>
         </>
@@ -36,8 +36,8 @@ const TagsTreeEditor = ({ selectTag, getAllTags, tagsEditorStore }) => {
 };
 
 const mapStateToProps = (state) => {
-  const { tagsEditorStore } = state;
-  return { tagsEditorStore };
+  const {tagsEditorStore} = state;
+  return {tagsEditorStore};
 };
 
 const mapDispatchToProps = (dispatch) => ({

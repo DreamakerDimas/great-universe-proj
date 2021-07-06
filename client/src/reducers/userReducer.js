@@ -1,4 +1,4 @@
-import { USER_TYPES } from '../actions/types';
+import {USER_TYPES} from '../actions/types';
 
 const {
   GET_USER_REQUEST,
@@ -13,7 +13,7 @@ const initialState = {
   data: null,
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case GET_USER_REQUEST:
       return {

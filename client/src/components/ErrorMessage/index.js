@@ -1,11 +1,12 @@
 import React from 'react';
 
 const ErrorMessage = (props) => {
-    const { message } = props;
+  const {message} = props;
 
-    return (
-        <div className="errorContainer">
-            <p>{message}</p>
-        </div>
-    )
-}
+
+  return (
+    <div className="errorContainer">
+      <p>{message}</p>
+    </div>
+  );
+};

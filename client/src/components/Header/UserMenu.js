@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import CONSTANTS from '../../lib/constants';
 import styles from './UserMenu.module.sass';
 
-const UserMenu = ({ userData, logout }) => {
+const UserMenu = ({userData, logout}) => {
   const [isShowMenu, setShowMenu] = useState(false);
 
   const showMenuHandler = () => {

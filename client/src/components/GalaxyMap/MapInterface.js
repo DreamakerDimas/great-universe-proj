@@ -1,15 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { hideZoneData } from '../../actions/map';
-import { MOUSE_ICONS } from '../../constants';
-import { MAP_MOUSE_MODES } from '../../constants';
+import {connect} from 'react-redux';
+import {hideZoneData} from '../../actions/map';
+import {MOUSE_ICONS} from '../../constants';
+import {MAP_MOUSE_MODES} from '../../constants';
 import styles from './MapInterface.module.sass';
 
-const { DRAG, SELECT } = MAP_MOUSE_MODES;
-const { GRAB_ICON, ZOOM_IN_ICON, ZOOM_OUT_ICON, DEFAULT_ICON } = MOUSE_ICONS;
+const {DRAG, SELECT} = MAP_MOUSE_MODES;
+const {GRAB_ICON, ZOOM_IN_ICON, ZOOM_OUT_ICON, DEFAULT_ICON} = MOUSE_ICONS;
 
 const MapInterface = (props) => {
-  const { setMouseMode, setZoom, hideZoneData } = props;
+  const {setMouseMode, setZoom, hideZoneData} = props;
 
   const toDragMode = () => {
     setMouseMode(DRAG);

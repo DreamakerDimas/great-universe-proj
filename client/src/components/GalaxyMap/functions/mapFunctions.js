@@ -1,4 +1,4 @@
-import { MAP_PNG_ARR } from '../../../constants';
+import {MAP_PNG_ARR} from '../../../constants';
 
 // get new width
 export const getWidth = (zoomValue) => {
@@ -21,7 +21,7 @@ export const getCheckedPosition = (top, left, boundaryValues) => {
   // y; if newPos +
   if (top > 0) top = boundaryValues.zero;
 
-  return { top, left };
+  return {top, left};
 };
 
 // get new boundaries values

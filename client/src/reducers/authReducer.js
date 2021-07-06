@@ -1,4 +1,4 @@
-import { AUTH_TYPES } from '../actions/types';
+import {AUTH_TYPES} from '../actions/types';
 
 const {
   REGISTER_REQUEST,
@@ -15,7 +15,7 @@ const initialState = {
   error: null,
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case LOGIN_REQUEST:
     case REGISTER_REQUEST:

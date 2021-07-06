@@ -1,4 +1,4 @@
-import { takeLatest, takeLeading, takeEvery } from 'redux-saga/effects';
+import {takeLatest, takeLeading, takeEvery} from 'redux-saga/effects';
 
 import {
   AUTH_TYPES,
@@ -7,15 +7,15 @@ import {
   TAGS_EDITOR_TYPES,
 } from '../actions/types';
 
-import { loginSaga, registerSaga } from './authSaga';
+import {loginSaga, registerSaga} from './authSaga';
 import {
   createZoneSaga,
   getZoneSaga,
   updateZoneSaga,
   deleteZoneSaga,
 } from './mapSaga';
-import { getAllTagsSaga } from './tagsEditorSaga';
-import { getUserSaga, createTagSaga, updateTagSaga, deleteTagSaga} from './userSaga';
+import {getAllTagsSaga, createTagSaga, updateTagSaga, deleteTagSaga} from './tagsEditorSaga';
+import {getUserSaga} from './userSaga';
 
 function* rootSaga() {
   yield takeLatest(AUTH_TYPES.REGISTER, registerSaga);

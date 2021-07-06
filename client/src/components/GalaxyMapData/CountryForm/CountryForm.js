@@ -1,4 +1,4 @@
-import { Field, Form, Formik } from 'formik';
+import {Field, Form, Formik} from 'formik';
 import React from 'react';
 import styles from './ContryForm.module.sass';
 
@@ -18,7 +18,7 @@ const CountryForm = (props) => {
       <h4>{props.initValues.zone_name}</h4>
       <Formik initialValues={initValues} onSubmit={submitHandler}>
         {({
-          values: { disp_name, emblem_img, description, government_type, tags },
+          values: {disp_name, emblem_img, description, government_type, tags},
         }) => (
           <Form className={styles.formContainer}>
             <label htmlFor="disp_name">Наименование</label>

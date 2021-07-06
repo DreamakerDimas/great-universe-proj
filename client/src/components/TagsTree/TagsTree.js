@@ -1,18 +1,18 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import TagsBranch from '../TagsBranch/TagsBranch';
 import styles from './TagsTree.module.sass';
 
 const TagsTree = (props) => {
-  const { tagsTree, select, popUpRenderer} = props;
-  
+  const {tagsTree, select, popUpRenderer} = props;
+
   const addTag = useCallback(() => {
     // popUpRenderer(some Form element)
   }, []);
-  
+
   const editTag = useCallback(() => {
     // popUpRenderer(some Form element)
   }, []);
-  
+
   const removeTag = useCallback(() => {
     // popUpRenderer(some Form element)
   }, []);
@@ -21,22 +21,22 @@ const TagsTree = (props) => {
     if (branch.child_tags.length === 0) {
       return (
         <TagsBranch
-          styles={styles.branchStyles}
+          // styles={styles.branchStyles}
           key={branch.code_name}
           branch={branch}
           select={select}
           childs={[]}
           pathArr={pathArr}
-          addTag={addTag} 
-          editTag={editTag} 
-          removeTag={removeTag} 
+          addTag={addTag}
+          editTag={editTag}
+          removeTag={removeTag}
         />
       );
     }
 
     return (
       <TagsBranch
-        styles={styles.branchStyles} //? mb use state (color) 
+        // styles={styles.branchStyles} //? mb use state (color)
         key={branch.code_name}
         branch={branch}
         select={select}

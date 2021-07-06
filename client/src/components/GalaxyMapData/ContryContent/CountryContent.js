@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, {useState} from 'react';
+import {connect} from 'react-redux';
 import {
   createCountry,
   updateCountry,
@@ -9,7 +9,7 @@ import CountryForm from '../CountryForm/CountryForm';
 import styles from './CountryContent.module.sass';
 
 const CountryContent = (props) => {
-  const { country, createCountry, updateCountry, deleteCountry } = props;
+  const {country, createCountry, updateCountry, deleteCountry} = props;
 
   const createHandler = (values) => {
     createCountry(values);
@@ -17,18 +17,18 @@ const CountryContent = (props) => {
 
   const updateHandler = (values) => {
     const id = props.country.id;
-    updateCountry({ id, updateData: values });
+    updateCountry({id, updateData: values});
   };
 
   const deleteHandler = () => {
-    const { id, zone_name } = props.country;
-    deleteCountry({ id, zone_name });
+    const {id, zone_name} = props.country;
+    deleteCountry({id, zone_name});
   };
 
   const [isEditMode, setEditMode] = useState(false);
 
   const getInitValues = () => {
-    const { id, ...restData } = country;
+    const {id, ...restData} = country;
     return restData;
   };
 
@@ -49,7 +49,7 @@ const CountryContent = (props) => {
           {country.isEmpty ? (
             <>
               <CountryForm
-                initValues={{ zone_name: country.zone_name }}
+                initValues={{zone_name: country.zone_name}}
                 actionFunc={createHandler}
               />
             </>

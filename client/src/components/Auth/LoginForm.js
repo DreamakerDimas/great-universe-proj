@@ -1,18 +1,18 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {Formik, Field, Form, ErrorMessage} from 'formik';
 import PropTypes from 'prop-types';
 
 import loginSchema from '../../lib/validationSchemas/loginSchema';
-import { authActionLogin } from '../../actions/auth';
+import {authActionLogin} from '../../actions/auth';
 import styles from './Auth.module.sass';
 
-const LoginForm = ({ login, history }) => {
-  const initValues = { email: '', password: '' };
+const LoginForm = ({login, history}) => {
+  const initValues = {email: '', password: ''};
 
   const submitHandler = (values) => {
-    const data = { values, history };
+    const data = {values, history};
     login(data);
   };
 
@@ -25,7 +25,7 @@ const LoginForm = ({ login, history }) => {
         validationSchema={loginSchema}
         onSubmit={submitHandler}
       >
-        {({ values: { email, password } }) => (
+        {({values: {email, password}}) => (
           <Form>
             <label htmlFor="email">Почта</label>
             <Field

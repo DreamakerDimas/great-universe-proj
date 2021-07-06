@@ -2,7 +2,7 @@ import React from 'react';
 
 const EditTagForm = () => {
   const initValues;
-  
+
   return <div>
      <Formik initialValues={initValues} onSubmit={submitHandler}>
               {({
@@ -21,9 +21,9 @@ const EditTagForm = () => {
                     component="div"
                     name="disp_name"
                   /> */}
-                  
-                  {/* Color. Only for primary tag?? */} 
-      
+
+                  {/* Color. Only for primary tag?? */}
+
                   <button type="submit">Изменить</button>
                 </Form>
               )}

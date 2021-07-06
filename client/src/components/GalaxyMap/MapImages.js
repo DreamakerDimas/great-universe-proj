@@ -1,15 +1,15 @@
-import React, { useCallback, useEffect } from 'react';
-import { MAP_MOUSE_MODES, MAP_PNG_PATH } from '../../constants';
+import React, {useCallback, useEffect} from 'react';
+import {MAP_MOUSE_MODES, MAP_PNG_PATH} from '../../constants';
 import SlicedMap from './SlicedMap/SlicedMap';
 import SVGZones from './SVGZones/SVGZones';
 import styles from './MapImages.module.sass';
-import { getCountryData, hideZoneData, showZoneData } from '../../actions/map';
-import { connect } from 'react-redux';
-import { useDrag, usePinch } from 'react-use-gesture';
-import { Globals, useSpring, animated } from 'react-spring';
-import { getCheckedPosition } from './functions/mapFunctions';
+import {getCountryData, hideZoneData, showZoneData} from '../../actions/map';
+import {connect} from 'react-redux';
+import {useDrag, usePinch} from 'react-use-gesture';
+import {Globals, useSpring, animated} from 'react-spring';
+import {getCheckedPosition} from './functions/mapFunctions';
 
-const { DRAG, SELECT } = MAP_MOUSE_MODES;
+const {DRAG, SELECT} = MAP_MOUSE_MODES;
 
 const MapImages = (props) => {
   const {
@@ -21,52 +21,52 @@ const MapImages = (props) => {
     boundaryValues,
     zoom,
   } = props;
-  const { showZoneData } = props;
+  const {showZoneData} = props;
 
   Globals.assign({
     skipAnimation: true,
   });
-  const [{ x, y }, api] = useSpring(() => ({
+  const [{x, y}, api] = useSpring(() => ({
     x: 0,
     y: 0,
   }));
 
   const bindDrag = useDrag(
-    ({ down, offset }) => {
-      if (down) {
-        let [left, top] = offset;
+      ({down, offset}) => {
+        if (down) {
+          const [left, top] = offset;
 
-        api.start({ x: left, y: top });
-      }
-    },
-    {
-      bounds: {
-        left: boundaryValues.left,
-        top: boundaryValues.top,
-        right: boundaryValues.zero,
-        bottom: boundaryValues.zero,
+          api.start({x: left, y: top});
+        }
       },
-      initial: [x, y],
-    }
+      {
+        bounds: {
+          left: boundaryValues.left,
+          top: boundaryValues.top,
+          right: boundaryValues.zero,
+          bottom: boundaryValues.zero,
+        },
+        initial: [x, y],
+      },
   );
 
   const recalcPosition = useCallback(
-    ({ x, y }) => {
-      const top =
+      ({x, y}) => {
+        const top =
         y.get() * currentZoomMultiplier -
         (window.innerHeight * currentZoomMultiplier - window.innerHeight) / 2;
 
-      const left =
+        const left =
         x.get() * currentZoomMultiplier -
         (window.innerWidth * currentZoomMultiplier - window.innerWidth) / 2;
 
-      return getCheckedPosition(
-        Math.trunc(top),
-        Math.trunc(left),
-        boundaryValues
-      );
-    },
-    [currentZoomMultiplier, boundaryValues]
+        return getCheckedPosition(
+            Math.trunc(top),
+            Math.trunc(left),
+            boundaryValues,
+        );
+      },
+      [currentZoomMultiplier, boundaryValues],
   );
 
   const zoneClickHandler = (e) => {
@@ -77,9 +77,9 @@ const MapImages = (props) => {
   };
 
   useEffect(() => {
-    const { top, left } = recalcPosition({ x, y });
+    const {top, left} = recalcPosition({x, y});
 
-    api.start({ x: left, y: top });
+    api.start({x: left, y: top});
   }, [currentZoomMultiplier]);
 
   return (
@@ -91,7 +91,7 @@ const MapImages = (props) => {
       // onMouseLeave={mouseLeaveHandler}
       onClick={zoneClickHandler}
       {...bindDrag()}
-      style={{ x, y, touchAction: 'none' }}
+      style={{x, y, touchAction: 'none'}}
     >
       <SlicedMap width={width} style={imagesStyle} />
       <SVGZones width={width} style={imagesStyle} />

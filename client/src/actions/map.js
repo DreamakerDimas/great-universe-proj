@@ -1,4 +1,4 @@
-import { MAP_INTERACTIONS_TYPES } from './types';
+import {MAP_INTERACTIONS_TYPES} from './types';
 
 export const showZoneData = (data) => ({
   type: MAP_INTERACTIONS_TYPES.SHOW_DATA,

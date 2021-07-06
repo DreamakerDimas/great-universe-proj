@@ -1,4 +1,4 @@
-import { TAGS_EDITOR_TYPES } from './types';
+import {TAGS_EDITOR_TYPES} from './types';
 
 export const selectTag = (data) => ({
   type: TAGS_EDITOR_TYPES.SELECT_TAG,

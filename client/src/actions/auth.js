@@ -1,4 +1,4 @@
-import { AUTH_TYPES } from './types';
+import {AUTH_TYPES} from './types';
 
 //   catch (err) {
 //     const errors = err.response.data.errors;

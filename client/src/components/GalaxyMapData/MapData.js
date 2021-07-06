@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { getCountryData } from '../../actions/map';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {getCountryData} from '../../actions/map';
 import CountryContent from './ContryContent/CountryContent';
 import styles from './MapData.module.sass';
 
 const MapData = (props) => {
-  const { mapStore, getCountryData } = props;
-  const { currentData } = mapStore;
+  const {mapStore, getCountryData} = props;
+  const {currentData} = mapStore;
 
   useEffect(() => {
     getCountryData(mapStore.zone_name);
@@ -30,8 +30,8 @@ const MapData = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const { mapStore } = state;
-  return { mapStore };
+  const {mapStore} = state;
+  return {mapStore};
 };
 
 const mapDispatchToProps = (dispatch) => ({

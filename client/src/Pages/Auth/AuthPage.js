@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import {useState} from 'react';
 import LoginForm from '../../components/Auth/LoginForm';
 import RegistrationForm from '../../components/Auth/RegistrationForm';
 import styles from './AuthPage.module.sass';

@@ -1,5 +1,5 @@
-import { put, select } from 'redux-saga/effects';
-import { MAP_INTERACTIONS_TYPES } from '../actions/types';
+import {put, select} from 'redux-saga/effects';
+import {MAP_INTERACTIONS_TYPES} from '../actions/types';
 import * as restController from '../api/rest/restController';
 
 const {
@@ -18,7 +18,7 @@ const {
 } = MAP_INTERACTIONS_TYPES;
 
 export function* getZoneSaga(action) {
-  yield put({ type: GET_COUNTRY_REQUEST });
+  yield put({type: GET_COUNTRY_REQUEST});
   try {
     const resData = yield restController.getZoneData(action.data);
 
@@ -27,12 +27,12 @@ export function* getZoneSaga(action) {
       data: resData.data,
     });
   } catch (err) {
-    yield put({ type: GET_COUNTRY_ERROR, error: err });
+    yield put({type: GET_COUNTRY_ERROR, error: err});
   }
 }
 
 export function* createZoneSaga(action) {
-  yield put({ type: CREATE_COUNTRY_REQUEST });
+  yield put({type: CREATE_COUNTRY_REQUEST});
   try {
     const resData = yield restController.createZone(action.data);
 
@@ -41,29 +41,29 @@ export function* createZoneSaga(action) {
       data: resData.data,
     });
   } catch (err) {
-    yield put({ type: CREATE_COUNTRY_ERROR, error: err });
+    yield put({type: CREATE_COUNTRY_ERROR, error: err});
   }
 }
 
 export function* updateZoneSaga(action) {
-  yield put({ type: UPDATE_COUNTRY_REQUEST });
+  yield put({type: UPDATE_COUNTRY_REQUEST});
   try {
     const resData = yield restController.updateZone(action.data);
 
-    yield put({ type: UPDATE_COUNTRY_SUCCESS, data: resData.data });
+    yield put({type: UPDATE_COUNTRY_SUCCESS, data: resData.data});
   } catch (err) {
-    yield put({ type: UPDATE_COUNTRY_ERROR, error: err });
+    yield put({type: UPDATE_COUNTRY_ERROR, error: err});
   }
 }
 
 export function* deleteZoneSaga(action) {
-  yield put({ type: DELETE_COUNTRY_REQUEST });
+  yield put({type: DELETE_COUNTRY_REQUEST});
   try {
     yield restController.deleteZone(action.data.id);
-    const emptyData = { zone_name: action.data.zone_name, isEmpty: true };
+    const emptyData = {zone_name: action.data.zone_name, isEmpty: true};
 
-    yield put({ type: DELETE_COUNTRY_SUCCESS, data: emptyData });
+    yield put({type: DELETE_COUNTRY_SUCCESS, data: emptyData});
   } catch (err) {
-    yield put({ type: DELETE_COUNTRY_ERROR, error: err });
+    yield put({type: DELETE_COUNTRY_ERROR, error: err});
   }
 }

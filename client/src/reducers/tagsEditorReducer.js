@@ -1,4 +1,4 @@
-import { TAGS_EDITOR_TYPES } from '../actions/types';
+import {TAGS_EDITOR_TYPES} from '../actions/types';
 
 const {
   SELECT_TAG,
@@ -22,7 +22,7 @@ const initialState = {
   tagsTree: [],
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case SELECT_TAG:
       return {

@@ -1,4 +1,4 @@
-import { MAP_INTERACTIONS_TYPES } from '../actions/types';
+import {MAP_INTERACTIONS_TYPES} from '../actions/types';
 
 const {
   SHOW_DATA,
@@ -25,7 +25,7 @@ const initialState = {
   currentData: null,
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case SHOW_DATA:
       return {

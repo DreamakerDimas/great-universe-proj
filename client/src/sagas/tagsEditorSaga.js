@@ -33,9 +33,13 @@ export function* createTagSaga(action) {
     const resData = yield restController.createTag(action.data);
 
     // join with existing tags tree (for render)
-    const tagsTree = [];
+    const {tagsTree} = yield select((state) => state.tagsEditorStore);
 
-    yield put({type: CREATE_TAG_SUCCESS, data: tagsTree});
+    const newBranch = resData.data;
+    const newTree = tagsTree.map((branch) =>
+        branch.code_name === newBranch.code_name ? newBranch : branch);
+
+    yield put({type: CREATE_TAG_SUCCESS, data: newTree});
   } catch (err) {
     yield put({type: CREATE_TAG_ERROR, error: err});
   }

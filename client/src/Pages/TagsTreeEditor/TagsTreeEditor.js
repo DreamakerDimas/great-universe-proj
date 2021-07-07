@@ -16,7 +16,7 @@ const TagsTreeEditor = ({selectTag, getAllTags, tagsEditorStore}) => {
 
   return (
     <div className={styles.mainContainer}>
-      {loading ? (
+      {loading && tagsTree.length === 0 ? (
         'Loading...'
       ) : (
         <>

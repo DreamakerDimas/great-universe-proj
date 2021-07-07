@@ -4,8 +4,9 @@ import {getTagValues} from '../../utils/tagsFunctions';
 import {Field, Form, Formik} from 'formik';
 import * as _ from 'lodash';
 import styles from './TagsActions.module.sass';
+import {createTag} from '../../actions/tagsEditor';
 
-const CreateTag = ({pathArr, closeModal}) => {
+const CreateTag = ({pathArr, closeModal, addTag}) => {
   const [tagValues, setTagValues] = useState({
     code_name: '',
     name: '',
@@ -15,8 +16,8 @@ const CreateTag = ({pathArr, closeModal}) => {
 
 
   const submitHandler = useCallback(() => {
-    console.log(tagValues); // !!! async action
-    // add new path arr!!! pathArr.push(code_name)
+    const data = {tagsChainArr: pathArr, tagData: tagValues};
+    addTag(data);
     closeModal();
   }, [tagValues]);
 
@@ -49,7 +50,7 @@ const CreateTag = ({pathArr, closeModal}) => {
 
           {/* Color. Only for primary tag?? */}
 
-          <button className={styles.button} type="submit">Изменить</button>
+          <button className={styles.button} type="submit">Добавить</button>
         </Form>
       )}
     </Formik>}
@@ -61,4 +62,8 @@ const mapStateToProps = (state) => {
   return {tagsTree};
 };
 
-export default connect(mapStateToProps, null)(CreateTag);
+const mapDispatchToProps = (dispatch) => ({
+  addTag: (data) => dispatch(createTag(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateTag);

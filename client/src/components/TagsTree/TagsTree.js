@@ -1,9 +1,13 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import TagsBranch from '../TagsBranch/TagsBranch';
 import styles from './TagsTree.module.sass';
+import Modal from '../Modal/Modal';
 
 const TagsTree = (props) => {
   const {tagsTree, select, popUpRenderer} = props;
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalInnerElem, setModalInnerElem] = useState(null);
 
   const addTag = useCallback(() => {
     // popUpRenderer(some Form element)
@@ -15,6 +19,16 @@ const TagsTree = (props) => {
 
   const removeTag = useCallback(() => {
     // popUpRenderer(some Form element)
+  }, []);
+
+  const displayModalHandler = useCallback((innerElem) => {
+    setShowModal(true);
+    setModalInnerElem(innerElem);
+  }, []);
+
+  const hideModalHandler = useCallback(() => {
+    setShowModal(false);
+    setModalInnerElem(null);
   }, []);
 
   const renderBranch = (branch, pathArr) => {
@@ -30,6 +44,8 @@ const TagsTree = (props) => {
           addTag={addTag}
           editTag={editTag}
           removeTag={removeTag}
+          displayModalHandler={displayModalHandler}
+          hideModalHandler={hideModalHandler}
         />
       );
     }
@@ -45,9 +61,11 @@ const TagsTree = (props) => {
           return renderBranch(tag, newPathArr);
         })}
         pathArr={pathArr}
-        addTag = { addTag }
-        editTag = { editTag }
-        removeTag = { removeTag }
+        addTag={addTag}
+        editTag={editTag}
+        removeTag={removeTag}
+        displayModalHandler={displayModalHandler}
+        hideModalHandler={hideModalHandler}
       />
     );
   };
@@ -57,6 +75,7 @@ const TagsTree = (props) => {
       <ul className={styles.treeList}>
         {tagsTree.map((branch) => renderBranch(branch, [branch.code_name]))}
       </ul>
+      {showModal && <Modal InnerElement={modalInnerElem} hideModalHandler={hideModalHandler} />}
     </div>
   );
 };

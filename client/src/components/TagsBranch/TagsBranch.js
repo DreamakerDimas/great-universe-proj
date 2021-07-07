@@ -1,14 +1,15 @@
 import React, {useCallback, useState} from 'react';
 import styles from './TagsBranch.module.sass';
+import EditTag from '../TagsActions/EditTag';
 
 const TagsBranch = (props) => {
   const {branch, select, childs, pathArr, editTag, addTag, removeTag,
-    compStyles} = props;
+    compStyles, displayModalHandler, hideModalHandler} = props;
 
   const [showContent, setShowContent] = useState(false);
 
   const editTagHandler = useCallback(() => {
-    // editTag()
+    displayModalHandler(<EditTag pathArr={pathArr} />);
   }, []);
 
   const addTagHandler = useCallback(() => {

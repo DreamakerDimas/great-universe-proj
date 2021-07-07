@@ -5,18 +5,18 @@ import {Field, Form, Formik} from 'formik';
 import * as _ from 'lodash';
 import styles from './TagsActions.module.sass';
 
-const EditTag = ({pathArr, tagsTree, closeModal}) => {
-  const [tagValues, setTagValues] = useState({});
+const CreateTag = ({pathArr, closeModal}) => {
+  const [tagValues, setTagValues] = useState({
+    code_name: '',
+    name: '',
+    child_tags: [],
+    related_tags: [],
+  });
 
-  useEffect(() => {
-    const targetBranch = tagsTree.find((tag) => tag.code_name === pathArr[0]);
-    const values = _.omit(getTagValues(targetBranch, pathArr), ['code_name', 'id']);
-
-    setTagValues(values);
-  }, []);
 
   const submitHandler = useCallback(() => {
     console.log(tagValues); // !!! async action
+    // add new path arr!!! pathArr.push(code_name)
     closeModal();
   }, [tagValues]);
 
@@ -38,6 +38,15 @@ const EditTag = ({pathArr, tagsTree, closeModal}) => {
             className={styles.field}
           />
 
+          <label htmlFor={'name'}>Кодовое имя (транслитерация)</label>
+          <Field
+            name={'code_name'}
+            type={'text'}
+            value={tagValues.code_name}
+            onChange={changeTagValue}
+            className={styles.field}
+          />
+
           {/* Color. Only for primary tag?? */}
 
           <button className={styles.button} type="submit">Изменить</button>
@@ -52,4 +61,4 @@ const mapStateToProps = (state) => {
   return {tagsTree};
 };
 
-export default connect(mapStateToProps, null)(EditTag);
+export default connect(mapStateToProps, null)(CreateTag);

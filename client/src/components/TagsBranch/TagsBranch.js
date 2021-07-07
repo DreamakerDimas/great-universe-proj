@@ -1,6 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import styles from './TagsBranch.module.sass';
 import EditTag from '../TagsActions/EditTag';
+import CreateTag from '../TagsActions/CreateTag';
 
 const TagsBranch = (props) => {
   const {branch, select, childs, pathArr, editTag, addTag, removeTag,
@@ -9,11 +10,11 @@ const TagsBranch = (props) => {
   const [showContent, setShowContent] = useState(false);
 
   const editTagHandler = useCallback(() => {
-    displayModalHandler(<EditTag pathArr={pathArr} />);
+    displayModalHandler(<EditTag pathArr={pathArr} closeModal={hideModalHandler} />);
   }, []);
 
   const addTagHandler = useCallback(() => {
-    // editTag()
+    displayModalHandler(<CreateTag pathArr={pathArr} closeModal={hideModalHandler} /> );
   }, []);
 
   const removeTagHandler = useCallback(() => {

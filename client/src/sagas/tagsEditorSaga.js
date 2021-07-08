@@ -32,7 +32,6 @@ export function* createTagSaga(action) {
   try {
     const resData = yield restController.createTag(action.data);
 
-    // join with existing tags tree (for render)
     const {tagsTree} = yield select((state) => state.tagsEditorStore);
 
     const newBranch = resData.data;
@@ -50,10 +49,13 @@ export function* updateTagSaga(action) {
   try {
     const resData = yield restController.updateTag(action.data);
 
-    // merge with existing tags tree
-    const tagsTree = [];
+    const {tagsTree} = yield select((state) => state.tagsEditorStore);
 
-    yield put({type: UPDATE_TAG_SUCCESS, data: tagsTree});
+    const newBranch = resData.data;
+    const newTree = tagsTree.map((branch) =>
+        branch.code_name === newBranch.code_name ? newBranch : branch);
+
+    yield put({type: UPDATE_TAG_SUCCESS, data: newTree});
   } catch (err) {
     yield put({type: UPDATE_TAG_ERROR, error: err});
   }
@@ -64,10 +66,13 @@ export function* deleteTagSaga(action) {
   try {
     const resData = yield restController.deleteTag(action.data);
 
-    // merge with existing tags tree
-    const tagsTree = [];
+    const {tagsTree} = yield select((state) => state.tagsEditorStore);
 
-    yield put({type: DELETE_TAG_SUCCESS, data: tagsTree});
+    const newBranch = resData.data;
+    const newTree = tagsTree.map((branch) =>
+        branch.code_name === newBranch.code_name ? newBranch : branch);
+
+    yield put({type: DELETE_TAG_SUCCESS, data: newTree});
   } catch (err) {
     yield put({type: DELETE_TAG_ERROR, error: err});
   }

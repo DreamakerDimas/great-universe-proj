@@ -4,19 +4,22 @@ import {getTagValues} from '../../utils/tagsFunctions';
 import {Field, Form, Formik} from 'formik';
 import * as _ from 'lodash';
 import styles from './TagsActions.module.sass';
+import {updateTag} from '../../actions/tagsEditor';
 
-const EditTag = ({pathArr, tagsTree, closeModal}) => {
+const EditTag = ({pathArr, tagsTree, closeModal, editTag}) => {
   const [tagValues, setTagValues] = useState({});
 
   useEffect(() => {
     const targetBranch = tagsTree.find((tag) => tag.code_name === pathArr[0]);
-    const values = _.omit(getTagValues(targetBranch, pathArr), ['code_name', 'id']);
+    const values = _.omit(getTagValues(targetBranch, pathArr), ['id']);
 
     setTagValues(values);
   }, []);
 
   const submitHandler = useCallback(() => {
-    console.log(tagValues); // !!! async action
+    const data = {tagsChainArr: pathArr, tagData: tagValues};
+    console.log(data);
+    editTag(data);
     closeModal();
   }, [tagValues]);
 
@@ -52,4 +55,8 @@ const mapStateToProps = (state) => {
   return {tagsTree};
 };
 
-export default connect(mapStateToProps, null)(EditTag);
+const mapDispatchToProps = (dispatch) => ({
+  editTag: (data) => dispatch(updateTag(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditTag);

@@ -7,14 +7,14 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { CreateTagDto } from './dto/create-tag.dto';
-import { UpdateTagDto } from './dto/update-tag.dto';
+import {CreateTagDto} from './dto/create-tag.dto';
+import {UpdateTagDto} from './dto/update-tag.dto';
 import {
   addTagToBranch,
   removeTagFromBranch,
   updateTagInBranch,
 } from './tags.functions';
-import { TagsService } from './tags.service';
+import {TagsService} from './tags.service';
 
 @Controller('tags')
 export class TagsController {
@@ -56,8 +56,11 @@ export class TagsController {
   }
 
   // edit tag
-  @Put() // tagsChain, tagData in props or body? !!! obviously need body
-  async edit(tagsChainArr: Array<string>, tagData: UpdateTagDto) {
+  @Post('update') // tagsChain, tagData in props or body? !!! obviously need body
+  async edit(
+      @Body('tagsChainArr') tagsChainArr: Array<string>,
+      @Body('tagData') tagData: UpdateTagDto,
+  ) {
     const tagBranch = await this.tagsService.getByBody({
       code_name: tagsChainArr[0],
     });
@@ -74,8 +77,10 @@ export class TagsController {
   }
 
   // delete tag
-  @Delete() // tagsChain in props or body? !!! obviously need body
-  async remove(tagsChainArr: Array<string>) {
+  @Post('delete') // tagsChain in props or body? !!! obviously need body
+  async remove(
+      @Body('tagsChainArr') tagsChainArr: Array<string>,
+  ) {
     const tagBranch = await this.tagsService.getByBody({
       code_name: tagsChainArr[0],
     });

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsArray } from 'class-validator';
+import {IsNotEmpty, IsString, IsArray, IsOptional} from 'class-validator';
 
 export class UpdateTagDto {
   @IsString()
@@ -14,7 +14,8 @@ export class UpdateTagDto {
 
   @IsArray()
   readonly child_tags: [];
-  
+
   @IsString()
+  @IsOptional()
   readonly color: string;
 }

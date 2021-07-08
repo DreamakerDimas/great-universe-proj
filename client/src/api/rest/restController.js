@@ -12,5 +12,5 @@ export const deleteZone = (data) => http.delete(`/zones/${data}`);
 
 export const getAllTags = () => http.get('/tags/');
 export const createTag = (data) => http.post('/tags/', data); // where data = {tagsChainArr: [strings of code_name], tagData}
-export const updateTag = (data) => http.put('/tags/', data); // !!! where data = {tagsChainArr: [strings of code_name], tagData}
-export const deleteTag = (data) => http.delete('/tags/', data); // !!! where data = [strings of code_name]
+export const updateTag = (data) => http.post('/tags/update', data); // !!! where data = {tagsChainArr: [strings of code_name], tagData}
+export const deleteTag = (data) => http.post('/tags/delete', data); // !!! where data = [strings of code_name]

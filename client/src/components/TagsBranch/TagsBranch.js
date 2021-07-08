@@ -2,6 +2,7 @@ import React, {useCallback, useState} from 'react';
 import styles from './TagsBranch.module.sass';
 import EditTag from '../TagsActions/EditTag';
 import CreateTag from '../TagsActions/CreateTag';
+import DeleteTagConfirm from '../TagsActions/DeleteTagConfirm';
 
 const TagsBranch = (props) => {
   const {branch, select, childs, pathArr, editTag, addTag, removeTag,
@@ -18,7 +19,7 @@ const TagsBranch = (props) => {
   }, []);
 
   const removeTagHandler = useCallback(() => {
-    // editTag()
+    displayModalHandler(<DeleteTagConfirm pathArr={pathArr} closeModal={hideModalHandler} />);
   }, []);
 
   const showContentToggle = useCallback(() => {

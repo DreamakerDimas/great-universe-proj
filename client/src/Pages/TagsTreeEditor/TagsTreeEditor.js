@@ -12,23 +12,17 @@ const TagsTreeEditor = ({selectTag, getAllTags, tagsEditorStore}) => {
     getAllTags();
   }, []);
 
-  // add user data waiter (globally) !!!
 
   return (
     <div className={styles.mainContainer}>
-      {loading && tagsTree.length === 0 ? (
+      {loading && tagsTree.length === 0 ? ( // add user data waiter (globally) !!!
         'Loading...'
       ) : (
         <>
           <TagsTree tagsTree={tagsTree} select={selectTag} />
 
+          {loading && <div>Loading...</div>}
           <div>Tag Description</div>
-
-          <div className={styles.popUpContainer}>
-            <div className={styles.formContainer}>
-
-            </div>
-          </div>
         </>
       )}
     </div>

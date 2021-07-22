@@ -3,12 +3,14 @@ import styles from './TagsBranch.module.sass';
 import EditTag from '../TagsActions/EditTag';
 import CreateTag from '../TagsActions/CreateTag';
 import DeleteTagConfirm from '../TagsActions/DeleteTagConfirm';
+import ArrowIcon from '../Common/ArrowIcon/ArrowIcon';
 
 const TagsBranch = (props) => {
   const {branch, select, childs, pathArr, editTag, addTag, removeTag,
     compStyles, displayModalHandler, hideModalHandler} = props;
 
   const [showContent, setShowContent] = useState(false);
+  const [showButtons, setShowButtons] = useState(true);
 
   const editTagHandler = useCallback(() => {
     displayModalHandler(<EditTag pathArr={pathArr} closeModal={hideModalHandler} />);
@@ -26,11 +28,21 @@ const TagsBranch = (props) => {
     setShowContent((prev) => !prev);
   }, []);
 
+  const showButtonsHandler = useCallback(() => {
+    setShowButtons(true);
+  }, []);
+
+  const hideButtonsHandler = useCallback(() => {
+    setShowButtons(false);
+  }, []);
+
   return (
     <li className={styles.branchContainer}>
       <div className={styles.branchHeader}>
-        <div className={styles.tagNameContainer}>
-          <div className={styles.arrow} onClick={showContentToggle}>{'>'}</div>
+        <div className={styles.tagNameContainer} onMouseEnter={showButtonsHandler} onMouseLeave={hideButtonsHandler}>
+          <div className={styles.arrow} onClick={showContentToggle}>
+            <ArrowIcon isActive={showContent} />
+          </div>
 
           <div
             className={styles.tagName}
@@ -38,10 +50,8 @@ const TagsBranch = (props) => {
           >
             {branch.name}
           </div>
-        </div>
 
-        {showContent && <>
-          <div className={styles.buttonsContainer}>
+          {showButtons && <div className={styles.buttonsContainer}>
             <div
               className={styles.editTagButton}
               onClick={editTagHandler}
@@ -52,14 +62,18 @@ const TagsBranch = (props) => {
             <div className={styles.removeTagButton}
               onClick={removeTagHandler}
             >{'-'}</div>
-          </div>
+          </div>}
+        </div>
+      </div>
 
+      <div className={styles.branchBody}>
+        {showContent &&
+        <div>
           {childs.length > 0 && <div className={styles.childsContainer}>
             <ul>{childs.map((child) => child)}
             </ul>
           </div>}
-
-        </>}
+        </div>}
       </div>
 
     </li>

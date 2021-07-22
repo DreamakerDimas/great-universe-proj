@@ -4,9 +4,7 @@ import styles from './TagsTree.module.sass';
 import Modal from '../Modal/Modal';
 import CreateTag from '../TagsActions/CreateTag';
 
-const TagsTree = (props) => {
-  const {tagsTree, select, popUpRenderer} = props;
-
+const TagsTree = ({tagsTree, select, isEditorMode}) => {
   const [showModal, setShowModal] = useState(false);
   const [modalInnerElem, setModalInnerElem] = useState(null);
 
@@ -37,6 +35,7 @@ const TagsTree = (props) => {
           pathArr={pathArr}
           displayModalHandler={displayModalHandler}
           hideModalHandler={hideModalHandler}
+          isEditorMode={isEditorMode}
         />
       );
     }
@@ -54,6 +53,7 @@ const TagsTree = (props) => {
         pathArr={pathArr}
         displayModalHandler={displayModalHandler}
         hideModalHandler={hideModalHandler}
+        isEditorMode={isEditorMode}
       />
     );
   };

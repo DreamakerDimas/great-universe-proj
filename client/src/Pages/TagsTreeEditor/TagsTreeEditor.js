@@ -19,7 +19,7 @@ const TagsTreeEditor = ({selectTag, getAllTags, tagsEditorStore}) => {
         'Loading...'
       ) : (
         <>
-          <TagsTree tagsTree={tagsTree} select={selectTag} />
+          <TagsTree tagsTree={tagsTree} select={selectTag} isEditorMode />
 
           {loading && <div>Loading...</div>}
           <div>Tag Description</div>

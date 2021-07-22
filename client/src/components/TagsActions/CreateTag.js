@@ -5,6 +5,7 @@ import {Field, Form, Formik} from 'formik';
 import * as _ from 'lodash';
 import styles from './TagsActions.module.sass';
 import {createTag} from '../../actions/tagsEditor';
+import {translitWord} from '../../utils/functions/functions';
 
 const CreateTag = ({pathArr, closeModal, addTag}) => {
   const [tagValues, setTagValues] = useState({
@@ -22,6 +23,11 @@ const CreateTag = ({pathArr, closeModal, addTag}) => {
   }, [tagValues]);
 
   const changeTagValue = useCallback((e) => {
+    if (e.target.name === 'name') {
+      const translit = translitWord(e.target.value);
+      setTagValues(((prev) => ({...prev, ...{code_name: translit}})));
+    }
+
     const newObj = {[e.target.name]: e.target.value};
     setTagValues((prev) => ({...prev, ...newObj}));
   }, []);

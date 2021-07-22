@@ -30,13 +30,20 @@ export function* getAllTagsSaga() {
 export function* createTagSaga(action) {
   yield put({type: CREATE_TAG_REQUEST});
   try {
+    const isNewTree = action.data.tagsChainArr.length === 0;
     const resData = yield restController.createTag(action.data);
 
     const {tagsTree} = yield select((state) => state.tagsEditorStore);
 
     const newBranch = resData.data;
-    const newTree = tagsTree.map((branch) =>
-        branch.code_name === newBranch.code_name ? newBranch : branch);
+
+    let newTree;
+    if (isNewTree) {
+      newTree = [...tagsTree, newBranch];
+    } else {
+      newTree = tagsTree.map((branch) =>
+          branch.code_name === newBranch.code_name ? newBranch : branch);
+    }
 
     yield put({type: CREATE_TAG_SUCCESS, data: newTree});
   } catch (err) {
@@ -64,13 +71,20 @@ export function* updateTagSaga(action) {
 export function* deleteTagSaga(action) {
   yield put({type: DELETE_TAG_REQUEST});
   try {
+    const isDeletedFullTree = action.data.tagsChainArr.length === 1;
     const resData = yield restController.deleteTag(action.data);
 
     const {tagsTree} = yield select((state) => state.tagsEditorStore);
 
     const newBranch = resData.data;
-    const newTree = tagsTree.map((branch) =>
-        branch.code_name === newBranch.code_name ? newBranch : branch);
+
+    let newTree;
+    if (isDeletedFullTree) {
+      newTree = tagsTree.filter((branch) => branch.code_name !== action.data.tagsChainArr[0]);
+    } else {
+      newTree = tagsTree.map((branch) =>
+          branch.code_name === newBranch.code_name ? newBranch : branch);
+    }
 
     yield put({type: DELETE_TAG_SUCCESS, data: newTree});
   } catch (err) {

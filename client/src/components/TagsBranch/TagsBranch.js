@@ -6,11 +6,10 @@ import DeleteTagConfirm from '../TagsActions/DeleteTagConfirm';
 import ArrowIcon from '../Common/ArrowIcon/ArrowIcon';
 
 const TagsBranch = (props) => {
-  const {branch, select, childs, pathArr, editTag, addTag, removeTag,
-    compStyles, displayModalHandler, hideModalHandler} = props;
+  const {branch, select, childs, pathArr, displayModalHandler, hideModalHandler} = props;
 
   const [showContent, setShowContent] = useState(false);
-  const [showButtons, setShowButtons] = useState(true);
+  const [showButtons, setShowButtons] = useState(false);
 
   const editTagHandler = useCallback(() => {
     displayModalHandler(<EditTag pathArr={pathArr} closeModal={hideModalHandler} />);

@@ -2,6 +2,7 @@ import React, {useCallback, useState} from 'react';
 import TagsBranch from '../TagsBranch/TagsBranch';
 import styles from './TagsTree.module.sass';
 import Modal from '../Modal/Modal';
+import CreateTag from '../TagsActions/CreateTag';
 
 const TagsTree = (props) => {
   const {tagsTree, select, popUpRenderer} = props;
@@ -9,17 +10,6 @@ const TagsTree = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [modalInnerElem, setModalInnerElem] = useState(null);
 
-  const addTag = useCallback(() => {
-    // popUpRenderer(some Form element)
-  }, []);
-
-  const editTag = useCallback(() => {
-    // popUpRenderer(some Form element)
-  }, []);
-
-  const removeTag = useCallback(() => {
-    // popUpRenderer(some Form element)
-  }, []);
 
   const displayModalHandler = useCallback((innerElem) => {
     setShowModal(true);
@@ -29,6 +19,10 @@ const TagsTree = (props) => {
   const hideModalHandler = useCallback(() => {
     setShowModal(false);
     setModalInnerElem(null);
+  }, []);
+
+  const addRootTagHandler = useCallback(() => {
+    displayModalHandler(<CreateTag pathArr={[]} closeModal={hideModalHandler} />);
   }, []);
 
   const renderBranch = (branch, pathArr) => {
@@ -41,9 +35,6 @@ const TagsTree = (props) => {
           select={select}
           childs={[]}
           pathArr={pathArr}
-          addTag={addTag}
-          editTag={editTag}
-          removeTag={removeTag}
           displayModalHandler={displayModalHandler}
           hideModalHandler={hideModalHandler}
         />
@@ -61,9 +52,6 @@ const TagsTree = (props) => {
           return renderBranch(tag, newPathArr);
         })}
         pathArr={pathArr}
-        addTag={addTag}
-        editTag={editTag}
-        removeTag={removeTag}
         displayModalHandler={displayModalHandler}
         hideModalHandler={hideModalHandler}
       />
@@ -74,6 +62,7 @@ const TagsTree = (props) => {
     <div className={styles.treeContainer}>
       <ul className={styles.treeList}>
         {tagsTree.map((branch) => renderBranch(branch, [branch.code_name]))}
+        <div className={styles.addBranch} onClick={addRootTagHandler}>Новая ветка</div>
       </ul>
       {showModal && <Modal InnerElement={modalInnerElem} hideModalHandler={hideModalHandler} />}
     </div>

@@ -4,12 +4,17 @@ import EditTag from '../TagsActions/EditTag';
 import CreateTag from '../TagsActions/CreateTag';
 import DeleteTagConfirm from '../TagsActions/DeleteTagConfirm';
 import ArrowIcon from '../Common/ArrowIcon/ArrowIcon';
+import classNames from 'classnames';
 
 const TagsBranch = (props) => {
   const {branch, select, childs, pathArr, displayModalHandler, hideModalHandler, isEditorMode} = props;
 
   const [showContent, setShowContent] = useState(false);
+  const [disableBodyRender, setDisableBodyRender] = useState(true);
+
   const [showButtons, setShowButtons] = useState(false);
+  const [disableButtonsRenderer, setDisableButtonsRenderer] = useState(true);
+
   const isEmpty = useMemo(() => childs.length === 0, [childs]);
 
   const editTagHandler = useCallback(() => {
@@ -28,19 +33,42 @@ const TagsBranch = (props) => {
   }, [isEditorMode]);
 
   const showContentToggle = useCallback(() => {
-    setShowContent((prev) => !prev);
-  }, []);
+    if (showContent) {
+      setShowContent(false);
+      setTimeout(() => setDisableBodyRender(true), 300);
+    } else {
+      setShowContent(true);
+      setDisableBodyRender(false);
+    }
+  }, [showContent]);
 
-  const showButtonsHandler = useCallback(() => {
+  const showButtonsHandler = useCallback(async () => {
     setShowButtons(true);
+    setDisableButtonsRenderer(false);
   }, []);
 
-  const hideButtonsHandler = useCallback(() => {
+  const hideButtonsHandler = useCallback(async () => {
     setShowButtons(false);
+    await setTimeout(() => setDisableButtonsRenderer(true), 300);
   }, []);
+
+  const branchBodyStyles = useMemo(() => classNames({
+    [styles.branchBody]: true,
+    [styles.activeBranchBody]: showContent,
+  }), [showContent]);
+
+  const branchContainerStyles = useMemo(() => classNames({
+    [styles.branchContainer]: true,
+    [styles.activeBranchContainer]: showContent,
+  }), [showContent]);
+
+  const buttonsContainerStyles = useMemo(() => classNames({
+    [styles.buttonsContainer]: true,
+    [styles.activeButtonsContainer]: showButtons,
+  }), [showButtons]);
 
   return (
-    <li className={styles.branchContainer}>
+    <li className={branchContainerStyles}>
       <div className={styles.branchHeader}>
         <div className={styles.tagNameContainer} onMouseEnter={showButtonsHandler} onMouseLeave={hideButtonsHandler}>
           <div className={styles.arrow} onClick={showContentToggle}>
@@ -54,7 +82,7 @@ const TagsBranch = (props) => {
             {branch.name}
           </div>
 
-          {isEditorMode && showButtons && <div className={styles.buttonsContainer}>
+          {isEditorMode && !disableButtonsRenderer && <div className={buttonsContainerStyles}>
             <div
               className={styles.editTagButton}
               onClick={editTagHandler}
@@ -69,8 +97,8 @@ const TagsBranch = (props) => {
         </div>
       </div>
 
-      <div className={styles.branchBody}>
-        {showContent &&
+      <div className={branchBodyStyles}>
+        {!disableBodyRender &&
         <div>
           {!isEmpty && <div className={styles.childsContainer}>
             <ul>{childs.map((child) => child)}

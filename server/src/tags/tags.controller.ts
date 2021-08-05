@@ -1,11 +1,9 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Param,
   Post,
-  Put,
 } from '@nestjs/common';
 import {CreateTagDto} from './dto/create-tag.dto';
 import {UpdateTagDto} from './dto/update-tag.dto';

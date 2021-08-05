@@ -15,5 +15,8 @@ module.exports = {
     '@typescript-eslint',
   ],
   'rules': {
+    'new-cap': ['warn'],
+    'camelcase': ['off'],
+    'max-len': ['warn', 100],
   },
 };

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsArray, IsOptional } from 'class-validator';
+import {IsNotEmpty, IsString, IsArray, IsOptional, IsNumber} from 'class-validator';
 
 export class CreateTagDto {
   @IsString()
@@ -16,8 +16,12 @@ export class CreateTagDto {
   @IsOptional()
   @IsArray()
   readonly child_tags?: []; // empty
-  
+
   @IsOptional()
   @IsArray()
   readonly color?: string; // hex
+
+  @IsOptional()
+  @IsNumber()
+  readonly sort_index?: number;
 }

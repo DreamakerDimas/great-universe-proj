@@ -4,10 +4,9 @@ import styles from './TagsTree.module.sass';
 import Modal from '../Modal/Modal';
 import CreateTag from '../TagsActions/CreateTag';
 
-const TagsTree = ({tagsTree, select, isEditorMode}) => {
+const TagsTree: React.FC = ({tagsTree, select, isEditorMode}) => {
   const [showModal, setShowModal] = useState(false);
   const [modalInnerElem, setModalInnerElem] = useState(null);
-
 
   const displayModalHandler = useCallback((innerElem) => {
     setShowModal(true);

@@ -6,7 +6,7 @@ import DeleteTagConfirm from '../TagsActions/DeleteTagConfirm';
 import ArrowIcon from '../Common/ArrowIcon/ArrowIcon';
 import classNames from 'classnames';
 
-const TagsBranch = (props) => {
+const TagsBranch: React.FC = (props) => {
   const {branch, select, childs, pathArr, displayModalHandler, hideModalHandler, isEditorMode} = props;
 
   // --- --- --- --- --- ---

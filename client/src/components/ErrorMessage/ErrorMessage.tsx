@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ErrorMessage = (props) => {
+const ErrorMessage: React.FC = (props) => {
   const {message} = props;
 
 

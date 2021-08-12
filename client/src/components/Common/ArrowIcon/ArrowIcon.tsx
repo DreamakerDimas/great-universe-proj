@@ -7,7 +7,7 @@ import classNames from 'classnames';
  * @param {boolean} isActive - Is active prop.
  * @return {JSX.Element}
  */
-const ArrowIcon = ({isActive}) => {
+const ArrowIcon: React.FC = ({isActive}) => {
   const arrowClass = classNames({
     [styles.default]: true,
     [styles.active]: isActive,

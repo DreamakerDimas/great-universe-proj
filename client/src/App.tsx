@@ -12,7 +12,7 @@ import Auth from './Pages/Auth/AuthPage';
 import Alert from './components/Alert/Alert';
 import TagsTreeEditor from './Pages/TagsTreeEditor/TagsTreeEditor';
 
-function App(props) {
+const App: React.FC = (props) => {
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -30,6 +30,6 @@ function App(props) {
       </BrowserRouter>
     </Provider>
   );
-}
+};
 
 export default App;

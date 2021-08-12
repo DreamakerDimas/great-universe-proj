@@ -2,7 +2,7 @@ import React from 'react';
 import {LOW_SIZE_MAP_PNG, MAP_PNG_ARR} from '../../../constants';
 import styles from './SlicedMap.module.sass';
 
-const SlicedMap = (props) => {
+const SlicedMap: React.FC = (props) => {
   const oneImageSize = Math.floor(props.width / MAP_PNG_ARR.length);
 
   const imageStyle = {

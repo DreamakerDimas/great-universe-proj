@@ -4,26 +4,30 @@ import {getTagValues} from '../../utils/tagsFunctions';
 import {Field, Form, Formik} from 'formik';
 import * as _ from 'lodash';
 import styles from './TagsActions.module.sass';
-import {updateTag} from '../../actions/tagsEditor';
+import {createTag} from '../../actions/tagsEditor';
+import {translitWord} from '../../utils/functions/functions';
 
-const EditTag = ({pathArr, tagsTree, closeModal, editTag}) => {
-  const [tagValues, setTagValues] = useState({});
+const CreateTag: React.FC = ({pathArr, closeModal, addTag}) => {
+  const [tagValues, setTagValues] = useState({
+    code_name: '',
+    name: '',
+    child_tags: [],
+    related_tags: [],
+  });
 
-  useEffect(() => {
-    const targetBranch = tagsTree.find((tag) => tag.code_name === pathArr[0]);
-    const values = _.omit(getTagValues(targetBranch, pathArr), ['id']);
-
-    setTagValues(values);
-  }, []);
 
   const submitHandler = useCallback(() => {
     const data = {tagsChainArr: pathArr, tagData: tagValues};
-    console.log(data);
-    editTag(data);
+    addTag(data);
     closeModal();
   }, [tagValues]);
 
   const changeTagValue = useCallback((e) => {
+    if (e.target.name === 'name') {
+      const translit = translitWord(e.target.value);
+      setTagValues(((prev) => ({...prev, ...{code_name: translit}})));
+    }
+
     const newObj = {[e.target.name]: e.target.value};
     setTagValues((prev) => ({...prev, ...newObj}));
   }, []);
@@ -41,9 +45,18 @@ const EditTag = ({pathArr, tagsTree, closeModal, editTag}) => {
             className={styles.field}
           />
 
+          <label htmlFor={'name'}>Кодовое имя (транслитерация)</label>
+          <Field
+            name={'code_name'}
+            type={'text'}
+            value={tagValues.code_name}
+            onChange={changeTagValue}
+            className={styles.field}
+          />
+
           {/* Color. Only for primary tag?? */}
 
-          <button className={styles.button} type="submit">Изменить</button>
+          <button className={styles.button} type="submit">Добавить</button>
         </Form>
       )}
     </Formik>}
@@ -56,7 +69,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  editTag: (data) => dispatch(updateTag(data)),
+  addTag: (data) => dispatch(createTag(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditTag);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateTag);

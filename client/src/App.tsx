@@ -9,7 +9,7 @@ import Articles from './Pages/Articles/Articles';
 import History from './Pages/History/History';
 import Map from './Pages/Map/Map';
 import Auth from './Pages/Auth/AuthPage';
-import Alert from './components/Alert';
+import Alert from './components/Alert/Alert';
 import TagsTreeEditor from './Pages/TagsTreeEditor/TagsTreeEditor';
 
 function App(props) {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Articles = () => {
+const Articles: React.FC = () => {
   return (
     <>
       <div>Articles</div>

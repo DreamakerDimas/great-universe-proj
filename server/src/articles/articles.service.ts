@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { ArticleEntity } from 'src/entities/article.entity';
-import { Repository } from 'typeorm';
-import { CreateArticleDto } from './dto/create-article.dto';
-import { DefaultArticleDto } from './dto/default-article.dto';
+import {Injectable} from '@nestjs/common';
+import {InjectRepository} from '@nestjs/typeorm';
+import {ArticleEntity} from 'src/entities/article.entity';
+import {Repository} from 'typeorm';
+import {CreateArticleDto} from './dto/create-article.dto';
+import {DefaultArticleDto} from './dto/default-article.dto';
 
 @Injectable()
 export class ArticlesService {
@@ -36,8 +36,6 @@ export class ArticlesService {
 
   async removeById(id: string): Promise<boolean> {
     await this.articleRepository.delete(id);
-    const article = await this.articleRepository.findOne(id);
-    if (article) return false;
     return true;
   }
 }

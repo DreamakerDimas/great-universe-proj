@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import styles from './TagsActions.module.sass';
 import {deleteTag} from '../../actions/tagsEditor';
 
-const DeleteTagConfirm = ({pathArr, tagsTree, closeModal, deleteTag}) => {
+const DeleteTagConfirm: React.FC = ({pathArr, tagsTree, closeModal, deleteTag}) => {
   const [tagValues, setTagValues] = useState({});
 
   useEffect(() => {

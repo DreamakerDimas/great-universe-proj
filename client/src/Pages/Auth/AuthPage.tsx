@@ -4,7 +4,7 @@ import LoginForm from '../../components/Auth/LoginForm';
 import RegistrationForm from '../../components/Auth/RegistrationForm';
 import styles from './AuthPage.module.sass';
 
-const Auth = () => {
+const Auth: React.FC = () => {
   const [isLoginForm, setCurrentForm] = useState(true);
 
   const changeFormHandler = () => {

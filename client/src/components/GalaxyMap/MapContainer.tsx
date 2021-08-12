@@ -13,7 +13,7 @@ import MapData from '../GalaxyMapData/MapData';
 
 const {SELECT, DRAG, DRAG_ACTIVE} = MAP_MOUSE_MODES;
 
-const MapContainer = (props) => {
+const MapContainer: React.FC = (props) => {
   // --- Modes --- //
   const [mouseMode, setMouseMode] = useState(SELECT);
   const [mouseDown, setMouseDown] = useState(false);

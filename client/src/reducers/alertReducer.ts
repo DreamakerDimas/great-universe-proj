@@ -1,8 +1,10 @@
 import {ALERT_TYPES} from '../actions/types';
 
+// !! add types when will work on alerts
+
 const {SET_ALERT, REMOVE_ALERT} = ALERT_TYPES;
 
-const initialState = [
+const initialState: [] = [
   // {
   //     id: 1,
   //     msg: '',

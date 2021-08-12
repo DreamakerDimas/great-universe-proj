@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Home.module.sass';
 
-const Home = () => {
+const Home: React.FC = () => {
   return (
     <div className={styles.articlesContainer}>
       <div className={styles.mainArticle}>

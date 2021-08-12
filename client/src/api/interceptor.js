@@ -1,5 +1,5 @@
 import axios from 'axios';
-import CONSTANTS from '../lib/constants/index';
+import CONSTANTS from '../lib/constants';
 
 const {baseURL, ACCESS_TOKEN} = CONSTANTS;
 

@@ -1,14 +1,13 @@
 import React, {useEffect} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
 
 import {getUser, clearUser} from '../../actions/user';
 import styles from './Header.module.sass';
 import logo from '../../assets/logo.png';
 import UserMenu from './UserMenu';
 
-const Header = ({getUser, userData, error, loading, logout}) => {
+const Header: React.FC = ({getUser, userData, error, loading, logout}) => {
   useEffect(() => {
     getUser();
   }, []);

@@ -1,5 +1,26 @@
 import {AUTH_TYPES} from '../actions/types';
 
+interface AuthState {
+  loading: boolean;
+  isAuthorized: boolean;
+  error: null | Object | string;
+}
+
+interface ErrorPayload {
+  error: Object;
+}
+
+interface AuthAction {
+  type: string;
+  error?: ErrorPayload;
+}
+
+const initialState: AuthState = {
+  loading: false,
+  isAuthorized: false,
+  error: null,
+};
+
 const {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -9,13 +30,7 @@ const {
   LOGIN_ERROR,
 } = AUTH_TYPES;
 
-const initialState = {
-  loading: false,
-  isAuthorized: false,
-  error: null,
-};
-
-export default function(state = initialState, action) {
+export default function(state = initialState, action: AuthAction) {
   switch (action.type) {
     case LOGIN_REQUEST:
     case REGISTER_REQUEST:

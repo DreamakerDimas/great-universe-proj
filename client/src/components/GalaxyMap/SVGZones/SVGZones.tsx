@@ -5,7 +5,7 @@ import styles from './SVGZones.module.sass';
 
 const svgPath = process.env.PUBLIC_URL + '/map/svg/main.svg';
 
-const SVGZones = ({style}) => {
+const SVGZones: React.FC = ({style}) => {
   // set class for inner SVG elements
   const setClassName = (node) => {
     const className = node.getAttribute('class');

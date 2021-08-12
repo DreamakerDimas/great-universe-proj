@@ -11,7 +11,7 @@ import {getCheckedPosition} from './functions/mapFunctions';
 
 const {DRAG, SELECT} = MAP_MOUSE_MODES;
 
-const MapImages = (props) => {
+const MapImages: React.FC = (props) => {
   const {
     mouseMode,
     setMouseDown,

@@ -4,7 +4,7 @@ import {getCountryData} from '../../actions/map';
 import CountryContent from './ContryContent/CountryContent';
 import styles from './MapData.module.sass';
 
-const MapData = (props) => {
+const MapData: React.FC = (props) => {
   const {mapStore, getCountryData} = props;
   const {currentData} = mapStore;
 

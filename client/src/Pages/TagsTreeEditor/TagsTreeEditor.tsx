@@ -5,7 +5,7 @@ import TagsTree from '../../components/TagsTree/TagsTree';
 import styles from './TagsTreeEditor.module.sass';
 
 // only for admin, moderator !!!
-const TagsTreeEditor = ({selectTag, getAllTags, tagsEditorStore}) => {
+const TagsTreeEditor: React.FC = ({selectTag, getAllTags, tagsEditorStore}) => {
   const {loading, tagsTree} = tagsEditorStore;
 
   useEffect(() => {

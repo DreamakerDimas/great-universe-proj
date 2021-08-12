@@ -3,33 +3,48 @@ import {ArticlesService} from './articles.service';
 import {CreateArticleDto} from './dto/create-article.dto';
 import {UpdateArticleDto} from './dto/update-article.dto';
 
+
 @Controller('articles')
 export class ArticlesController {
-  constructor(private articlesService: ArticlesService) {
-  }
+  constructor(private articlesService: ArticlesService) {}
 
-  // get by tags and sort by date, other filters !!!
-  // !!!
+  // ++++++++++++++++++++++++
+  // ++++++++++++++++++++++++
+  // get by tags & sort by date & other filters !!!
 
+  /**
+   * Get Article By Id.
+   * @param {string} id - Article doc ID.
+   */
   @Get('/:id')
   async getArticleById(@Param('id') id: string) {
     return this.articlesService.findById(id);
   }
 
-  // create article
+  /**
+   * Create Article Controller
+   * @param {CreateArticleDto} body - Article Data.
+   */
   @Post()
   async createArticle(@Body() body: CreateArticleDto) {
-    console.log(body);
+    return this.articlesService.create(body);
   }
 
-  // edit article
-  @Post('update') // add dto !!!
-  async editArticle(@Body() body: UpdateArticleDto) {
-    console.log(body);
+  /**
+   * Update.
+   * @param {UpdateArticleDto} body - Article Data for update.
+   * @param {string} id - Article doc ID which need to update.
+   */
+  @Post('update/:id')
+  async editArticle(@Body() body: UpdateArticleDto, @Param('id') id: string) {
+    return this.articlesService.updateById(id, body);
   }
 
-  // delete article
-    @Delete('/:id')
+  /**
+   * Delete.
+   * @param {string} id - Article doc ID which need to delete.
+   */
+  @Delete('/:id')
   async deleteArticleById(@Param('id') id: string) {
     return this.articlesService.removeById(id);
   }

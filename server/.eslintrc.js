@@ -18,5 +18,7 @@ module.exports = {
     'new-cap': ['warn'],
     'camelcase': ['off'],
     'max-len': ['warn', 100],
+    'require-jsdoc': ['off'],
+    'new-cap': ['off'],
   },
 };

@@ -2,7 +2,7 @@ import {Field, Form, Formik} from 'formik';
 import React from 'react';
 import styles from './ContryForm.module.sass';
 
-const CountryForm = (props) => {
+const CountryForm: React.FC = (props) => {
   const initValues = {
     disp_name: '',
     description: '',

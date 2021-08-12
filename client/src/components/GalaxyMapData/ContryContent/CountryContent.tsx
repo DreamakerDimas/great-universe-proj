@@ -8,7 +8,7 @@ import {
 import CountryForm from '../CountryForm/CountryForm';
 import styles from './CountryContent.module.sass';
 
-const CountryContent = (props) => {
+const CountryContent: React.FC = (props) => {
   const {country, createCountry, updateCountry, deleteCountry} = props;
 
   const createHandler = (values) => {

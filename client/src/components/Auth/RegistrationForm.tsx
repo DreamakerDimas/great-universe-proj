@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {Formik, Field, Form, ErrorMessage} from 'formik';
@@ -7,20 +7,39 @@ import PropTypes from 'prop-types';
 import registerSchema from '../../lib/validationSchemas/registerSchema';
 import {authActionRegister} from '../../actions/auth';
 import styles from './Auth.module.sass';
+import {History} from 'history';
+import {Dispatch} from 'redux';
 
-const RegistrationForm = ({register, history}) => {
-  const initValues = {
+interface IRegistrationValues {
+    login: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+}
+
+interface IRegistrationData {
+    values: IRegistrationValues;
+    history?: History<any>;
+}
+
+interface IRegistrationFormProps {
+    register: (data: IRegistrationData) => void;
+    history: History<any>;
+}
+
+const RegistrationForm: React.FC<IRegistrationFormProps> = ({register, history}) => {
+  const initValues = useMemo<IRegistrationValues>(() => ({
     login: '',
     email: '',
     password: '',
     confirmPassword: '',
-  };
+  }), []);
 
-  const submitHandler = (values) => {
+  const submitHandler = useCallback((values: IRegistrationValues) => {
     console.log(values);
     const data = {values, history};
     register(data);
-  };
+  }, [history]);
 
   return (
     <div className={styles.formContainer}>
@@ -31,7 +50,7 @@ const RegistrationForm = ({register, history}) => {
         validationSchema={registerSchema}
         onSubmit={submitHandler}
       >
-        {({values: {login, email, password, confirmPassword}}) => (
+        {({values: {login, email, password, confirmPassword}}: IRegistrationData) => (
           <Form>
             <label htmlFor="login">Логин</label>
             <Field
@@ -97,12 +116,8 @@ const RegistrationForm = ({register, history}) => {
   );
 };
 
-RegistrationForm.propTypes = {
-  register: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  register: (data) => dispatch(authActionRegister(data)),
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  register: (data: IRegistrationData) => dispatch(authActionRegister(data)),
 });
 
 export default withRouter(connect(null, mapDispatchToProps)(RegistrationForm));

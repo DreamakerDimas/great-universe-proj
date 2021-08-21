@@ -17,7 +17,7 @@ const App: React.FC = (props) => {
     <Provider store={store}>
       <BrowserRouter>
         <Header />
-        <Alert />
+        <Alert alerts={[]} />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/articles" component={Articles} />

@@ -38,12 +38,12 @@ export const createCountry = (data: CreateCountryPayload) => ({
   data,
 });
 
-export const updateCountry = (data) => ({
+export const updateCountry = (data: UpdateCountryPayload) => ({
   type: MAP_INTERACTIONS_TYPES.UPDATE_COUNTRY,
   data,
 });
 
-export const deleteCountry = (data: UpdateCountryPayload) => ({
+export const deleteCountry = (zoneName: string) => ({
   type: MAP_INTERACTIONS_TYPES.DELETE_COUNTRY,
   data,
 });

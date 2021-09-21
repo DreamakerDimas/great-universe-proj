@@ -1,4 +1,5 @@
 import {ALERT_TYPES} from '../actions/types';
+import {ReducerAction} from 'react';
 
 // !! add types when will work on alerts
 

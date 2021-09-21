@@ -1,4 +1,11 @@
 import {MAP_INTERACTIONS_TYPES} from '../actions/types';
+import {CreateCountryPayload, UpdateCountryPayload} from '../actions/map';
+
+interface MapReducerAction {
+  type: string;
+  data: string | UpdateCountryPayload | CreateCountryPayload;
+  error?: Error;
+}
 
 const {
   SHOW_DATA,
@@ -25,7 +32,7 @@ const initialState = {
   currentData: null,
 };
 
-export default function(state = initialState, action) {
+export default function(state = initialState, action: MapReducerAction) {
   switch (action.type) {
     case SHOW_DATA:
       return {

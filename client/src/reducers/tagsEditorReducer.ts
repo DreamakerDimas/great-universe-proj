@@ -1,4 +1,11 @@
 import {TAGS_EDITOR_TYPES} from '../actions/types';
+import {CreateTagPayload, DeleteTagPayload, SelectTagPayload, UpdateTagPayload} from '../actions/tagsEditor';
+
+interface TagsReducerAction {
+  type: string;
+  data: SelectTagPayload | CreateTagPayload | UpdateTagPayload | DeleteTagPayload; // TODO: Or return from api
+  error?: Error;
+}
 
 const {
   SELECT_TAG,
@@ -22,7 +29,7 @@ const initialState = {
   tagsTree: [],
 };
 
-export default function(state = initialState, action) {
+export default function(state = initialState, action: TagsReducerAction) {
   switch (action.type) {
     case SELECT_TAG:
       return {

@@ -45,5 +45,5 @@ export const updateCountry = (data: UpdateCountryPayload) => ({
 
 export const deleteCountry = (zoneName: string) => ({
   type: MAP_INTERACTIONS_TYPES.DELETE_COUNTRY,
-  data,
+  data: zoneName,
 });

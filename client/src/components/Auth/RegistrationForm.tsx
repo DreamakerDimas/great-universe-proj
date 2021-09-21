@@ -5,25 +5,13 @@ import {Formik, Field, Form, ErrorMessage} from 'formik';
 import PropTypes from 'prop-types';
 
 import registerSchema from '../../lib/validationSchemas/registerSchema';
-import {authActionRegister} from '../../actions/auth';
+import {authActionRegister, IRegistrationPayload, IRegistrationValues} from '../../actions/auth';
 import styles from './Auth.module.sass';
 import {History} from 'history';
 import {Dispatch} from 'redux';
 
-interface IRegistrationValues {
-    login: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-}
-
-interface IRegistrationData {
-    values: IRegistrationValues;
-    history?: History<any>;
-}
-
 interface IRegistrationFormProps {
-    register: (data: IRegistrationData) => void;
+    register: (data: IRegistrationPayload) => void;
     history: History<any>;
 }
 
@@ -50,7 +38,7 @@ const RegistrationForm: React.FC<IRegistrationFormProps> = ({register, history})
         validationSchema={registerSchema}
         onSubmit={submitHandler}
       >
-        {({values: {login, email, password, confirmPassword}}: IRegistrationData) => (
+        {({values: {login, email, password, confirmPassword}}: IRegistrationPayload) => (
           <Form>
             <label htmlFor="login">Логин</label>
             <Field
@@ -117,7 +105,7 @@ const RegistrationForm: React.FC<IRegistrationFormProps> = ({register, history})
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  register: (data: IRegistrationData) => dispatch(authActionRegister(data)),
+  register: (data: IRegistrationPayload) => dispatch(authActionRegister(data)),
 });
 
 export default withRouter(connect(null, mapDispatchToProps)(RegistrationForm));

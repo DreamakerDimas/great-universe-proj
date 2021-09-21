@@ -28,7 +28,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         selectedTagData: action.data.tagData,
-        selectedTagChain: action.data.tagChain,
+        selectedTagChain: action.data.tagsChainArr,
       };
     case GET_ALL_TAGS_REQUEST:
     case CREATE_TAG_REQUEST:

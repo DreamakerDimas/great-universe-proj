@@ -1,10 +1,10 @@
-import { Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
+import {Column, Entity, ObjectID, ObjectIdColumn} from 'typeorm';
 
-@Entity({ name: 'zones' })
+@Entity({name: 'zones'})
 export class ZoneEntity {
   @ObjectIdColumn() id: ObjectID;
 
-  @Column({ unique: true }) zone_name: string;
+  @Column({unique: true}) zone_name: string;
 
   @Column() disp_name: string;
 
@@ -17,5 +17,5 @@ export class ZoneEntity {
   emblem_img: string;
 
   @Column()
-  tags: string; // tag link
+  tags: string; // TODO ARRAY?
 }

@@ -1,8 +1,8 @@
 import {USER_TYPES} from './types';
 
-export const getUser = (data) => ({
+export const getUser = (userId: string) => ({
   type: USER_TYPES.GET_USER,
-  data: data,
+  data: userId,
 });
 
 export const clearUser = () => ({

@@ -95,7 +95,7 @@ const TagsBranch: React.FC = (props) => {
           {/* Header */}
           <div
             className={styles.tagName}
-            onClick={() => select({tagData: branch, tagChain: pathArr})}
+            onClick={() => select({tagData: branch, tagsChainArr: pathArr})}
           >
             {branch.name}
           </div>

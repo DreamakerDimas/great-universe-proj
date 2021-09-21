@@ -3,23 +3,13 @@ import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {Formik, Field, Form, ErrorMessage} from 'formik';
 import loginSchema from '../../lib/validationSchemas/loginSchema';
-import {authActionLogin} from '../../actions/auth';
+import {authActionLogin, ILoginPayload, ILoginValues} from '../../actions/auth';
 import styles from './Auth.module.sass';
 import {History} from 'history';
 import {Dispatch} from 'redux';
 
-interface ILoginValues {
-    email: string;
-    password: string;
-}
-
-interface ILoginData {
-    values: ILoginValues;
-    history: History<any>;
-}
-
 interface ILoginFormProps {
-    login: (data: ILoginData) => void;
+    login: (data: ILoginPayload) => void;
     history: History<any>;
 }
 
@@ -40,7 +30,7 @@ const LoginForm: React.FC<ILoginFormProps> = ({login, history}) => {
         validationSchema={loginSchema}
         onSubmit={submitHandler}
       >
-        {({values: {email, password}}) => (
+        {({values: {email, password}}: ILoginPayload) => (
           <Form>
             <label htmlFor="email">Почта</label>
             <Field
@@ -78,7 +68,7 @@ const LoginForm: React.FC<ILoginFormProps> = ({login, history}) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  login: (data: ILoginData) => dispatch(authActionLogin(data)),
+  login: (data: ILoginPayload) => dispatch(authActionLogin(data)),
 });
 
 export default withRouter(connect(null, mapDispatchToProps)(LoginForm));

@@ -1,4 +1,5 @@
 import {AUTH_TYPES} from './types';
+import {History} from 'history';
 
 //   catch (err) {
 //     const errors = err.response.data.errors;
@@ -6,12 +7,34 @@ import {AUTH_TYPES} from './types';
 //       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
 //   }
 
-export const authActionLogin = (data) => ({
+export interface ILoginValues {
+  email: string;
+  password: string;
+}
+
+export interface ILoginPayload {
+  values: ILoginValues;
+  history: History<any>;
+}
+
+export interface IRegistrationValues {
+  login: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export interface IRegistrationPayload {
+  values: IRegistrationValues;
+  history?: History<any>;
+}
+
+export const authActionLogin = (data: ILoginPayload) => ({
   type: AUTH_TYPES.LOGIN,
   data,
 });
 
-export const authActionRegister = (data) => ({
+export const authActionRegister = (data: IRegistrationPayload) => ({
   type: AUTH_TYPES.REGISTER,
   data,
 });

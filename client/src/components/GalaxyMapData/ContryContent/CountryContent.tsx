@@ -3,12 +3,19 @@ import {connect} from 'react-redux';
 import {
   createCountry,
   updateCountry,
-  deleteCountry,
+  deleteCountry, CountryEntity, CreateCountryPayload, UpdateCountryPayload,
 } from '../../../actions/map';
 import CountryForm from '../CountryForm/CountryForm';
 import styles from './CountryContent.module.sass';
 
-const CountryContent: React.FC = (props) => {
+interface CountryContentProps {
+  country: CountryEntity;
+  createCountry(params: CreateCountryPayload): void;
+  updateCountry(values: {id: string, updateData: UpdateCountryPayload}): void;
+  deleteCountry(params: {id: string, zone_name: string}): void;
+}
+
+const CountryContent: React.FC<CountryContentProps> = (props) => {
   const {country, createCountry, updateCountry, deleteCountry} = props;
 
   const createHandler = (values) => {

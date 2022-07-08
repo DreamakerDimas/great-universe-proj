@@ -6,14 +6,18 @@ import styles from './MapContainer.module.sass';
 import {
   getWidth,
   getCheckedPosition,
-  getBoundaries,
+  getBoundaries, BoundariesValues,
 } from './functions/mapFunctions';
 import {connect} from 'react-redux';
 import MapData from '../GalaxyMapData/MapData';
 
 const {SELECT, DRAG, DRAG_ACTIVE} = MAP_MOUSE_MODES;
 
-const MapContainer: React.FC = (props) => {
+interface MapContainerProps {
+  isShowed: boolean;
+}
+
+const MapContainer: React.FC<MapContainerProps> = (props) => {
   // --- Modes --- //
   const [mouseMode, setMouseMode] = useState(SELECT);
   const [mouseDown, setMouseDown] = useState(false);
@@ -23,7 +27,7 @@ const MapContainer: React.FC = (props) => {
 
   const [currentZoomMultiplier, setCurrentZoomMultiplier] = useState(1); // For correct centering while zoom happens
 
-  const [boundaryValues, setBoundaryValues] = useState(() =>
+  const [boundaryValues, setBoundaryValues] = useState<BoundariesValues>(() =>
     getBoundaries(width),
   );
 

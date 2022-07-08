@@ -1,9 +1,10 @@
 import React from 'react';
 
-const ErrorMessage: React.FC = (props) => {
-  const {message} = props;
+interface ErrorMessageProps {
+    message: string;
+}
 
-
+const ErrorMessage: React.FC<ErrorMessageProps> = ({message}) => {
   return (
     <div className="errorContainer">
       <p>{message}</p>

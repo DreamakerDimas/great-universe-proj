@@ -8,7 +8,13 @@ import styles from './MapInterface.module.sass';
 const {DRAG, SELECT} = MAP_MOUSE_MODES;
 const {GRAB_ICON, ZOOM_IN_ICON, ZOOM_OUT_ICON, DEFAULT_ICON} = MOUSE_ICONS;
 
-const MapInterface: React.FC = (props) => {
+interface MapInterfaceProps {
+    setMouseMode: React.Dispatch<React.SetStateAction<MAP_MOUSE_MODES>>;
+    setZoom: React.Dispatch<React.SetStateAction<number>>;
+    hideZoneData(): void;
+}
+
+const MapInterface: React.FC<MapInterfaceProps> = (props) => {
   const {setMouseMode, setZoom, hideZoneData} = props;
 
   const toDragMode = () => {

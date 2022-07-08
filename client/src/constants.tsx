@@ -90,8 +90,8 @@ export const MOUSE_ICONS = {
   ZOOM_OUT_ICON: process.env.PUBLIC_URL + '/icons/svg/zoom-out.svg',
   DEFAULT_ICON: process.env.PUBLIC_URL + '/icons/svg/cursor-icon.svg',
 };
-export const MAP_MOUSE_MODES = {
-  SELECT: 'default',
-  DRAG: 'grab',
-  DRAG_ACTIVE: 'grabbing',
-};
+export enum MAP_MOUSE_MODES {
+  SELECT = 'default',
+  DRAG = 'grab',
+  DRAG_ACTIVE = 'grabbing',
+}

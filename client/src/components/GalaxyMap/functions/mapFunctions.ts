@@ -1,5 +1,11 @@
 import {MAP_PNG_ARR} from '../../../constants';
 
+export interface BoundariesValues {
+  top: number;
+  left: number;
+  zero: number;
+}
+
 // get new width
 export const getWidth = (zoomValue) => {
   let newWidth = Math.trunc(zoomValue * window.innerWidth);
@@ -25,7 +31,7 @@ export const getCheckedPosition = (top, left, boundaryValues) => {
 };
 
 // get new boundaries values
-export const getBoundaries = (width) => {
+export const getBoundaries = (width: number): BoundariesValues => {
   if (window.innerWidth - width >= 0) {
     return {
       top: window.innerHeight - width,

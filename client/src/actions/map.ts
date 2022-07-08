@@ -1,5 +1,15 @@
 import {MAP_INTERACTIONS_TYPES} from './types';
 
+export interface CountryEntity {
+  id: string;
+  zone_name: string;
+  disp_name: string;
+  description: string;
+  government_type: string;
+  emblem_img: string;
+  tags?: string[]; // recursed
+}
+
 export interface CreateCountryPayload {
   zone_name: string;
   disp_name: string;

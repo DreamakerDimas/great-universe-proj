@@ -1,17 +1,30 @@
 import React, {useCallback, useEffect} from 'react';
-import {MAP_MOUSE_MODES, MAP_PNG_PATH} from '../../constants';
+import {MAP_MOUSE_MODES} from '../../constants';
 import SlicedMap from './SlicedMap/SlicedMap';
 import SVGZones from './SVGZones/SVGZones';
 import styles from './MapImages.module.sass';
-import {getCountryData, hideZoneData, showZoneData} from '../../actions/map';
+import {getCountryData, showZoneData} from '../../actions/map';
 import {connect} from 'react-redux';
-import {useDrag, usePinch} from 'react-use-gesture';
+import {useDrag} from 'react-use-gesture';
 import {Globals, useSpring, animated} from 'react-spring';
-import {getCheckedPosition} from './functions/mapFunctions';
+import {BoundariesValues, getCheckedPosition} from './functions/mapFunctions';
 
 const {DRAG, SELECT} = MAP_MOUSE_MODES;
 
-const MapImages: React.FC = (props) => {
+interface MapImagesProps {
+  mouseMode: MAP_MOUSE_MODES,
+  setMouseDown: React.Dispatch<React.SetStateAction<boolean>>
+  imagesStyle: object;
+  width: number;
+  currentZoomMultiplier: number;
+  boundaryValues: BoundariesValues;
+  zoom: number;
+  setWidth: React.Dispatch<React.SetStateAction<number>>;
+  showZoneData(zone: string): void;
+  getCountryData(zone: string): void;
+}
+
+const MapImages: React.FC<MapImagesProps> = (props) => {
   const {
     mouseMode,
     setMouseDown,
@@ -100,8 +113,8 @@ const MapImages: React.FC = (props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  showZoneData: (zone_name) => dispatch(showZoneData(zone_name)),
-  getCountryData: (zone_name) => dispatch(getCountryData(zone_name)),
+  showZoneData: (zone_name: string) => dispatch(showZoneData(zone_name)),
+  getCountryData: (zone_name: string) => dispatch(getCountryData(zone_name)),
 });
 
 export default connect(null, mapDispatchToProps)(MapImages);
